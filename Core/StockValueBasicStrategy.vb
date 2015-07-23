@@ -19,11 +19,11 @@ Public Class StockBuyBackStrategy
         Dim currentValue As Double = coeffecient * baselinePrice
 
         'Buying Pattern
-        For Each item As Transaction In theMarket.sellingOfferings.Where(Function(n) n.Resource.Name = ResourceToBuyName)
-            If item.PricePerUnit < currentValue Then
-                theMarket.Buy(item, theCompany)
-            End If
-        Next
+        'For Each item As Transaction In theMarket.sellingOfferings.Where(Function(n) n.Resource.Name = ResourceToBuyName)
+        '    If item.PricePerUnit < currentValue Then
+        '        theMarket.Buy(item, theCompany)
+        '    End If
+        'Next
 
 
     End Sub

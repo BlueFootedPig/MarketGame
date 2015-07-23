@@ -1,17 +1,12 @@
 ﻿Public Class Engine
     Public Companies As New List(Of Company)
-    Dim market As New Market
+    Private market As New Market
 
-    Public Sub New(timeFrame As Double)
-        market.TimeFrame = timeFrame
-    End Sub
 
     Public Sub ExecuteComputerActions()
         For Each currentCompany As Company In companies
             currentCompany.PerformAction(market)
         Next
-
-
 
     End Sub
 
@@ -26,9 +21,9 @@
         nCompany.ProfitPerUnit = 0
         nCompany.Shares = 1000
 
-        nCompany.Assests.AddAsset(New Resource() With {.Name = Resource.RESOURCE_COMMON, .Shares = 300})
-        nCompany.gamingStrategy.Add(New StockBuyBackStrategy(90, 500, Resource.RESOURCE_COMMON))
-        nCompany.gamingStrategy.Add(New StockSellingBasicStrategy(110, 500, Resource.RESOURCE_COMMON))
+        nCompany.Assests.AddAsset(New Resource() With {.Name = Resource.RESOURCE_LUMBER, .Shares = 300})
+        nCompany.gamingStrategy.Add(New StockBuyBackStrategy(90, 500, Resource.RESOURCE_LUMBER))
+        nCompany.gamingStrategy.Add(New StockSellingBasicStrategy(110, 500, Resource.RESOURCE_LUMBER))
 
 
 

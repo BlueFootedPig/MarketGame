@@ -16,12 +16,12 @@
         Dim producedResource As Resource = Nothing
         Select Case currentSkill
             Case SkillChoice.Common
-                Assests.AddAsset(New Resource() With {.Name = Resource.RESOURCE_COMMON, .Shares = 1})
+                Assests.AddAsset(New Resource() With {.Name = Resource.RESOURCE_LUMBER, .Shares = 1})
                 
             Case SkillChoice.Uncommon
-                Assests.AddAsset(New Resource() With {.Name = Resource.RESOURCE_UNCOMMON, .Shares = 1})
+                Assests.AddAsset(New Resource() With {.Name = Resource.RESOURCE_IRON, .Shares = 1})
             Case SkillChoice.Rare
-                Assests.AddAsset(New Resource() With {.Name = Resource.RESOURCE_RARE, .Shares = 1})
+                Assests.AddAsset(New Resource() With {.Name = Resource.RESOURCE_GOLD, .Shares = 1})
         End Select
 
 

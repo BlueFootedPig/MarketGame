@@ -1,7 +1,7 @@
 ﻿Imports Core
 
 Public Class HomeScreen
-    Dim gameEngine As New Engine(10)
+    Dim gameEngine As New Engine()
     Dim user As New Player()
     Dim clock As New System.Timers.Timer(1000)
     Public Sub New()
@@ -123,7 +123,7 @@ Public Class HomeScreen
 
     Private Sub RareBarButtonItem_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles RareBarButtonItem.ItemClick
         user.currentSkill = SkillChoice.Rare
-        ResourceSelectionBarLinkContainerItem.Caption = Resource.RESOURCE_RARE
+        ResourceSelectionBarLinkContainerItem.Caption = Resource.RESOURCE_GOLD
         ResourceSelectionBarLinkContainerItem.LargeGlyph = RareBarButtonItem.Glyph
         RareBarButtonItem.Down = True
     End Sub
@@ -131,14 +131,14 @@ Public Class HomeScreen
     Private Sub UncommonBarButtonItem_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles UncommonBarButtonItem.ItemClick
         user.currentSkill = SkillChoice.Uncommon
 
-        ResourceSelectionBarLinkContainerItem.Caption = Resource.RESOURCE_UNCOMMON
+        ResourceSelectionBarLinkContainerItem.Caption = Resource.RESOURCE_IRON
         ResourceSelectionBarLinkContainerItem.LargeGlyph = UncommonBarButtonItem.Glyph
         UncommonBarButtonItem.Down = True
     End Sub
 
     Private Sub CommonBarButtonItem_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles CommonBarButtonItem.ItemClick
         user.currentSkill = SkillChoice.Common
-        ResourceSelectionBarLinkContainerItem.Caption = Resource.RESOURCE_COMMON
+        ResourceSelectionBarLinkContainerItem.Caption = Resource.RESOURCE_LUMBER
         ResourceSelectionBarLinkContainerItem.LargeGlyph = CommonBarButtonItem.Glyph
         CommonBarButtonItem.Down = True
 

@@ -1,22 +1,23 @@
 ﻿Public Class Market
-    Public sellingOfferings As New List(Of Transaction)
-    Friend TimeFrame As Double
+    Public Property SellingOfferings As New List(Of Transaction)
+    Public Property BuyingOfferings As New List(Of Transaction)
 
+
+    Private knownResources As IList(Of Resource)
 
     Private Function GetResourceValue(item As Resource) As Double
-        Return 0
+        Return knownResources.First(Function(n) n.Name = item.Name).MarketValue
     End Function
 
     'Posts an bid up for sale
-    Sub Buy(item As Transaction, theCompany As Company)
+    Sub Buy(pricePerUnit As Integer, item As Resource, theCompany As Company)
 
-        'Dim requiredResources = theCompany.Assests.FirstOrDefault(Function(n) n.Name = item.AskingResource)
-        'If requiredResources Is Nothing Then Exit Sub
+        Dim nTransaction As New Transaction()
+        nTransaction.Seller = theCompany.Name
+        nTransaction.Resource = item
+        nTransaction.PricePerUnit = pricePerUnit
 
-        'If requiredResources.Shares > item.PricePerUnit * item.Resource.Shares Then
-
-        'End If
-
+        BuyingOfferings.Add(nTransaction)
 
     End Sub
 
@@ -27,7 +28,7 @@
         nTransaction.Resource = item
         nTransaction.PricePerUnit = pricePerUnit
 
-        sellingOfferings.Add(nTransaction)
+        SellingOfferings.Add(nTransaction)
     End Sub
 
     Sub CompleteTransaction(trans As Transaction, numberToBuy As Integer, theCompany As Company)

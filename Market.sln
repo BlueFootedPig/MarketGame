@@ -7,6 +7,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Market", "Market\Market.vbp
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Core", "Core\Core.vbproj", "{ECBAB770-239A-4BA1-AECA-5A16CC866A29}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CoreUnitTests", "CoreUnitTests\CoreUnitTests.vbproj", "{FA377098-1652-4094-A83D-9CE087A05360}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{ECBAB770-239A-4BA1-AECA-5A16CC866A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECBAB770-239A-4BA1-AECA-5A16CC866A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECBAB770-239A-4BA1-AECA-5A16CC866A29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA377098-1652-4094-A83D-9CE087A05360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA377098-1652-4094-A83D-9CE087A05360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA377098-1652-4094-A83D-9CE087A05360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA377098-1652-4094-A83D-9CE087A05360}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
