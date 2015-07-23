@@ -1,6 +1,6 @@
 ﻿Public Class Resource
     Public Property Name As String
-    Public Property Shares As Double = 0
+    Public Property Shares As Integer = 0
     Public Property MarketValue As Double = 0
 
     Public Shared RESOURCE_LUMBER As String = "Lumber"

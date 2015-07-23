@@ -94,27 +94,27 @@ Public Class HomeScreen
         updateTable = MarketGridControl.DataSource
 
         For Each item As Transaction In gameEngine.GetMarketResources()
-            Dim tmpView As New DataView(updateTable, "Resource = '" & item.Resource.Name & "' and Seller = '" & item.Seller & "'", String.Empty, DataViewRowState.CurrentRows)
-            If tmpView.Count = 0 Then
-                Dim nRow As DataRow = Nothing
+            'Dim tmpView As New DataView(updateTable, "Resource = '" & item.Resource.Name & "' and Seller = '" & item.Seller & "'", String.Empty, DataViewRowState.CurrentRows)
+            'If tmpView.Count = 0 Then
+            '    Dim nRow As DataRow = Nothing
 
-                nRow = updateTable.NewRow
-                nRow("Seller") = item.Seller
+            '    nRow = updateTable.NewRow
+            '    nRow("Seller") = item.Seller
 
-                nRow("#") = item.Resource.Shares
-                nRow("Per Unit") = item.PricePerUnit
-                nRow("Resource") = item.Resource.Name
+            '    nRow("#") = item.Resource.Shares
+            '    nRow("Per Unit") = item.PricePerUnit
+            '    nRow("Resource") = item.Resource.Name
 
-                updateTable.Rows.Add(nRow)
-            Else
-                Dim nRow As DataRowView = tmpView(0)
-                nRow("Seller") = item.Seller
+            '    updateTable.Rows.Add(nRow)
+            'Else
+            '    Dim nRow As DataRowView = tmpView(0)
+            '    nRow("Seller") = item.Seller
 
-                nRow("#") = item.Resource.Shares
-                nRow("Per Unit") = item.PricePerUnit
-                nRow("Resource") = item.Resource.Name
+            '    nRow("#") = item.Resource.Shares
+            '    nRow("Per Unit") = item.PricePerUnit
+            '    nRow("Resource") = item.Resource.Name
 
-            End If
+            'End If
         Next
         updating = False
     End Sub

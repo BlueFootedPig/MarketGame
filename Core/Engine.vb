@@ -48,21 +48,21 @@
 
     Sub RequestPurchase(seller As String, resource As String, buyer As Company)
         ' If buyer.Resources.Any(Function(n) n.Name = )
-        Dim lowestPrice As Double = market.sellingOfferings.Where(Function(n) n.Seller = seller AndAlso n.Resource.Name = resource).Min(Function(n) n.PricePerUnit)
-        Dim findTransaction As Transaction = market.sellingOfferings.FirstOrDefault(Function(n) n.Seller = seller AndAlso n.Resource.Name = resource AndAlso n.PricePerUnit = lowestPrice)
+        'Dim lowestPrice As Double = market.sellingOfferings.Where(Function(n) n.Seller = seller AndAlso n.Resource.Name = resource).Min(Function(n) n.PricePerUnit)
+        'Dim findTransaction As Transaction = market.sellingOfferings.FirstOrDefault(Function(n) n.Seller = seller AndAlso n.Resource.Name = resource AndAlso n.PricePerUnit = lowestPrice)
 
-        'current exits function, will post item for buy
-        If findTransaction Is Nothing Then Exit Sub
+        ''current exits function, will post item for buy
+        'If findTransaction Is Nothing Then Exit Sub
 
-        findTransaction.Resource.Shares -= 1
+        'findTransaction.Resource.Shares -= 1
 
-        buyer.Assests.AddAsset(New Resource() With {.Name = resource, .Shares = 1})
+        'buyer.Assests.AddAsset(New Resource() With {.Name = resource, .Shares = 1})
 
-        buyer.Assests.RemoveAsset(New Resource() With {.Name = "Credit", .Shares = findTransaction.PricePerUnit})
-        
-        Dim sellerCompany As Company = Companies.First(Function(n) n.Name = findTransaction.Seller)
+        'buyer.Assests.RemoveAsset(New Resource() With {.Name = "Credit", .Shares = findTransaction.PricePerUnit})
 
-        sellerCompany.Assests.AddAsset(New Resource() With {.Name = "Credit", .Shares = findTransaction.PricePerUnit})
+        'Dim sellerCompany As Company = Companies.First(Function(n) n.Name = findTransaction.Seller)
+
+        'sellerCompany.Assests.AddAsset(New Resource() With {.Name = "Credit", .Shares = findTransaction.PricePerUnit})
 
     End Sub
 
