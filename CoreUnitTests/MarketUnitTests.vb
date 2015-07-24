@@ -46,7 +46,7 @@ Public Class MarketUnitTests
     End Sub
 
     <TestMethod()>
-    Public Sub Market_BuyOrder_SellOrderAlreadyExists()
+    Public Sub Market_SellOrderAlreadyExists_Fulfilled()
 
         'setup
         Dim testMarket As New Market
@@ -76,7 +76,7 @@ Public Class MarketUnitTests
     End Sub
 
     <TestMethod()>
-    Public Sub Market_SellOrder_BuyOrderAlreadyExists()
+    Public Sub Market_BuyOrderAlreadyExists_NotEnoughBuys()
 
         'setup
         Dim testMarket As New Market
@@ -103,6 +103,37 @@ Public Class MarketUnitTests
         Assert.AreEqual(100.0, testMarket.SellingOfferings.First().PricePerUnit)
         Assert.AreEqual(resourceToSell.Name, testMarket.SellingOfferings.First().Resource.Name)
         Assert.AreEqual(1336, testMarket.SellingOfferings(0).Resource.Shares)
+
+    End Sub
+
+    <TestMethod()>
+    Public Sub Market_BuyOrderAlreadyExists_Fullfilled()
+
+        'setup
+        Dim testMarket As New Market
+        Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 5}
+        Dim companySelling As New Company() With {.Name = "TheCompany"}
+        companySelling.Assests.AddAsset(New Resource() With {.Name = "TestResource", .Shares = 1000})
+
+        Dim resourcetobuy As New Resource() With {.Name = "TestResource", .Shares = 15}
+        Dim companyBuying As New Company() With {.Name = "Buyer"}
+
+
+        companyBuying.Assests.AddAsset(New Resource() With {.Name = Resource.CREDIT, .Shares = 1500})
+        'test
+
+        testMarket.Buy(140, resourcetobuy, companyBuying)
+        testMarket.Sell(100, resourceToSell, companySelling)
+
+
+
+        'validation
+        Assert.AreEqual(1, testMarket.BuyingOfferings.Count)
+        Assert.AreEqual(0, testMarket.SellingOfferings.Count)
+        Assert.AreEqual(companyBuying.Name, testMarket.BuyingOfferings.First().Owner.Name)
+        Assert.AreEqual(140.0, testMarket.BuyingOfferings.First().PricePerUnit)
+        Assert.AreEqual(resourcetobuy.Name, testMarket.BuyingOfferings.First().Resource.Name)
+        Assert.AreEqual(10, testMarket.BuyingOfferings(0).Resource.Shares)
 
     End Sub
 
