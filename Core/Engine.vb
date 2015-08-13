@@ -21,7 +21,7 @@
         nCompany.ProfitPerUnit = 0
         nCompany.Shares = 1000
 
-        nCompany.Assests.AddAsset(New Resource() With {.Name = Resource.RESOURCE_LUMBER, .Shares = 300})
+        nCompany.AddResource(New Resource() With {.Name = Resource.RESOURCE_LUMBER, .Shares = 300})
         nCompany.gamingStrategy.Add(New StockBuyBackStrategy(90, 500, Resource.RESOURCE_LUMBER))
         nCompany.gamingStrategy.Add(New StockSellingBasicStrategy(110, 500, Resource.RESOURCE_LUMBER))
 

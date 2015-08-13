@@ -1,7 +1,7 @@
 ﻿Public Class Company
     Inherits Resource
 
-    Public Assests As New AssetManager()
+    Private Assests As New AssetManager()
 
     Public RequiredResources As New List(Of Resource)
     Friend ProfitPerUnit As Double
@@ -9,6 +9,14 @@
     Public Property ProducedResource As Resource
 
     Public gamingStrategy As New List(Of Strategy)
+
+    Public Sub AddResource(resourceToAdd As Resource)
+        Assests.AddAsset(resourceToAdd)
+    End Sub
+
+    Public Sub RemoveResource(resourceToRemove As Resource)
+        Assests.RemoveAsset(resourceToRemove)
+    End Sub
 
     Public Overridable Sub PerformAction(market As Market)
         For Each strat As Strategy In gamingStrategy
@@ -41,5 +49,7 @@
 
         Return returnValue
     End Function
+
+
 
 End Class

@@ -25,12 +25,12 @@ Public Class HomeScreen
         resourceDatatable.Columns.Add("Name")
         resourceDatatable.Columns.Add("#", Type.GetType("System.Double"))
 
-        For Each item As Resource In user.Assests.GetAllAssets
-            Dim nRow As DataRow = resourceDatatable.NewRow
-            nRow("Name") = item.Name
-            nRow("#") = Math.Floor(item.Shares)
-            resourceDatatable.Rows.Add(nRow)
-        Next
+        'For Each item As Resource In user.Assests.GetAllAssets
+        '    Dim nRow As DataRow = resourceDatatable.NewRow
+        '    nRow("Name") = item.Name
+        '    nRow("#") = Math.Floor(item.Shares)
+        '    resourceDatatable.Rows.Add(nRow)
+        'Next
 
         ResourceDataGrid.DataSource = resourceDatatable
 
@@ -73,23 +73,23 @@ Public Class HomeScreen
         Dim updateTable As DataTable = ResourceDataGrid.DataSource
 
         ' updateTable.Rows.Clear()
-        For Each item As Resource In user.Assests.GetAllAssets
+        'For Each item As Resource In user.Assests.GetAllAssets
 
-            Dim tmpView As New DataView(updateTable, "Name = '" & item.Name & "'", String.Empty, DataViewRowState.CurrentRows)
-            If tmpView.Count = 0 Then
-                Dim nRow As DataRow = Nothing
+        '    Dim tmpView As New DataView(updateTable, "Name = '" & item.Name & "'", String.Empty, DataViewRowState.CurrentRows)
+        '    If tmpView.Count = 0 Then
+        '        Dim nRow As DataRow = Nothing
 
-                nRow = updateTable.NewRow
-                nRow("Name") = item.Name
-                nRow("#") = Math.Floor(item.Shares)
+        '        nRow = updateTable.NewRow
+        '        nRow("Name") = item.Name
+        '        nRow("#") = Math.Floor(item.Shares)
 
-                updateTable.Rows.Add(nRow)
-            Else
-                Dim nRow As DataRowView = tmpView(0)
-                nRow("#") = item.Shares
-            End If
+        '        updateTable.Rows.Add(nRow)
+        '    Else
+        '        Dim nRow As DataRowView = tmpView(0)
+        '        nRow("#") = item.Shares
+        '    End If
 
-        Next
+        'Next
 
         updateTable = MarketGridControl.DataSource
 

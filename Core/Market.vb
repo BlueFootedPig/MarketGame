@@ -10,7 +10,7 @@
     End Function
 
     'Posts an bid up for sale
-    Sub Buy(pricePerUnit As Integer, item As Resource, theCompany As Company)
+    Public Sub Buy(pricePerUnit As Integer, item As Resource, theCompany As Company)
 
         Dim nTransaction As New Transaction()
         nTransaction.Owner = theCompany
@@ -27,7 +27,13 @@
     End Sub
 
     'Posts an item for sale
-    Sub Sell(pricePerUnit As Integer, item As Resource, theCompany As Company)
+    Public Sub Sell(pricePerUnit As Integer, item As Resource, theCompany As Company)
+        If item Is Nothing Then Throw New ArgumentNullException("A Resource must be specified.")
+        If item.Shares <= 0 OrElse String.IsNullOrEmpty(item.Name) Then Throw New ArgumentException("Item did not have a resource name or number of shares.")
+
+        If theCompany Is Nothing Then Throw New ArgumentNullException("A company must be specified.")
+
+
         Dim nTransaction As New Transaction()
         nTransaction.Owner = theCompany
         nTransaction.Resource = item
@@ -44,27 +50,32 @@
 
         Dim availableTransaction As Transaction = BuyingOfferings.FirstOrDefault(Function(n) n.Resource.Name = selling.Resource.Name)
         While availableTransaction IsNot Nothing AndAlso selling.Resource.Shares > 0
-            Dim buyer As Company = availableTransaction.Owner
-            Dim amountBuying As Integer = selling.Resource.Shares
-
-            If amountBuying > availableTransaction.Resource.Shares Then
-                amountBuying = availableTransaction.Resource.Shares
-                BuyingOfferings.Remove(availableTransaction)
-            End If
-
-            selling.Resource.Shares -= amountBuying
-            selling.Owner.Assests.AddAsset(New Resource() With {.Name = Resource.CREDIT, .Shares = availableTransaction.PricePerUnit * amountBuying})
-            selling.Owner.Assests.RemoveAsset(New Resource() With {.Name = selling.Resource.Name, .Shares = amountBuying})
-            
-            buyer.Assests.RemoveAsset(New Resource() With {.Name = Resource.CREDIT, .Shares = availableTransaction.PricePerUnit * amountBuying})
-            buyer.Assests.AddAsset(New Resource() With {.Name = selling.Resource.Name, .Shares = amountBuying})
-
-            availableTransaction.Resource.Shares -= amountBuying
-            availableTransaction = BuyingOfferings.FirstOrDefault(Function(n) n.Resource.Name = selling.Resource.Name)
-
+            TransferPropertyBetweenCompanies(availableTransaction, selling)
         End While
 
     End Sub
+
+    Private Sub TransferPropertyBetweenCompanies(buyingTransaction As Transaction, sellingTransaction As Transaction)
+        Dim buyer As Company = buyingTransaction.Owner
+        Dim amountBuying As Integer = sellingTransaction.Resource.Shares
+
+        If amountBuying > buyingTransaction.Resource.Shares Then
+            amountBuying = buyingTransaction.Resource.Shares
+            BuyingOfferings.Remove(buyingTransaction)
+        End If
+
+        sellingTransaction.Resource.Shares -= amountBuying
+        sellingTransaction.Owner.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = buyingTransaction.PricePerUnit * amountBuying})
+        sellingTransaction.Owner.RemoveResource(New Resource() With {.Name = sellingTransaction.Resource.Name, .Shares = amountBuying})
+
+        buyer.RemoveResource(New Resource() With {.Name = Resource.CREDIT, .Shares = buyingTransaction.PricePerUnit * amountBuying})
+        buyer.AddResource(New Resource() With {.Name = sellingTransaction.Resource.Name, .Shares = amountBuying})
+
+        buyingTransaction.Resource.Shares -= amountBuying
+        buyingTransaction = BuyingOfferings.FirstOrDefault(Function(n) n.Resource.Name = sellingTransaction.Resource.Name)
+
+    End Sub
+
 
     Sub CompleteBuyOrder(buying As Transaction)
 
@@ -79,11 +90,11 @@
             End If
 
             buying.Resource.Shares -= amountBuying
-            buying.Owner.Assests.RemoveAsset(New Resource() With {.Name = Resource.CREDIT, .Shares = availableTransaction.PricePerUnit * amountBuying})
-            buying.Owner.Assests.AddAsset(New Resource() With {.Name = availableTransaction.Resource.Name, .Shares = amountBuying})
+            buying.Owner.RemoveResource(New Resource() With {.Name = Resource.CREDIT, .Shares = availableTransaction.PricePerUnit * amountBuying})
+            buying.Owner.AddResource(New Resource() With {.Name = availableTransaction.Resource.Name, .Shares = amountBuying})
 
-            seller.Assests.AddAsset(New Resource() With {.Name = Resource.CREDIT, .Shares = availableTransaction.PricePerUnit * amountBuying})
-            seller.Assests.RemoveAsset(New Resource() With {.Name = availableTransaction.Resource.Name, .Shares = amountBuying})
+            seller.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = availableTransaction.PricePerUnit * amountBuying})
+            seller.RemoveResource(New Resource() With {.Name = availableTransaction.Resource.Name, .Shares = amountBuying})
 
             availableTransaction.Resource.Shares -= amountBuying
             availableTransaction = SellingOfferings.FirstOrDefault(Function(n) n.Resource.Name = buying.Resource.Name)
