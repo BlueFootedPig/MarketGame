@@ -26,6 +26,48 @@ Public Class MarketUnitTests
 
     <TestMethod()>
     <ExpectedException(GetType(ArgumentException))>
+    Public Sub Market_AddSellOrder_NoShares()
+
+        'setup
+        Dim testMarket As New Market
+        Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 0}
+        Dim companySelling As New Company() With {.Name = "TheCompany"}
+
+        'test
+        testMarket.Sell(140, resourceToSell, companySelling)
+
+
+    End Sub
+
+    <TestMethod()>
+    <ExpectedException(GetType(ArgumentNullException))>
+    Public Sub Market_AddSellOrder_NullCompany()
+
+        'setup
+        Dim testMarket As New Market
+        Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 1337}
+
+        'test
+        testMarket.Sell(140, resourceToSell, Nothing)
+
+    End Sub
+
+    <TestMethod()>
+    <ExpectedException(GetType(ArgumentNullException))>
+    Public Sub Market_AddSellOrder_NullResource()
+
+        'setup
+        Dim testMarket As New Market
+        Dim companySelling As New Company() With {.Name = "TheCompany"}
+
+        'test
+        testMarket.Sell(140, Nothing, companySelling)
+
+
+    End Sub
+
+    <TestMethod()>
+    <ExpectedException(GetType(ArgumentException))>
     Public Sub Market_AddSellOrder_NoSharesSpecified()
 
         'setup
@@ -57,6 +99,63 @@ Public Class MarketUnitTests
         Assert.AreEqual(companySelling.Name, testMarket.BuyingOfferings.First().Owner.Name)
         Assert.AreEqual(140.0, testMarket.BuyingOfferings.First().PricePerUnit)
         Assert.AreEqual(resourceToSell.Name, testMarket.BuyingOfferings.First().Resource.Name)
+
+    End Sub
+
+    <TestMethod()>
+    <ExpectedException(GetType(ArgumentException))>
+    Public Sub Market_AddBuyOrder_NoShares()
+
+        'setup
+        Dim testMarket As New Market
+        Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 0}
+        Dim companySelling As New Company() With {.Name = "TheCompany"}
+
+        'test
+        testMarket.Buy(140, resourceToSell, companySelling)
+
+
+    End Sub
+
+    <TestMethod()>
+    <ExpectedException(GetType(ArgumentNullException))>
+    Public Sub Market_AddBuyOrder_NullCompany()
+
+        'setup
+        Dim testMarket As New Market
+        Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 1337}
+
+        'test
+        testMarket.Buy(140, resourceToSell, Nothing)
+
+    End Sub
+
+    <TestMethod()>
+    <ExpectedException(GetType(ArgumentNullException))>
+    Public Sub Market_AddBuyOrder_NullResource()
+
+        'setup
+        Dim testMarket As New Market
+        Dim companySelling As New Company() With {.Name = "TheCompany"}
+
+        'test
+        testMarket.Buy(140, Nothing, companySelling)
+
+
+    End Sub
+
+    <TestMethod()>
+    <ExpectedException(GetType(ArgumentException))>
+    Public Sub Market_AddBuyOrder_NoSharesSpecified()
+
+        'setup
+        Dim testMarket As New Market
+        Dim resourceToSell As New Resource() With {.Name = "TestResource"}
+        Dim companySelling As New Company() With {.Name = "TheCompany"}
+
+        'test
+        testMarket.Buy(140, resourceToSell, companySelling)
+
 
     End Sub
 

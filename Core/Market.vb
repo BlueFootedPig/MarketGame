@@ -11,6 +11,11 @@
 
     'Posts an bid up for sale
     Public Sub Buy(pricePerUnit As Integer, item As Resource, theCompany As Company)
+        If item Is Nothing Then Throw New ArgumentNullException("A Resource must be specified.")
+        If item.Shares <= 0 OrElse String.IsNullOrEmpty(item.Name) Then Throw New ArgumentException("Item did not have a resource name or number of shares.")
+
+        If theCompany Is Nothing Then Throw New ArgumentNullException("A company must be specified.")
+
 
         Dim nTransaction As New Transaction()
         nTransaction.Owner = theCompany
@@ -55,7 +60,7 @@
 
     End Sub
 
-    Private Sub TransferPropertyBetweenCompanies(buyingTransaction As Transaction, sellingTransaction As Transaction)
+    Private Sub TransferPropertyBetweenCompanies(ByRef buyingTransaction As Transaction, ByRef sellingTransaction As Transaction)
         Dim buyer As Company = buyingTransaction.Owner
         Dim amountBuying As Integer = sellingTransaction.Resource.Shares
 
@@ -72,12 +77,13 @@
         buyer.AddResource(New Resource() With {.Name = sellingTransaction.Resource.Name, .Shares = amountBuying})
 
         buyingTransaction.Resource.Shares -= amountBuying
-        buyingTransaction = BuyingOfferings.FirstOrDefault(Function(n) n.Resource.Name = sellingTransaction.Resource.Name)
+        Dim SellerResourceName As String = sellingTransaction.Resource.Name
+        buyingTransaction = BuyingOfferings.FirstOrDefault(Function(n) n.Resource.Name = SellerResourceName)
 
     End Sub
 
 
-    Sub CompleteBuyOrder(buying As Transaction)
+    Private Sub CompleteBuyOrder(buying As Transaction)
 
         Dim availableTransaction As Transaction = SellingOfferings.FirstOrDefault(Function(n) n.Resource.Name = buying.Resource.Name)
         While availableTransaction IsNot Nothing AndAlso buying.Resource.Shares > 0

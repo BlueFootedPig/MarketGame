@@ -11,12 +11,22 @@
     Public gamingStrategy As New List(Of Strategy)
 
     Public Sub AddResource(resourceToAdd As Resource)
+        If resourceToAdd Is Nothing Then Throw New ArgumentNullException("Resource cannot be Null.")
+        If resourceToAdd.Shares = 0 Then Throw New ArgumentException("Resource must have more than 0 shares.")
+
         Assests.AddAsset(resourceToAdd)
     End Sub
 
     Public Sub RemoveResource(resourceToRemove As Resource)
+        If resourceToRemove Is Nothing Then Throw New ArgumentNullException("Resource cannot be Null.")
+        If resourceToRemove.Shares = 0 Then Throw New ArgumentException("Resource must have more than 0 shares.")
+
         Assests.RemoveAsset(resourceToRemove)
     End Sub
+
+    Public Function GetAllAssets() As IList(Of Resource)
+        Return Assests.GetAllAssets()
+    End Function
 
     Public Overridable Sub PerformAction(market As Market)
         For Each strat As Strategy In gamingStrategy
@@ -25,6 +35,7 @@
 
     End Sub
 
+ 
 
     Private Sub Produce(market As Market)
 
