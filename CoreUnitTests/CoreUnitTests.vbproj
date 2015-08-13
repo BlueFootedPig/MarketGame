@@ -48,6 +48,10 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NSubstitute, Version=1.8.2.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>TestingDLLs\NSubstitute.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -98,6 +102,7 @@
     </Compile>
     <Compile Include="CompanyUnitTests.vb" />
     <Compile Include="AssetManagerUnitTests.vb" />
+    <Compile Include="EngineUnitTests.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -123,6 +128,10 @@
       <Project>{ecbab770-239a-4ba1-aeca-5a16cc866a29}</Project>
       <Name>Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestingDLLs\NSubstitute.dll" />
+    <Content Include="TestingDLLs\NSubstitute.XML" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

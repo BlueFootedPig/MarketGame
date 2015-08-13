@@ -1,7 +1,7 @@
 ﻿Imports Core
 
 Public Class HomeScreen
-    Dim gameEngine As New Engine()
+    Dim gameEngine As New Engine(New Core.Market)
     Dim user As New Player()
     Dim clock As New System.Timers.Timer(1000)
     Public Sub New()

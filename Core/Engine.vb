@@ -1,7 +1,12 @@
 ﻿Public Class Engine
     Public Companies As New List(Of Company)
-    Private market As New Market
+    Private market As IMarket
 
+    Public Sub New(thisMarket As IMarket)
+        If thisMarket Is Nothing Then Throw New ArgumentNullException("Market cannot be Null.")
+
+        market = thisMarket
+    End Sub
 
     Public Sub ExecuteComputerActions()
         For Each currentCompany As Company In companies

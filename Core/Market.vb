@@ -1,6 +1,8 @@
 ﻿Public Class Market
-    Public Property SellingOfferings As New List(Of Transaction)
-    Public Property BuyingOfferings As New List(Of Transaction)
+    Implements IMarket
+
+    Public Property SellingOfferings As New List(Of Transaction) Implements IMarket.SellingOfferings
+    Public Property BuyingOfferings As New List(Of Transaction) Implements IMarket.BuyingOfferings
 
 
     Private knownResources As IList(Of Resource)
@@ -10,7 +12,7 @@
     End Function
 
     'Posts an bid up for sale
-    Public Sub Buy(pricePerUnit As Integer, item As Resource, theCompany As Company)
+    Public Sub Buy(pricePerUnit As Integer, item As Resource, theCompany As Company) Implements IMarket.Buy
         If item Is Nothing Then Throw New ArgumentNullException("A Resource must be specified.")
         If item.Shares <= 0 OrElse String.IsNullOrEmpty(item.Name) Then Throw New ArgumentException("Item did not have a resource name or number of shares.")
 
@@ -32,7 +34,7 @@
     End Sub
 
     'Posts an item for sale
-    Public Sub Sell(pricePerUnit As Integer, item As Resource, theCompany As Company)
+    Public Sub Sell(pricePerUnit As Integer, item As Resource, theCompany As Company) Implements IMarket.Sell
         If item Is Nothing Then Throw New ArgumentNullException("A Resource must be specified.")
         If item.Shares <= 0 OrElse String.IsNullOrEmpty(item.Name) Then Throw New ArgumentException("Item did not have a resource name or number of shares.")
 
@@ -120,4 +122,13 @@ Public Class Transaction
     Public PricePerUnit As Double
     Public Resource As Resource
 End Class
+
+Public Interface IMarket
+    Property SellingOfferings As List(Of Transaction)
+    Property BuyingOfferings As List(Of Transaction)
+
+    Sub Buy(pricePerUnit As Integer, item As Resource, theCompany As Company)
+    Sub Sell(pricePerUnit As Integer, item As Resource, theCompany As Company)
+
+End Interface
 
