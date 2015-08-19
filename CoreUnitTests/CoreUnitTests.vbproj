@@ -103,6 +103,7 @@
     <Compile Include="CompanyUnitTests.vb" />
     <Compile Include="AssetManagerUnitTests.vb" />
     <Compile Include="EngineUnitTests.vb" />
+    <Compile Include="StockBuyingStrategyUnitTests.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

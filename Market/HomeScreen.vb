@@ -14,7 +14,7 @@ Public Class HomeScreen
         user.currentSkill = SkillChoice.Common
 
         'Setup Companies
-        If Not gameEngine.Load() Then gameEngine.Initialize()
+        '  If Not gameEngine.Load() Then gameEngine.Initialize()
 
         gameEngine.Companies.Add(user)
 
@@ -25,12 +25,6 @@ Public Class HomeScreen
         resourceDatatable.Columns.Add("Name")
         resourceDatatable.Columns.Add("#", Type.GetType("System.Double"))
 
-        'For Each item As Resource In user.Assests.GetAllAssets
-        '    Dim nRow As DataRow = resourceDatatable.NewRow
-        '    nRow("Name") = item.Name
-        '    nRow("#") = Math.Floor(item.Shares)
-        '    resourceDatatable.Rows.Add(nRow)
-        'Next
 
         ResourceDataGrid.DataSource = resourceDatatable
 
@@ -40,23 +34,6 @@ Public Class HomeScreen
         marketDatatable.Columns.Add("Will Buy")
         marketDatatable.Columns.Add("Per Unit", Type.GetType("System.Double"))
         marketDatatable.Columns.Add("Resource")
-        'nRow("Per Unit") = item.PricePerUnit
-        'nRow("Resource") = item.Resource.Name
-
-        For Each item As Transaction In gameEngine.GetMarketResources()
-            Dim nRow As DataRow = resourceDatatable.NewRow
-            nRow("Seller") = item.Resource.Name
-            nRow("#") = Math.Floor(item.Resource.Shares)
-            nRow("Per Unit") = item.PricePerUnit
-            nRow("Resource") = item.Resource.Name
-            resourceDatatable.Rows.Add(nRow)
-
-            'nRow("Name") = item.Seller     nRow("Name") = item.Seller
-            'nRow("Will Buy") = item.AskingResource
-            'nRow("#") = item.Resource.Shares
-            'nRow("Per Unit") = item.PricePerUnit
-            'nRow("Resource") = item.Resource.Name
-        Next
 
 
         MarketGridControl.DataSource = marketDatatable
@@ -65,59 +42,6 @@ Public Class HomeScreen
     End Sub
 
     Dim updating As Boolean = False
-    Private Sub UpdateEngine()
-        If updating Then Exit Sub
-        updating = True
-        gameEngine.ExecuteComputerActions()
-
-        Dim updateTable As DataTable = ResourceDataGrid.DataSource
-
-        ' updateTable.Rows.Clear()
-        'For Each item As Resource In user.Assests.GetAllAssets
-
-        '    Dim tmpView As New DataView(updateTable, "Name = '" & item.Name & "'", String.Empty, DataViewRowState.CurrentRows)
-        '    If tmpView.Count = 0 Then
-        '        Dim nRow As DataRow = Nothing
-
-        '        nRow = updateTable.NewRow
-        '        nRow("Name") = item.Name
-        '        nRow("#") = Math.Floor(item.Shares)
-
-        '        updateTable.Rows.Add(nRow)
-        '    Else
-        '        Dim nRow As DataRowView = tmpView(0)
-        '        nRow("#") = item.Shares
-        '    End If
-
-        'Next
-
-        updateTable = MarketGridControl.DataSource
-
-        For Each item As Transaction In gameEngine.GetMarketResources()
-            'Dim tmpView As New DataView(updateTable, "Resource = '" & item.Resource.Name & "' and Seller = '" & item.Seller & "'", String.Empty, DataViewRowState.CurrentRows)
-            'If tmpView.Count = 0 Then
-            '    Dim nRow As DataRow = Nothing
-
-            '    nRow = updateTable.NewRow
-            '    nRow("Seller") = item.Seller
-
-            '    nRow("#") = item.Resource.Shares
-            '    nRow("Per Unit") = item.PricePerUnit
-            '    nRow("Resource") = item.Resource.Name
-
-            '    updateTable.Rows.Add(nRow)
-            'Else
-            '    Dim nRow As DataRowView = tmpView(0)
-            '    nRow("Seller") = item.Seller
-
-            '    nRow("#") = item.Resource.Shares
-            '    nRow("Per Unit") = item.PricePerUnit
-            '    nRow("Resource") = item.Resource.Name
-
-            'End If
-        Next
-        updating = False
-    End Sub
 
 
 
@@ -151,7 +75,7 @@ Public Class HomeScreen
         Dim transRow As DataRowView = MarketGridView.GetRow(rowIndex)
 
 
-        gameEngine.RequestPurchase(transRow("Seller"), transRow("Resource"), user)
+        ' gameEngine.RequestPurchase(transRow("Seller"), transRow("Resource"), user)
 
         'nRow("Seller") = item.Seller
         'nRow("Will Buy") = item.AskingResource
@@ -159,6 +83,10 @@ Public Class HomeScreen
         'nRow("Per Unit") = item.PricePerUnit
         'nRow("Resource") = item.Resource.Name
 
+    End Sub
+
+    Private Sub UpdateEngine(sender As Object, e As Timers.ElapsedEventArgs)
+        Throw New NotImplementedException
     End Sub
 
 

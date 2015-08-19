@@ -1,8 +1,25 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports Core
+Imports NSubstitute
 
 <TestClass()> Public Class CompanyUnitTests
+
+    <TestMethod()>
+    Public Sub Company_PerformSingleStrategy()
+        Dim mockMarket As IMarket = Substitute.For(Of IMarket)()
+
+        'setup
+        Dim testCompany As New Company()
+
+
+
+        'test
+        testCompany.PerformAction(mockMarket)
+
+        'verify
+        Assert.Inconclusive()
+    End Sub
 
     <TestMethod()>
     Public Sub Company_AddResource()

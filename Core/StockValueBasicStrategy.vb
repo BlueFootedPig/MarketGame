@@ -1,5 +1,5 @@
 ﻿Public Interface Strategy
-    Sub Execute(company As Company, theMarket As Market)
+    Sub Execute(company As Company, theMarket As IMarket)
 End Interface
 
 Public Class StockBuyBackStrategy
@@ -8,22 +8,22 @@ Public Class StockBuyBackStrategy
     Dim idealShares As Integer
     Dim ResourceToBuyName As String
 
+    ''' <summary>
+    ''' Sets up a strategy of buying resources.
+    ''' </summary>
+    ''' <param name="baseline">Price to buy at.</param>
+    ''' <param name="shares">Ideal amount to hold onto.</param>
+    ''' <param name="resourceToBuy">Name of Resource to buy.</param>
+    ''' <remarks></remarks>
     Public Sub New(baseline As Integer, shares As Integer, resourceToBuy As String)
         baselinePrice = baseline
         idealShares = shares
         ResourceToBuyName = resourceToBuy
     End Sub
 
-    Public Sub Execute(theCompany As Company, theMarket As Market) Implements Strategy.Execute
+    Public Sub Execute(theCompany As Company, theMarket As IMarket) Implements Strategy.Execute
         Dim coeffecient As Double = idealShares / theCompany.Shares 'idealShares / ( idealShares - theCompany.Shares)
         Dim currentValue As Double = coeffecient * baselinePrice
-
-        'Buying Pattern
-        'For Each item As Transaction In theMarket.sellingOfferings.Where(Function(n) n.Resource.Name = ResourceToBuyName)
-        '    If item.PricePerUnit < currentValue Then
-        '        theMarket.Buy(item, theCompany)
-        '    End If
-        'Next
 
 
     End Sub
@@ -41,7 +41,7 @@ Public Class StockSellingBasicStrategy
         idealShares = shares
     End Sub
 
-    Public Sub Execute(theCompany As Company, theMarket As Market) Implements Strategy.Execute
+    Public Sub Execute(theCompany As Company, theMarket As IMarket) Implements Strategy.Execute
         'Dim coeffecient As Double = theCompany.Assests.First(Function(n) n.Name = ResourceToBuyName).Shares / idealShares
         'Dim currentValue As Double = coeffecient * baselinePrice
 

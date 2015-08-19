@@ -2,12 +2,11 @@
     Inherits Resource
 
     Private Assests As New AssetManager()
-
-    Public RequiredResources As New List(Of Resource)
     Friend ProfitPerUnit As Double
 
-    Public Property ProducedResource As Resource
 
+    Public RequiredResources As New List(Of Resource)
+    Public Property ProducedResource As Resource
     Public gamingStrategy As New List(Of Strategy)
 
     Public Sub AddResource(resourceToAdd As Resource)

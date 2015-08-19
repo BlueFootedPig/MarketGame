@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports Core
+Imports NSubstitute
 
 <TestClass()>
 Public Class EngineUnitTests
@@ -12,12 +13,11 @@ Public Class EngineUnitTests
 
     End Sub
 
-    <TestMethod>
-    Public Sub Engine_()
-        Dim mockMarket As IMarket = NSubstitute.Substitute.For(Of IMarket)()
-
-        Dim testEngine As New Engine(mockMarket)
+    <TestMethod()>
+    Public Sub Engine_ExecuteStrageties()
+        Assert.Inconclusive()
 
     End Sub
+
 
 End Class

@@ -7,9 +7,9 @@
 
     Private knownResources As IList(Of Resource)
 
-    Private Function GetResourceValue(item As Resource) As Double
-        Return knownResources.First(Function(n) n.Name = item.Name).MarketValue
-    End Function
+    'Private Function GetResourceValue(item As Resource) As Double
+    '    Return knownResources.First(Function(n) n.Name = item.Name).MarketValue
+    'End Function
 
     'Posts an bid up for sale
     Public Sub Buy(pricePerUnit As Integer, item As Resource, theCompany As Company) Implements IMarket.Buy
@@ -126,6 +126,7 @@ End Class
 Public Interface IMarket
     Property SellingOfferings As List(Of Transaction)
     Property BuyingOfferings As List(Of Transaction)
+
 
     Sub Buy(pricePerUnit As Integer, item As Resource, theCompany As Company)
     Sub Sell(pricePerUnit As Integer, item As Resource, theCompany As Company)
