@@ -10,9 +10,16 @@
 
 
     Public Overrides Function ToString() As String
-        Return Name + ";" + Shares
+        Return Name & ";" & Shares
     End Function
 
+    Public Overrides Function Equals(obj As Object) As Boolean
+        Return Me.ToString() = obj.ToString()
+    End Function
+
+    Public Overrides Function GetHashCode() As Integer
+        Return Me.ToString().GetHashCode()
+    End Function
 End Class
 
 

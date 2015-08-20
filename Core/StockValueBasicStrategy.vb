@@ -22,8 +22,25 @@ Public Class StockBuyBackStrategy
     End Sub
 
     Public Sub Execute(theCompany As Company, theMarket As IMarket) Implements Strategy.Execute
-        Dim coeffecient As Double = idealShares / theCompany.Shares 'idealShares / ( idealShares - theCompany.Shares)
-        Dim currentValue As Double = coeffecient * baselinePrice
+        Dim listOfWantedResources As IEnumerable(Of Transaction) = theMarket.SellingOfferings.Where(Function(n) n.Resource.Name = ResourceToBuyName AndAlso n.PricePerUnit < baselinePrice)
+
+        Dim sortedTransactions As IEnumerable(Of Transaction) = listOfWantedResources.OrderBy(Function(n) n.PricePerUnit)
+
+
+        Dim currentResourceAmount As Resource = theCompany.GetAllAssets().FirstOrDefault(Function(n) n.Name = ResourceToBuyName)
+        If currentResourceAmount Is Nothing Then currentResourceAmount = New Resource() With {.Name = ResourceToBuyName, .Shares = 0}
+        Dim neededAmount As Integer = idealShares - currentResourceAmount.Shares
+
+
+        For Each currentTransaction As Transaction In sortedTransactions
+            If neededAmount <= 0 Then Exit For
+            Dim amount As Integer = neededAmount
+            If currentTransaction.Resource.Shares < amount Then amount = currentTransaction.Resource.Shares
+
+            theMarket.Buy(currentTransaction.PricePerUnit, New Resource() With {.Name = ResourceToBuyName, .Shares = amount}, theCompany)
+
+            neededAmount -= amount
+        Next
 
 
     End Sub
