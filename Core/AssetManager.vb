@@ -30,13 +30,17 @@
         If foundResource Is Nothing Then
             Return False
         Else
-            Return foundResource.Shares < item.Shares
+            Return foundResource.Shares > item.Shares
         End If
         Return False
     End Function
 
     Function GetAllAssets() As IList(Of Resource)
         Return assests
+    End Function
+
+    Function GetResource(resource As String) As Resource
+        Return assests.FirstOrDefault(Function(n) n.Name = resource)
     End Function
 
 End Class

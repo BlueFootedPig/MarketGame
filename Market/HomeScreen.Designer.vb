@@ -28,8 +28,10 @@ Partial Class HomeScreen
         Me.CommonBarButtonItem = New DevExpress.XtraBars.BarButtonItem()
         Me.UncommonBarButtonItem = New DevExpress.XtraBars.BarButtonItem()
         Me.RareBarButtonItem = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem2 = New DevExpress.XtraBars.BarButtonItem()
         Me.BuyBarButtonItem = New DevExpress.XtraBars.BarButtonItem()
         Me.SellBarButtonItem = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarButtonItem1 = New DevExpress.XtraBars.BarButtonItem()
         Me.ControlRibbonPage = New DevExpress.XtraBars.Ribbon.RibbonPage()
         Me.ProductionRibbonPageGroup = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.MarketRibbonPageGroup = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
@@ -38,8 +40,8 @@ Partial Class HomeScreen
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.MarketGridControl = New DevExpress.XtraGrid.GridControl()
         Me.MarketGridView = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.BarButtonItem1 = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem2 = New DevExpress.XtraBars.BarButtonItem()
+        Me.ProduceRibbonPageGroup = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.ProduceLumberBarButtonItem = New DevExpress.XtraBars.BarButtonItem()
         CType(Me.RibbonControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ResourceDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ResourceGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -54,9 +56,9 @@ Partial Class HomeScreen
         'RibbonControl1
         '
         Me.RibbonControl1.ExpandCollapseItem.Id = 0
-        Me.RibbonControl1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl1.ExpandCollapseItem, Me.ResourceSelectionBarLinkContainerItem, Me.CommonBarButtonItem, Me.UncommonBarButtonItem, Me.RareBarButtonItem, Me.BuyBarButtonItem, Me.SellBarButtonItem, Me.BarButtonItem1, Me.BarButtonItem2})
+        Me.RibbonControl1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl1.ExpandCollapseItem, Me.ResourceSelectionBarLinkContainerItem, Me.CommonBarButtonItem, Me.UncommonBarButtonItem, Me.RareBarButtonItem, Me.BuyBarButtonItem, Me.SellBarButtonItem, Me.BarButtonItem1, Me.BarButtonItem2, Me.ProduceLumberBarButtonItem})
         Me.RibbonControl1.Location = New System.Drawing.Point(0, 0)
-        Me.RibbonControl1.MaxItemId = 10
+        Me.RibbonControl1.MaxItemId = 11
         Me.RibbonControl1.Name = "RibbonControl1"
         Me.RibbonControl1.Pages.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPage() {Me.ControlRibbonPage})
         Me.RibbonControl1.Size = New System.Drawing.Size(889, 142)
@@ -91,6 +93,12 @@ Partial Class HomeScreen
         Me.RareBarButtonItem.Id = 5
         Me.RareBarButtonItem.Name = "RareBarButtonItem"
         '
+        'BarButtonItem2
+        '
+        Me.BarButtonItem2.Caption = "Uber Rare"
+        Me.BarButtonItem2.Id = 9
+        Me.BarButtonItem2.Name = "BarButtonItem2"
+        '
         'BuyBarButtonItem
         '
         Me.BuyBarButtonItem.Caption = "Buy"
@@ -106,9 +114,15 @@ Partial Class HomeScreen
         Me.SellBarButtonItem.LargeGlyph = CType(resources.GetObject("SellBarButtonItem.LargeGlyph"), System.Drawing.Image)
         Me.SellBarButtonItem.Name = "SellBarButtonItem"
         '
+        'BarButtonItem1
+        '
+        Me.BarButtonItem1.Caption = "BarButtonItem1"
+        Me.BarButtonItem1.Id = 8
+        Me.BarButtonItem1.Name = "BarButtonItem1"
+        '
         'ControlRibbonPage
         '
-        Me.ControlRibbonPage.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.ProductionRibbonPageGroup, Me.MarketRibbonPageGroup})
+        Me.ControlRibbonPage.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.ProductionRibbonPageGroup, Me.MarketRibbonPageGroup, Me.ProduceRibbonPageGroup})
         Me.ControlRibbonPage.Name = "ControlRibbonPage"
         Me.ControlRibbonPage.Text = "Control"
         '
@@ -183,17 +197,17 @@ Partial Class HomeScreen
         Me.MarketGridView.OptionsEditForm.ActionOnModifiedRowChange = DevExpress.XtraGrid.Views.Grid.EditFormModifiedAction.[Nothing]
         Me.MarketGridView.OptionsSelection.EnableAppearanceFocusedCell = False
         '
-        'BarButtonItem1
+        'ProduceRibbonPageGroup
         '
-        Me.BarButtonItem1.Caption = "BarButtonItem1"
-        Me.BarButtonItem1.Id = 8
-        Me.BarButtonItem1.Name = "BarButtonItem1"
+        Me.ProduceRibbonPageGroup.ItemLinks.Add(Me.ProduceLumberBarButtonItem)
+        Me.ProduceRibbonPageGroup.Name = "ProduceRibbonPageGroup"
+        Me.ProduceRibbonPageGroup.Text = "Produce"
         '
-        'BarButtonItem2
+        'ProduceLumberBarButtonItem
         '
-        Me.BarButtonItem2.Caption = "Uber Rare"
-        Me.BarButtonItem2.Id = 9
-        Me.BarButtonItem2.Name = "BarButtonItem2"
+        Me.ProduceLumberBarButtonItem.Caption = "Lumber"
+        Me.ProduceLumberBarButtonItem.Id = 10
+        Me.ProduceLumberBarButtonItem.Name = "ProduceLumberBarButtonItem"
         '
         'HomeScreen
         '
@@ -234,5 +248,7 @@ Partial Class HomeScreen
     Friend WithEvents MarketRibbonPageGroup As DevExpress.XtraBars.Ribbon.RibbonPageGroup
     Friend WithEvents BarButtonItem2 As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarButtonItem1 As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents ProduceLumberBarButtonItem As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents ProduceRibbonPageGroup As DevExpress.XtraBars.Ribbon.RibbonPageGroup
 
 End Class

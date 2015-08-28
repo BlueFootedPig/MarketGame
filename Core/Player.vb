@@ -12,12 +12,12 @@
 
     End Sub
 
-    Public Overrides Sub PerformAction(market As Market)
+    Public Overrides Sub PerformAction(market As IMarket)
         Dim producedResource As Resource = Nothing
         Select Case currentSkill
             Case SkillChoice.Common
                 AddResource(New Resource() With {.Name = Resource.RESOURCE_LUMBER, .Shares = 1})
-                
+
             Case SkillChoice.Uncommon
                 AddResource(New Resource() With {.Name = Resource.RESOURCE_IRON, .Shares = 1})
             Case SkillChoice.Rare

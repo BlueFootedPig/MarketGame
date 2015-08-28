@@ -1,9 +1,9 @@
-﻿Public Interface Strategy
+﻿Public Interface IStrategy
     Sub Execute(company As Company, theMarket As IMarket)
 End Interface
 
-Public Class StockBuyBackStrategy
-    Implements Strategy
+Public Class StockBuyStrategy
+    Implements IStrategy
     Dim baselinePrice As Integer
     Dim idealShares As Integer
     Dim ResourceToBuyName As String
@@ -21,33 +21,23 @@ Public Class StockBuyBackStrategy
         ResourceToBuyName = resourceToBuy
     End Sub
 
-    Public Sub Execute(theCompany As Company, theMarket As IMarket) Implements Strategy.Execute
-        Dim listOfWantedResources As IEnumerable(Of Transaction) = theMarket.SellingOfferings.Where(Function(n) n.Resource.Name = ResourceToBuyName AndAlso n.PricePerUnit < baselinePrice)
+    Public Sub Execute(theCompany As Company, theMarket As IMarket) Implements IStrategy.Execute
 
-        Dim sortedTransactions As IEnumerable(Of Transaction) = listOfWantedResources.OrderBy(Function(n) n.PricePerUnit)
+        Dim currentResource As Resource = theCompany.GetAsset(ResourceToBuyName)
+        Dim numberOfShares As Integer = 0
+        If currentResource IsNot Nothing Then
+            numberOfShares = currentResource.Shares
+        End If
 
-
-        Dim currentResourceAmount As Resource = theCompany.GetAllAssets().FirstOrDefault(Function(n) n.Name = ResourceToBuyName)
-        If currentResourceAmount Is Nothing Then currentResourceAmount = New Resource() With {.Name = ResourceToBuyName, .Shares = 0}
-        Dim neededAmount As Integer = idealShares - currentResourceAmount.Shares
-
-
-        For Each currentTransaction As Transaction In sortedTransactions
-            If neededAmount <= 0 Then Exit For
-            Dim amount As Integer = neededAmount
-            If currentTransaction.Resource.Shares < amount Then amount = currentTransaction.Resource.Shares
-
-            theMarket.Buy(currentTransaction.PricePerUnit, New Resource() With {.Name = ResourceToBuyName, .Shares = amount}, theCompany)
-
-            neededAmount -= amount
-        Next
-
+        If numberOfShares < idealShares Then
+            theMarket.Buy(baselinePrice, New Resource() With {.Name = ResourceToBuyName, .Shares = idealShares - numberOfShares}, theCompany)
+        End If
 
     End Sub
 End Class
 
 Public Class StockSellingBasicStrategy
-    Implements Strategy
+    Implements IStrategy
     Dim baselinePrice As Integer
     Dim idealShares As Integer
     Dim ResourceToBuyName As String
@@ -58,25 +48,16 @@ Public Class StockSellingBasicStrategy
         idealShares = shares
     End Sub
 
-    Public Sub Execute(theCompany As Company, theMarket As IMarket) Implements Strategy.Execute
-        'Dim coeffecient As Double = theCompany.Assests.First(Function(n) n.Name = ResourceToBuyName).Shares / idealShares
-        'Dim currentValue As Double = coeffecient * baselinePrice
+    Public Sub Execute(theCompany As Company, theMarket As IMarket) Implements IStrategy.Execute
+        Dim currentResource As Resource = theCompany.GetAsset(ResourceToBuyName)
+        Dim numberOfShares As Integer = 0
+        If currentResource IsNot Nothing Then
+            numberOfShares = currentResource.Shares
+        End If
 
-        ''Selling Pattern
-        'For Each item As Transaction In theMarket.sellingOfferings.Where(Function(n) n.Resource.Name = ResourceToBuyName AndAlso n.AskingResource = theCompany.Name)
-        '    If item.PricePerUnit > currentValue Then
-        '        theMarket.CompleteTransaction(item, 1, theCompany)
-        '    End If
-        'Next
-
-        'If theCompany.Shares > idealShares Then
-        '    Dim numberInBatch As Integer = theCompany.Shares - idealShares
-        '    If numberInBatch > 5 Then numberInBatch = 5
-        '    Dim resourceToSell As New Resource() With {.Name = theCompany.Name, .Shares = numberInBatch}
-        '    theMarket.Sell(currentValue, Resource.RESOURCE_COMMON, resourceToSell, theCompany)
-        '    'theCompany.Resources.Add(New Resource() With {.Name = theCompany.Name, .Shares = numberInBatch})
-        '    'theCompany.Shares -= numberInBatch
-        'End If
+        If numberOfShares > idealShares Then
+            theMarket.Sell(baselinePrice, New Resource() With {.Name = ResourceToBuyName, .Shares = numberOfShares - idealShares}, theCompany)
+        End If
 
     End Sub
 End Class

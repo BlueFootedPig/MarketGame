@@ -7,7 +7,7 @@
 
     Public RequiredResources As New List(Of Resource)
     Public Property ProducedResource As Resource
-    Public gamingStrategy As New List(Of Strategy)
+    Public gamingStrategy As New List(Of IStrategy)
 
     Public Sub AddResource(resourceToAdd As Resource)
         If resourceToAdd Is Nothing Then Throw New ArgumentNullException("Resource cannot be Null.")
@@ -27,8 +27,8 @@
         Return Assests.GetAllAssets()
     End Function
 
-    Public Overridable Sub PerformAction(market As Market)
-        For Each strat As Strategy In gamingStrategy
+    Public Overridable Sub PerformAction(market As IMarket)
+        For Each strat As IStrategy In gamingStrategy
             strat.Execute(Me, market)
         Next
 
@@ -36,13 +36,13 @@
 
  
 
-    Private Sub Produce(market As Market)
+    Public Sub Produce()
 
         If hasEnoughToProduce() Then
             Assests.AddAsset(New Resource() With {.Name = ProducedResource.Name, .Shares = ProducedResource.Shares})
 
             For Each item As Resource In RequiredResources
-                Dim reqResource As Resource = RequiredResources.FirstOrDefault(Function(n) n.Name = item.Name)
+                Dim reqResource As Resource = GetAsset(item.Name)
                 reqResource.Shares -= item.Shares
             Next
         End If
@@ -54,10 +54,14 @@
 
         For Each item As Resource In RequiredResources
 
-            hasEnoughToProduce = hasEnoughToProduce AndAlso Assests.HasEnough(item)
+            returnValue = returnValue AndAlso Assests.HasEnough(item)
         Next
 
         Return returnValue
+    End Function
+
+    Public Function GetAsset(resource As String) As Resource
+        Return Assests.GetResource(resource)
     End Function
 
 

@@ -1,7 +1,8 @@
 ﻿Imports Core
 
 Public Class HomeScreen
-    Dim gameEngine As New Engine(New Core.Market)
+    ' Dim gameEngine As New Engine(New Core.Market)
+    Dim market As IMarket = New Core.Market
     Dim user As New Player()
     Dim clock As New System.Timers.Timer(1000)
     Public Sub New()
@@ -14,11 +15,11 @@ Public Class HomeScreen
         user.currentSkill = SkillChoice.Common
 
         'Setup Companies
-        '  If Not gameEngine.Load() Then gameEngine.Initialize()
 
-        gameEngine.Companies.Add(user)
 
-        AddHandler clock.Elapsed, AddressOf UpdateEngine
+        '   gameEngine.Companies.Add(user)
+
+        AddHandler clock.Elapsed, AddressOf UpdateInterface
         clock.Start()
 
         Dim resourceDatatable As New DataTable()
@@ -74,20 +75,59 @@ Public Class HomeScreen
         Dim rowIndex As Integer = MarketGridView.GetSelectedRows()(0)
         Dim transRow As DataRowView = MarketGridView.GetRow(rowIndex)
 
+    End Sub
 
-        ' gameEngine.RequestPurchase(transRow("Seller"), transRow("Resource"), user)
+    Private Sub UpdateInterface(sender As Object, e As Timers.ElapsedEventArgs)
 
-        'nRow("Seller") = item.Seller
-        'nRow("Will Buy") = item.AskingResource
-        'nRow("#") = item.Resource.Shares
-        'nRow("Per Unit") = item.PricePerUnit
-        'nRow("Resource") = item.Resource.Name
+        Dim allAssests As IList(Of Resource) = user.GetAllAssets()
+
+        Dim checkedResources As New List(Of Resource)
+        Dim rowsToRemove As New List(Of DataRow)
+
+        Dim resourceDataTable As DataTable = ResourceDataGrid.DataSource
+
+        For Each row As DataRow In resourceDataTable.Rows
+            Dim resourceName As String = row("Name")
+
+            Dim currentResource As Resource = allAssests.FirstOrDefault(Function(n) n.Name = resourceName)
+
+            If currentResource Is Nothing Then
+                rowsToRemove.Add(row)
+            Else
+                row("#") = currentResource.Shares
+            End If
+            checkedResources.Add(currentResource)
+        Next
+
+        For Each item As Resource In allAssests
+            If checkedResources.Any(Function(n) n.Name = item.Name) Then Continue For
+
+            Dim nRow As DataRow = resourceDataTable.NewRow
+            nRow("Name") = item.Name
+            nRow("#") = item.Shares
+            resourceDataTable.Rows.Add(nRow)
+        Next
+
+        For Each row As DataRow In rowsToRemove
+            resourceDataTable.Rows.Remove(row)
+        Next
 
     End Sub
 
-    Private Sub UpdateEngine(sender As Object, e As Timers.ElapsedEventArgs)
-        Throw New NotImplementedException
+
+    Private Sub ProduceLumberBarButtonItem_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles ProduceLumberBarButtonItem.ItemClick
+        user.AddResource(New Resource() With {.Name = "Lumber", .Shares = 1})
     End Sub
 
+    Private Sub SellBarButtonItem_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles SellBarButtonItem.ItemClick
+        Dim indexes As Integer() = ResourceGridView.GetSelectedRows()
+        If indexes.Count = 0 Then Exit Sub
 
+        Dim firstIndex As Integer = indexes.First()
+
+        Dim row As DataRowView = ResourceGridView.GetRow(firstIndex)
+
+        market.Sell(10, New Resource() With {.Name = row("Name"), .Shares = 1}, user)
+
+    End Sub
 End Class
