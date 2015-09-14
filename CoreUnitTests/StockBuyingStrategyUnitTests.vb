@@ -10,6 +10,7 @@ Public Class StockBuyingStrategyUnitTests
     Public Sub StockBuyingStrategy_BuyingRequiredResources_NoResourcesYet()
         'Setup
         Dim mockMarket As IMarket = Substitute.For(Of IMarket)()
+        mockMarket.BuyingOfferings.Returns(New List(Of Transaction))
 
         Dim seller As New Company()
         seller.AddResource(New Resource() With {.Name = "TestResource", .Shares = 1000})
@@ -40,6 +41,7 @@ Public Class StockBuyingStrategyUnitTests
     Public Sub StockBuyingStrategy_BuyingRequiredResources_SomeResources()
         'Setup
         Dim mockMarket As IMarket = Substitute.For(Of IMarket)()
+        mockMarket.BuyingOfferings.Returns(New List(Of Transaction))
 
         Dim seller As New Company()
         seller.AddResource(New Resource() With {.Name = "TestResource", .Shares = 1000})
@@ -65,6 +67,7 @@ Public Class StockBuyingStrategyUnitTests
     Public Sub StockBuyingStrategy_BuyingRequiredResources_EnoughResources()
         'Setup
         Dim mockMarket As IMarket = Substitute.For(Of IMarket)()
+        mockMarket.BuyingOfferings.Returns(New List(Of Transaction))
 
         Dim seller As New Company()
         seller.AddResource(New Resource() With {.Name = "TestResource", .Shares = 1000})

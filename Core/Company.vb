@@ -37,16 +37,16 @@
  
 
     Public Sub Produce()
+        If ProducedResource IsNot Nothing Then
+            If hasEnoughToProduce() Then
+                Assests.AddAsset(New Resource() With {.Name = ProducedResource.Name, .Shares = ProducedResource.Shares})
 
-        If hasEnoughToProduce() Then
-            Assests.AddAsset(New Resource() With {.Name = ProducedResource.Name, .Shares = ProducedResource.Shares})
-
-            For Each item As Resource In RequiredResources
-                Dim reqResource As Resource = GetAsset(item.Name)
-                reqResource.Shares -= item.Shares
-            Next
+                For Each item As Resource In RequiredResources
+                    Dim reqResource As Resource = GetAsset(item.Name)
+                    reqResource.Shares -= item.Shares
+                Next
+            End If
         End If
-
     End Sub
 
     Private Function hasEnoughToProduce() As Boolean

@@ -29,6 +29,10 @@ Public Class StockBuyStrategy
             numberOfShares = currentResource.Shares
         End If
 
+        Dim listOfMyOfferings As IEnumerable(Of Transaction) = theMarket.BuyingOfferings.Where(Function(n) n.Owner.Name = theCompany.Name AndAlso n.Resource.Name = ResourceToBuyName)
+        If listOfMyOfferings.Count > 0 Then numberOfShares += listOfMyOfferings.Sum(Function(n) n.Resource.Shares)
+
+
         If numberOfShares < idealShares Then
             theMarket.Buy(baselinePrice, New Resource() With {.Name = ResourceToBuyName, .Shares = idealShares - numberOfShares}, theCompany)
         End If

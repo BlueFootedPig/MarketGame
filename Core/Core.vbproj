@@ -43,6 +43,10 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EventBlocker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>External DLLs\EventBlocker.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -84,6 +88,12 @@
     <Compile Include="Player.vb" />
     <Compile Include="Resources.vb" />
     <Compile Include="StockValueBasicStrategy.vb" />
+    <Compile Include="WorldPopulation\PopulationCampaigns\IPopulationCampaign.vb" />
+    <Compile Include="WorldPopulation\IWorldPopulationEngine.vb" />
+    <Compile Include="WorldPopulation\Person.vb" />
+    <Compile Include="WorldPopulation\PopulationCampaigns\WorldPopluationIncreaseCampaign.vb" />
+    <Compile Include="WorldPopulation\SpendingCampaigns\ISpendingCampaign.vb" />
+    <Compile Include="WorldPopulation\WorldPopulationEngine.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -103,6 +113,10 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="External DLLs\EventBlocker.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

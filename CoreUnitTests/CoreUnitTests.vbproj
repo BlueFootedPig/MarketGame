@@ -105,6 +105,8 @@
     <Compile Include="EngineUnitTests.vb" />
     <Compile Include="StockBuyingStrategyUnitTests.vb" />
     <Compile Include="StockSellingStrategyUnitTests.vb" />
+    <Compile Include="WorldPopulationEngineUnitTests.vb" />
+    <Compile Include="WorldPopulationIncreaseUnitTests.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

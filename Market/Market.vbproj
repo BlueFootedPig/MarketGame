@@ -126,6 +126,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Event-Manager\EventBlocker.vbproj">
+      <Project>{89a71fb3-b7e2-4734-867e-e3c442918d48}</Project>
+      <Name>EventBlocker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Core\Core.vbproj">
       <Project>{ecbab770-239a-4ba1-aeca-5a16cc866a29}</Project>
       <Name>Core</Name>

@@ -12,7 +12,7 @@ Public Class MarketUnitTests
         Dim testMarket As New Market
         Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 1337}
         Dim companySelling As New Company() With {.Name = "TheCompany"}
-
+        companySelling.AddResource(New Resource() With {.Name = "TestResource", .Shares = 2000})
         'test
         testMarket.Sell(140, resourceToSell, companySelling)
 
@@ -21,7 +21,7 @@ Public Class MarketUnitTests
         Assert.AreEqual(companySelling.Name, testMarket.SellingOfferings.First().Owner.Name)
         Assert.AreEqual(140.0, testMarket.SellingOfferings.First().PricePerUnit)
         Assert.AreEqual(resourceToSell.Name, testMarket.SellingOfferings.First().Resource.Name)
-
+        Assert.AreEqual(663, companySelling.GetAsset("TestResource").Shares)
     End Sub
 
     <TestMethod()>
@@ -166,7 +166,7 @@ Public Class MarketUnitTests
         Dim testMarket As New Market
         Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 1337}
         Dim companySelling As New Company() With {.Name = "TheCompany"}
-        companySelling.AddResource(New Resource() With {.Name = "TestResource", .Shares = 1000})
+        companySelling.AddResource(New Resource() With {.Name = "TestResource", .Shares = 10000})
 
         Dim resourcetobuy As New Resource() With {.Name = "TestResource", .Shares = 1}
         Dim companyBuying As New Company() With {.Name = "Buyer"}
@@ -196,7 +196,7 @@ Public Class MarketUnitTests
         Dim testMarket As New Market
         Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 1337}
         Dim companySelling As New Company() With {.Name = "TheCompany"}
-        companySelling.AddResource(New Resource() With {.Name = "TestResource", .Shares = 1000})
+        companySelling.AddResource(New Resource() With {.Name = "TestResource", .Shares = 10000})
 
         Dim resourcetobuy As New Resource() With {.Name = "TestResource", .Shares = 1}
         Dim companyBuying As New Company() With {.Name = "Buyer"}

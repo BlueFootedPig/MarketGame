@@ -1,10 +1,12 @@
-﻿Imports Core
+﻿Imports EventBlocker
+Imports Core
 
 Public Class HomeScreen
-    ' Dim gameEngine As New Engine(New Core.Market)
+
     Dim market As IMarket = New Core.Market
+    Dim gameEngine As New Engine(market)
     Dim user As New Player()
-    Dim clock As New System.Timers.Timer(1000)
+    Dim clock As System.Timers.Timer
     Public Sub New()
 
         ' This call is required by the designer.
@@ -18,7 +20,7 @@ Public Class HomeScreen
 
 
         '   gameEngine.Companies.Add(user)
-
+        clock = New Timers.Timer(1000)
         AddHandler clock.Elapsed, AddressOf UpdateInterface
         clock.Start()
 
@@ -30,20 +32,56 @@ Public Class HomeScreen
         ResourceDataGrid.DataSource = resourceDatatable
 
         Dim marketDatatable As New DataTable
-        marketDatatable.Columns.Add("Seller")
+        marketDatatable.Columns.Add("Poster")
         marketDatatable.Columns.Add("#", Type.GetType("System.Double"))
-        marketDatatable.Columns.Add("Will Buy")
+        marketDatatable.Columns.Add("Type")
         marketDatatable.Columns.Add("Per Unit", Type.GetType("System.Double"))
         marketDatatable.Columns.Add("Resource")
-
-
         MarketGridControl.DataSource = marketDatatable
 
+        UpdateTransactionGrid()
+
+
+
+
+
+        Dim company As New Company()
+        company.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = 1000000})
+        company.gamingStrategy.Add(New StockBuyStrategy(100, 100, "Lumber"))
+        company.gamingStrategy.Add(New StockSellingBasicStrategy(200, 5, "Stool"))
+        company.ProducedResource = New Resource() With {.Name = "Stool", .Shares = 1}
+        company.RequiredResources.Add(New Resource() With {.Name = "Lumber", .Shares = 2})
+        gameEngine.Companies.Add(company)
 
     End Sub
 
-    Dim updating As Boolean = False
+    Dim updatingObject As New Object
 
+    Private Sub UpdateTransactionGrid()
+        Dim marketDatatable As DataTable = MarketGridControl.DataSource
+        marketDatatable.Clear()
+        For Each trans As Transaction In market.SellingOfferings
+            Dim nRow As DataRow = marketDatatable.NewRow
+            nRow("Poster") = trans.Owner
+            nRow("#") = trans.Resource.Shares
+            nRow("Type") = "Buy"
+            nRow("Per Unit") = trans.PricePerUnit
+            nRow("Resource") = trans.Resource.Name
+
+            marketDatatable.Rows.Add(nRow)
+        Next
+
+        For Each trans As Transaction In market.BuyingOfferings
+            Dim nRow As DataRow = marketDatatable.NewRow
+            nRow("Poster") = trans.Owner
+            nRow("#") = trans.Resource.Shares
+            nRow("Type") = "Sell"
+            nRow("Per Unit") = trans.PricePerUnit
+            nRow("Resource") = trans.Resource.Name
+
+            marketDatatable.Rows.Add(nRow)
+        Next
+    End Sub
 
 
     Private Sub RareBarButtonItem_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles RareBarButtonItem.ItemClick
@@ -79,6 +117,10 @@ Public Class HomeScreen
 
     Private Sub UpdateInterface(sender As Object, e As Timers.ElapsedEventArgs)
 
+        Dim token As IBlock = New ClassBlock(updatingObject)
+        If Not EventRegistry.TryGetLock(Me, updatingObject, token) Then Exit Sub
+
+
         Dim allAssests As IList(Of Resource) = user.GetAllAssets()
 
         Dim checkedResources As New List(Of Resource)
@@ -112,6 +154,14 @@ Public Class HomeScreen
             resourceDataTable.Rows.Remove(row)
         Next
 
+
+        gameEngine.ExecuteComputerActions()
+
+        UpdateTransactionGrid()
+
+        token.Dispose()
+
+
     End Sub
 
 
@@ -126,8 +176,8 @@ Public Class HomeScreen
         Dim firstIndex As Integer = indexes.First()
 
         Dim row As DataRowView = ResourceGridView.GetRow(firstIndex)
-
-        market.Sell(10, New Resource() With {.Name = row("Name"), .Shares = 1}, user)
+        Dim resourceToDealWith As New Resource() With {.Name = row("Name"), .Shares = 1}
+        market.Sell(10, resourceToDealWith, user)
 
     End Sub
 End Class

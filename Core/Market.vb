@@ -40,6 +40,7 @@
 
         If theCompany Is Nothing Then Throw New ArgumentNullException("A company must be specified.")
 
+        theCompany.GetAsset(item.Name).Shares -= item.Shares
 
         Dim nTransaction As New Transaction()
         nTransaction.Owner = theCompany
@@ -73,7 +74,7 @@
 
         sellingTransaction.Resource.Shares -= amountBuying
         sellingTransaction.Owner.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = buyingTransaction.PricePerUnit * amountBuying})
-        sellingTransaction.Owner.RemoveResource(New Resource() With {.Name = sellingTransaction.Resource.Name, .Shares = amountBuying})
+        '  sellingTransaction.Owner.RemoveResource(New Resource() With {.Name = sellingTransaction.Resource.Name, .Shares = amountBuying})
 
         buyer.RemoveResource(New Resource() With {.Name = Resource.CREDIT, .Shares = buyingTransaction.PricePerUnit * amountBuying})
         buyer.AddResource(New Resource() With {.Name = sellingTransaction.Resource.Name, .Shares = amountBuying})
