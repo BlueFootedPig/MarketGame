@@ -1,7 +1,7 @@
 ﻿Imports EventBlocker
 
 Public Class Engine
-    Public Companies As New List(Of Company)
+    Public Companies As New List(Of IMarketForce)
     Private market As IMarket
 
     Public Sub New(thisMarket As IMarket)
@@ -12,7 +12,7 @@ Public Class Engine
 
     Public Sub ExecuteComputerActions()
 
-        For Each currentCompany As Company In Companies
+        For Each currentCompany As IMarketForce In Companies
             currentCompany.Produce()
             currentCompany.PerformAction(market)
         Next

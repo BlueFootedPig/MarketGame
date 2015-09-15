@@ -1,8 +1,7 @@
 ﻿Public Class Resource
     Public Property Name As String
     Public Property Shares As Integer = 0
-    'Public Property MarketValue As Double = 0
-
+    
     Public Shared RESOURCE_LUMBER As String = "Lumber"
     Public Shared RESOURCE_IRON As String = "Iron Ore"
     Public Shared RESOURCE_GOLD As String = "Gold"
@@ -22,4 +21,10 @@
     End Function
 End Class
 
+Public Class LuxuryResource
+    Inherits Resource
+
+    Public Property PrefferedCustomers As New List(Of String)
+
+End Class
 

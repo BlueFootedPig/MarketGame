@@ -17,7 +17,7 @@ Public Class EngineUnitTests
     Public Sub Engine_ExecuteStrageties()
         'setup
         Dim mockMarket As IMarket = Substitute.For(Of IMarket)()
-        Dim mockCompany As Company = Substitute.For(Of Company)()
+        Dim mockCompany As IMarketForce = Substitute.For(Of IMarketForce)()
 
         Dim testengine As New Engine(mockMarket)
         testengine.Companies.Add(mockCompany)
@@ -35,13 +35,13 @@ Public Class EngineUnitTests
     Public Sub Engine_ExecuteStrageties_ManyCompanies()
         'setup
         Dim mockMarket As IMarket = Substitute.For(Of IMarket)()
-        Dim mockCompany As Company = Substitute.For(Of Company)()
+        Dim mockCompany As IMarketForce = Substitute.For(Of IMarketForce)()
 
         Dim testengine As New Engine(mockMarket)
         testengine.Companies.Add(mockCompany)
-        Dim mockCompany2 = Substitute.For(Of Company)()
+        Dim mockCompany2 = Substitute.For(Of IMarketForce)()
         testengine.Companies.Add(mockCompany2)
-        Dim mockCompany3 = Substitute.For(Of Company)()
+        Dim mockCompany3 = Substitute.For(Of IMarketForce)()
         testengine.Companies.Add(mockCompany3)
 
 

@@ -12,7 +12,7 @@ Imports NSubstitute
         Dim mockMarket As IMarket = Substitute.For(Of IMarket)()
         Dim mockStrategy As IStrategy = Substitute.For(Of IStrategy)()
 
-        Dim testCompany As New Company()
+        Dim testCompany As New Company(New AssetManager())
         testCompany.gamingStrategy.Add(mockStrategy)
         'test
         testCompany.PerformAction(mockMarket)
@@ -25,7 +25,7 @@ Imports NSubstitute
     <TestMethod>
     Public Sub Company_Produce_SingleRequiredResource()
         'Setup
-        Dim testCompany As New Company()
+        Dim testCompany As New Company(New AssetManager())
         Dim requiredResource As New Resource() With {.Name = "TestResource", .Shares = 2}
         testCompany.RequiredResources.Add(requiredResource)
         testCompany.ProducedResource = New Resource() With {.Name = "ProducedResource", .Shares = 1}
@@ -49,7 +49,7 @@ Imports NSubstitute
     Public Sub Company_Produce_ManyRequiredResource()
 
         'Setup
-        Dim testCompany As New Company()
+        Dim testCompany As New Company(New AssetManager())
         Dim requiredResource As New Resource() With {.Name = "TestResource", .Shares = 2}
         testCompany.RequiredResources.Add(requiredResource)
 
@@ -86,7 +86,7 @@ Imports NSubstitute
     <TestMethod>
     Public Sub Company_Produce_NotEnoughResources()
         'Setup
-        Dim testCompany As New Company()
+        Dim testCompany As New Company(New AssetManager())
         Dim requiredResource As New Resource() With {.Name = "TestResource", .Shares = 10}
         testCompany.RequiredResources.Add(requiredResource)
         testCompany.ProducedResource = New Resource() With {.Name = "ProducedResource", .Shares = 1}
@@ -107,7 +107,7 @@ Imports NSubstitute
     <TestMethod>
     Public Sub Company_Produce_ManyRequiredResource_MissingOne()
         'Setup
-        Dim testCompany As New Company()
+        Dim testCompany As New Company(New AssetManager())
         Dim requiredResource As New Resource() With {.Name = "TestResource", .Shares = 2}
         testCompany.RequiredResources.Add(requiredResource)
 
@@ -144,7 +144,7 @@ Imports NSubstitute
     <TestMethod()>
     Public Sub Company_AddResource()
         'setup
-        Dim testCompany As New Company()
+        Dim testCompany As New Company(New AssetManager())
         Dim newResourceToAdd As New Resource() With {.Name = "TestResource", .Shares = 1337}
 
         'test
@@ -162,7 +162,7 @@ Imports NSubstitute
     <ExpectedException(GetType(ArgumentNullException))>
     Public Sub Company_AddResource_NullResource()
         'setup
-        Dim testCompany As New Company()
+        Dim testCompany As New Company(New AssetManager())
 
         'test
         testCompany.AddResource(Nothing)
@@ -173,7 +173,7 @@ Imports NSubstitute
     <ExpectedException(GetType(ArgumentException))>
     Public Sub Company_AddResource_NoShares()
         'setup
-        Dim testCompany As New Company()
+        Dim testCompany As New Company(New AssetManager())
         Dim newResourceToAdd As New Resource() With {.Name = "TestResource", .Shares = 0}
 
         'test
@@ -184,7 +184,7 @@ Imports NSubstitute
     <TestMethod()>
     Public Sub Company_RemoveResource()
         'setup
-        Dim testCompany As New Company()
+        Dim testCompany As New Company(New AssetManager())
         Dim newResourceToAdd As New Resource() With {.Name = "TestResource", .Shares = 20}
         Dim resourceToRemove As New Resource() With {.Name = "TestResource", .Shares = 5}
         testCompany.AddResource(newResourceToAdd)
@@ -203,7 +203,7 @@ Imports NSubstitute
     <ExpectedException(GetType(InvalidOperationException))>
     Public Sub Company_RemoveResource_NoResource()
         'setup
-        Dim testCompany As New Company()
+        Dim testCompany As New Company(New AssetManager())
         Dim resourceToRemove As New Resource() With {.Name = "TestResource", .Shares = 5}
         'test
         testCompany.RemoveResource(resourceToRemove)
@@ -220,7 +220,7 @@ Imports NSubstitute
     <ExpectedException(GetType(InvalidOperationException))>
     Public Sub Company_RemoveResource_NotEnough()
         'setup
-        Dim testCompany As New Company()
+        Dim testCompany As New Company(New AssetManager())
         Dim newResourceToAdd As New Resource() With {.Name = "TestResource", .Shares = 5}
         Dim resourceToRemove As New Resource() With {.Name = "TestResource", .Shares = 20}
         testCompany.AddResource(newResourceToAdd)

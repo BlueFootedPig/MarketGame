@@ -11,7 +11,7 @@ Public Class MarketUnitTests
         'setup
         Dim testMarket As New Market
         Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 1337}
-        Dim companySelling As New Company() With {.Name = "TheCompany"}
+        Dim companySelling As New Company(New AssetManager()) With {.Name = "TheCompany"}
         companySelling.AddResource(New Resource() With {.Name = "TestResource", .Shares = 2000})
         'test
         testMarket.Sell(140, resourceToSell, companySelling)
@@ -31,7 +31,7 @@ Public Class MarketUnitTests
         'setup
         Dim testMarket As New Market
         Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 0}
-        Dim companySelling As New Company() With {.Name = "TheCompany"}
+        Dim companySelling As New Company(New AssetManager()) With {.Name = "TheCompany"}
 
         'test
         testMarket.Sell(140, resourceToSell, companySelling)
@@ -58,7 +58,7 @@ Public Class MarketUnitTests
 
         'setup
         Dim testMarket As New Market
-        Dim companySelling As New Company() With {.Name = "TheCompany"}
+        Dim companySelling As New Company(New AssetManager()) With {.Name = "TheCompany"}
 
         'test
         testMarket.Sell(140, Nothing, companySelling)
@@ -73,7 +73,7 @@ Public Class MarketUnitTests
         'setup
         Dim testMarket As New Market
         Dim resourceToSell As New Resource() With {.Name = "TestResource"}
-        Dim companySelling As New Company() With {.Name = "TheCompany"}
+        Dim companySelling As New Company(New AssetManager()) With {.Name = "TheCompany"}
 
         'test
         testMarket.Sell(140, resourceToSell, companySelling)
@@ -88,7 +88,7 @@ Public Class MarketUnitTests
         'setup
         Dim testMarket As New Market
         Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 1337}
-        Dim companySelling As New Company() With {.Name = "TheCompany"}
+        Dim companySelling As New Company(New AssetManager()) With {.Name = "TheCompany"}
 
         'test
         testMarket.Buy(140, resourceToSell, companySelling)
@@ -109,7 +109,7 @@ Public Class MarketUnitTests
         'setup
         Dim testMarket As New Market
         Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 0}
-        Dim companySelling As New Company() With {.Name = "TheCompany"}
+        Dim companySelling As New Company(New AssetManager()) With {.Name = "TheCompany"}
 
         'test
         testMarket.Buy(140, resourceToSell, companySelling)
@@ -136,7 +136,7 @@ Public Class MarketUnitTests
 
         'setup
         Dim testMarket As New Market
-        Dim companySelling As New Company() With {.Name = "TheCompany"}
+        Dim companySelling As New Company(New AssetManager()) With {.Name = "TheCompany"}
 
         'test
         testMarket.Buy(140, Nothing, companySelling)
@@ -151,7 +151,7 @@ Public Class MarketUnitTests
         'setup
         Dim testMarket As New Market
         Dim resourceToSell As New Resource() With {.Name = "TestResource"}
-        Dim companySelling As New Company() With {.Name = "TheCompany"}
+        Dim companySelling As New Company(New AssetManager()) With {.Name = "TheCompany"}
 
         'test
         testMarket.Buy(140, resourceToSell, companySelling)
@@ -165,11 +165,11 @@ Public Class MarketUnitTests
         'setup
         Dim testMarket As New Market
         Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 1337}
-        Dim companySelling As New Company() With {.Name = "TheCompany"}
+        Dim companySelling As New Company(New AssetManager()) With {.Name = "TheCompany"}
         companySelling.AddResource(New Resource() With {.Name = "TestResource", .Shares = 10000})
 
         Dim resourcetobuy As New Resource() With {.Name = "TestResource", .Shares = 1}
-        Dim companyBuying As New Company() With {.Name = "Buyer"}
+        Dim companyBuying As New Company(New AssetManager()) With {.Name = "Buyer"}
 
 
         companyBuying.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = 150})
@@ -195,11 +195,11 @@ Public Class MarketUnitTests
         'setup
         Dim testMarket As New Market
         Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 1337}
-        Dim companySelling As New Company() With {.Name = "TheCompany"}
+        Dim companySelling As New Company(New AssetManager()) With {.Name = "TheCompany"}
         companySelling.AddResource(New Resource() With {.Name = "TestResource", .Shares = 10000})
 
         Dim resourcetobuy As New Resource() With {.Name = "TestResource", .Shares = 1}
-        Dim companyBuying As New Company() With {.Name = "Buyer"}
+        Dim companyBuying As New Company(New AssetManager()) With {.Name = "Buyer"}
 
 
         companyBuying.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = 150})
@@ -226,11 +226,11 @@ Public Class MarketUnitTests
         'setup
         Dim testMarket As New Market
         Dim resourceToSell As New Resource() With {.Name = "TestResource", .Shares = 5}
-        Dim companySelling As New Company() With {.Name = "TheCompany"}
+        Dim companySelling As New Company(New AssetManager()) With {.Name = "TheCompany"}
         companySelling.AddResource(New Resource() With {.Name = "TestResource", .Shares = 1000})
 
         Dim resourcetobuy As New Resource() With {.Name = "TestResource", .Shares = 15}
-        Dim companyBuying As New Company() With {.Name = "Buyer"}
+        Dim companyBuying As New Company(New AssetManager()) With {.Name = "Buyer"}
 
 
         companyBuying.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = 1500})

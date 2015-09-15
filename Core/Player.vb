@@ -5,7 +5,8 @@
     Dim skillRare As Double
     Public currentSkill As SkillChoice
 
-    Public Sub New()
+    Public Sub New(manager As IAssetManager)
+        MyBase.New(manager)
         skillCommon = 200
         skillUncommon = 100
         skillRare = 1000

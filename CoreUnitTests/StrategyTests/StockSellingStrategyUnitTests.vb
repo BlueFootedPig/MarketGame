@@ -4,15 +4,13 @@ Imports Core
 Imports NSubstitute
 
 <TestClass()>
-Public Class StockBuyingStrategyUnitTests
-
+Public Class StockSellingStrategyUnitTests
     <TestMethod()>
-    Public Sub StockBuyingStrategy_BuyingRequiredResources_NoResourcesYet()
+    Public Sub StockSellingStrategy_SellingRequiredResources_SellAll()
         'Setup
         Dim mockMarket As IMarket = Substitute.For(Of IMarket)()
-        mockMarket.BuyingOfferings.Returns(New List(Of Transaction))
 
-        Dim seller As New Company()
+        Dim seller As New Company(New AssetManager())
         seller.AddResource(New Resource() With {.Name = "TestResource", .Shares = 1000})
 
         Dim nTransaction As New Transaction() With {.Owner = seller, .PricePerUnit = 10, .Resource = New Resource() With {.Name = "TestResource", .Shares = 1}}
@@ -22,73 +20,75 @@ Public Class StockBuyingStrategyUnitTests
         mockMarket.SellingOfferings.Returns(returnList)
 
 
-        Dim myCompany As New Company()
+        Dim myCompany As New Company(New AssetManager())
         myCompany.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = 1000})
+        myCompany.AddResource(New Resource() With {.Name = "TestResource", .Shares = 500})
 
         Dim priceToBuy As Integer = 100
-        Dim sharesToHave As Integer = 500
+        Dim sharesToHave As Integer = 0
 
         'test
-        Dim testStrategy As New StockBuyStrategy(priceToBuy, sharesToHave, "TestResource")
+        Dim testStrategy As New StockSellingBasicStrategy(priceToBuy, sharesToHave, "TestResource")
         testStrategy.Execute(myCompany, mockMarket)
 
         'verify
-        mockMarket.Received().Buy(100, New Resource() With {.Name = "TestResource", .Shares = 500}, myCompany)
+        mockMarket.Received().Sell(100, New Resource() With {.Name = "TestResource", .Shares = 500}, myCompany)
 
     End Sub
 
     <TestMethod()>
-    Public Sub StockBuyingStrategy_BuyingRequiredResources_SomeResources()
+    Public Sub StockSellingStrategy_SellingRequiredResources_SomeResources()
         'Setup
         Dim mockMarket As IMarket = Substitute.For(Of IMarket)()
-        mockMarket.BuyingOfferings.Returns(New List(Of Transaction))
 
-        Dim seller As New Company()
+        Dim seller As New Company(New AssetManager())
         seller.AddResource(New Resource() With {.Name = "TestResource", .Shares = 1000})
 
 
-        Dim myCompany As New Company()
+        Dim myCompany As New Company(New AssetManager())
         myCompany.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = 1000})
         myCompany.AddResource(New Resource() With {.Name = "TestResource", .Shares = 400})
 
         Dim priceToBuy As Integer = 100
-        Dim sharesToHave As Integer = 500
+        Dim sharesToHave As Integer = 300
 
         'test
-        Dim testStrategy As New StockBuyStrategy(priceToBuy, sharesToHave, "TestResource")
+        Dim testStrategy As New StockSellingBasicStrategy(priceToBuy, sharesToHave, "TestResource")
         testStrategy.Execute(myCompany, mockMarket)
 
         'verify
-        mockMarket.Received().Buy(100, New Resource() With {.Name = "TestResource", .Shares = 100}, myCompany)
+        mockMarket.Received().Sell(100, New Resource() With {.Name = "TestResource", .Shares = 100}, myCompany)
 
     End Sub
 
     <TestMethod()>
-    Public Sub StockBuyingStrategy_BuyingRequiredResources_EnoughResources()
+    Public Sub StockSellingStrategy_SellingRequiredResources_SellNone()
         'Setup
         Dim mockMarket As IMarket = Substitute.For(Of IMarket)()
-        mockMarket.BuyingOfferings.Returns(New List(Of Transaction))
 
-        Dim seller As New Company()
+        Dim seller As New Company(New AssetManager())
         seller.AddResource(New Resource() With {.Name = "TestResource", .Shares = 1000})
 
 
-        Dim myCompany As New Company()
+        Dim myCompany As New Company(New AssetManager())
         myCompany.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = 1000})
-        myCompany.AddResource(New Resource() With {.Name = "TestResource", .Shares = 600})
+        myCompany.AddResource(New Resource() With {.Name = "TestResource", .Shares = 100})
 
         Dim priceToBuy As Integer = 100
         Dim sharesToHave As Integer = 500
 
         'test
-        Dim testStrategy As New StockBuyStrategy(priceToBuy, sharesToHave, "TestResource")
+        Dim testStrategy As New StockSellingBasicStrategy(priceToBuy, sharesToHave, "TestResource")
         testStrategy.Execute(myCompany, mockMarket)
 
         'verify
-        mockMarket.DidNotReceiveWithAnyArgs.Buy(100, New Resource() With {.Name = "TestResource", .Shares = 100}, myCompany)
+        mockMarket.DidNotReceiveWithAnyArgs.Sell(100, New Resource() With {.Name = "TestResource", .Shares = 100}, myCompany)
 
     End Sub
-   
+
+
+
+
 
 
 End Class

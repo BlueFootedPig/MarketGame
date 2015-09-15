@@ -1,28 +1,27 @@
 ﻿
-Public Class WorldPopluationIncreaseCampaign
+Public Class WorldPopluationDecreaseCampaign
     Implements IPopulationCampaign
 
+    Dim random As Random
+    Public Sub New(randomGenerator As Random)
+        random = randomGenerator
+    End Sub
+
     Public Sub Run(ByRef population As IList(Of Person)) Implements IPopulationCampaign.Run
-        Dim random As New Random(DateTime.Today.Ticks)
-        Dim populationIncreases As New Dictionary(Of Integer, Integer)
+
+        Dim populationDecreases As New List(Of Person)
 
 
         For Each subject As Person In population
-            Dim hadChild As Boolean = random.Next(0, 100) > (30 - subject.Income * 5)
-            If hadChild Then
-                If populationIncreases.ContainsKey(subject.Income) Then
-                    populationIncreases(subject.Income) += 1
-                Else
-                    populationIncreases(subject.Income) = 1
-                End If
+            Dim hasDied As Boolean = random.Next(0, 100) < (28 - subject.Income * 5)
+            If hasDied Then
+                populationDecreases.Add(subject)
             End If
         Next
 
 
-        For Each incomeLevel As Integer In populationIncreases.Keys
-            For counter As Integer = 0 To populationIncreases(incomeLevel)
-                population.Add(New Person(incomeLevel))
-            Next
+        For Each subject As Person In populationDecreases
+            population.Remove(subject)
         Next
 
 

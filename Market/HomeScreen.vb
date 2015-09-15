@@ -5,7 +5,7 @@ Public Class HomeScreen
 
     Dim market As IMarket = New Core.Market
     Dim gameEngine As New Engine(market)
-    Dim user As New Player()
+    Dim user As New Player(New AssetManager())
     Dim clock As System.Timers.Timer
     Public Sub New()
 
@@ -45,7 +45,7 @@ Public Class HomeScreen
 
 
 
-        Dim company As New Company()
+        Dim company As New Company(New AssetManager())
         company.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = 1000000})
         company.gamingStrategy.Add(New StockBuyStrategy(100, 100, "Lumber"))
         company.gamingStrategy.Add(New StockSellingBasicStrategy(200, 5, "Stool"))
