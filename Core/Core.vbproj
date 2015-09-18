@@ -69,6 +69,8 @@
     <Compile Include="AssetManager.vb" />
     <Compile Include="Company.vb" />
     <Compile Include="Engine.vb" />
+    <Compile Include="IAssetManager.vb" />
+    <Compile Include="LuxuryResource.vb" />
     <Compile Include="Market.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -88,6 +90,7 @@
     <Compile Include="Player.vb" />
     <Compile Include="Resources.vb" />
     <Compile Include="StockValueBasicStrategy.vb" />
+    <Compile Include="VoidAssestManager.vb" />
     <Compile Include="WorldPopulation\PopulationCampaigns\IPopulationCampaign.vb" />
     <Compile Include="WorldPopulation\IWorldPopulationEngine.vb" />
     <Compile Include="WorldPopulation\Person.vb" />

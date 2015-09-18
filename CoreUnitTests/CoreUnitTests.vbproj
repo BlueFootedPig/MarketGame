@@ -106,6 +106,7 @@
     <Compile Include="SpendingTests\StandardSpendingCampaignUnitTests.vb" />
     <Compile Include="StrategyTests\StockBuyingStrategyUnitTests.vb" />
     <Compile Include="StrategyTests\StockSellingStrategyUnitTests.vb" />
+    <Compile Include="LuxuryResourceUnitTests.vb" />
     <Compile Include="WorldPopulationDecreaseUnitTests.vb" />
     <Compile Include="WorldPopulationTests\WorldPopulationEngineUnitTests.vb" />
     <Compile Include="WorldPopulationTests\WorldPopulationIncreaseUnitTests.vb" />

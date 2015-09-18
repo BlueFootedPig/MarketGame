@@ -1,4 +1,7 @@
-﻿Public Class Company
+﻿
+Imports Core.VoidAssestManager
+
+Public Class Company
     Inherits Resource
     Implements IMarketForce
 
