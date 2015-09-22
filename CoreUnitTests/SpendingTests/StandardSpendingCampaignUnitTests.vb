@@ -25,7 +25,7 @@ Public Class StandardSpendingCampaignUnitTests
 
         testSpendingCampaign.RunCamapign(wallet, mockmarket)
 
-        mockmarket.Received().Buy(10, New Resource() With {.Name = "TestStool", .Shares = 10}, Company.VoidCompany)
+        mockmarket.Received().Buy(10, New CraftResource() With {.Name = "TestStool", .Shares = 10}, Company.VoidCompany)
 
         Assert.AreEqual(0.0, wallet("TestTag"))
 
@@ -78,7 +78,7 @@ Public Class StandardSpendingCampaignUnitTests
 
         testSpendingCampaign.RunCamapign(wallet, mockmarket)
 
-        mockmarket.Received().Buy(10, New Resource() With {.Name = "TestStool", .Shares = 10}, Company.VoidCompany)
+        mockmarket.Received().Buy(10, New CraftResource() With {.Name = "TestStool", .Shares = 10}, Company.VoidCompany)
 
         Assert.AreEqual(0.0, wallet("TestTag"))
 
@@ -108,7 +108,7 @@ Public Class StandardSpendingCampaignUnitTests
 
         testSpendingCampaign.RunCamapign(wallet, mockmarket)
 
-        mockmarket.Received().Buy(10, New Resource() With {.Name = "TestStool", .Shares = 10}, Company.VoidCompany)
+        mockmarket.Received().Buy(10, New CraftResource() With {.Name = "TestStool", .Shares = 10}, Company.VoidCompany)
 
         Assert.AreEqual(0.0, wallet("TestTag"))
 
@@ -133,7 +133,7 @@ Public Class StandardSpendingCampaignUnitTests
 
         testSpendingCampaign.RunCamapign(wallet, mockmarket)
 
-        mockmarket.Received().Buy(10, New Resource() With {.Name = "TestStool", .Shares = 100}, Company.VoidCompany)
+        mockmarket.Received().Buy(10, New CraftResource() With {.Name = "TestStool", .Shares = 100}, Company.VoidCompany)
 
     End Sub
 
@@ -162,9 +162,9 @@ Public Class StandardSpendingCampaignUnitTests
 
         testSpendingCampaign.RunCamapign(wallet, mockmarket)
 
-        mockmarket.Received().Buy(10, New Resource() With {.Name = "TestStool", .Shares = 100}, Company.VoidCompany)
-        mockmarket.Received().Buy(15, New Resource() With {.Name = "TestStool", .Shares = 200}, Company.VoidCompany)
-        mockmarket.Received().Buy(20, New Resource() With {.Name = "TestStool", .Shares = 500}, Company.VoidCompany)
+        mockmarket.Received().Buy(10, New CraftResource() With {.Name = "TestStool", .Shares = 100}, Company.VoidCompany)
+        mockmarket.Received().Buy(15, New CraftResource() With {.Name = "TestStool", .Shares = 200}, Company.VoidCompany)
+        mockmarket.Received().Buy(20, New CraftResource() With {.Name = "TestStool", .Shares = 500}, Company.VoidCompany)
 
 
 

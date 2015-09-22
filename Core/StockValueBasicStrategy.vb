@@ -23,7 +23,7 @@ Public Class StockBuyStrategy
 
     Public Sub Execute(theCompany As Company, theMarket As IMarket) Implements IStrategy.Execute
 
-        Dim currentResource As Resource = theCompany.GetAsset(ResourceToBuyName)
+        Dim currentResource As CraftResource = theCompany.GetAsset(ResourceToBuyName)
         Dim numberOfShares As Integer = 0
         If currentResource IsNot Nothing Then
             numberOfShares = currentResource.Shares
@@ -34,7 +34,7 @@ Public Class StockBuyStrategy
 
 
         If numberOfShares < idealShares Then
-            theMarket.Buy(baselinePrice, New Resource() With {.Name = ResourceToBuyName, .Shares = idealShares - numberOfShares}, theCompany)
+            theMarket.Buy(baselinePrice, New CraftResource() With {.Name = ResourceToBuyName, .Shares = idealShares - numberOfShares}, theCompany)
         End If
 
     End Sub
@@ -44,23 +44,23 @@ Public Class StockSellingBasicStrategy
     Implements IStrategy
     Dim baselinePrice As Integer
     Dim idealShares As Integer
-    Dim ResourceToBuyName As String
+    Dim ResourceToSellName As String
 
-    Public Sub New(baseline As Integer, shares As Integer, resourceToBuy As String)
-        ResourceToBuyName = resourceToBuy
+    Public Sub New(baseline As Integer, shares As Integer, resourceToSell As String)
+        ResourceToSellName = resourceToSell
         baselinePrice = baseline
         idealShares = shares
     End Sub
 
     Public Sub Execute(theCompany As Company, theMarket As IMarket) Implements IStrategy.Execute
-        Dim currentResource As Resource = theCompany.GetAsset(ResourceToBuyName)
+        Dim currentResource As CraftResource = theCompany.GetAsset(ResourceToSellName)
         Dim numberOfShares As Integer = 0
         If currentResource IsNot Nothing Then
             numberOfShares = currentResource.Shares
         End If
 
         If numberOfShares > idealShares Then
-            theMarket.Sell(baselinePrice, New Resource() With {.Name = ResourceToBuyName, .Shares = numberOfShares - idealShares}, theCompany)
+            theMarket.Sell(baselinePrice, New CraftResource() With {.Name = ResourceToSellName, .Shares = numberOfShares - idealShares}, theCompany)
         End If
 
     End Sub

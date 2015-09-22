@@ -13,9 +13,9 @@ Public Class StockBuyingStrategyUnitTests
         mockMarket.BuyingOfferings.Returns(New List(Of Transaction))
 
         Dim seller As New Company(New AssetManager())
-        seller.AddResource(New Resource() With {.Name = "TestResource", .Shares = 1000})
+        seller.AddResource(New CraftResource() With {.Name = "TestResource", .Shares = 1000})
 
-        Dim nTransaction As New Transaction() With {.Owner = seller, .PricePerUnit = 10, .Resource = New Resource() With {.Name = "TestResource", .Shares = 1}}
+        Dim nTransaction As New Transaction() With {.Owner = seller, .PricePerUnit = 10, .Resource = New CraftResource() With {.Name = "TestResource", .Shares = 1}}
         Dim returnList As New List(Of Transaction)
         returnList.Add(nTransaction)
 
@@ -23,7 +23,7 @@ Public Class StockBuyingStrategyUnitTests
 
 
         Dim myCompany As New Company(New AssetManager())
-        myCompany.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = 1000})
+        myCompany.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = 1000})
 
         Dim priceToBuy As Integer = 100
         Dim sharesToHave As Integer = 500
@@ -33,7 +33,7 @@ Public Class StockBuyingStrategyUnitTests
         testStrategy.Execute(myCompany, mockMarket)
 
         'verify
-        mockMarket.Received().Buy(100, New Resource() With {.Name = "TestResource", .Shares = 500}, myCompany)
+        mockMarket.Received().Buy(100, New CraftResource() With {.Name = "TestResource", .Shares = 500}, myCompany)
 
     End Sub
 
@@ -44,12 +44,12 @@ Public Class StockBuyingStrategyUnitTests
         mockMarket.BuyingOfferings.Returns(New List(Of Transaction))
 
         Dim seller As New Company(New AssetManager())
-        seller.AddResource(New Resource() With {.Name = "TestResource", .Shares = 1000})
+        seller.AddResource(New CraftResource() With {.Name = "TestResource", .Shares = 1000})
 
 
         Dim myCompany As New Company(New AssetManager())
-        myCompany.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = 1000})
-        myCompany.AddResource(New Resource() With {.Name = "TestResource", .Shares = 400})
+        myCompany.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = 1000})
+        myCompany.AddResource(New CraftResource() With {.Name = "TestResource", .Shares = 400})
 
         Dim priceToBuy As Integer = 100
         Dim sharesToHave As Integer = 500
@@ -59,7 +59,7 @@ Public Class StockBuyingStrategyUnitTests
         testStrategy.Execute(myCompany, mockMarket)
 
         'verify
-        mockMarket.Received().Buy(100, New Resource() With {.Name = "TestResource", .Shares = 100}, myCompany)
+        mockMarket.Received().Buy(100, New CraftResource() With {.Name = "TestResource", .Shares = 100}, myCompany)
 
     End Sub
 
@@ -70,12 +70,12 @@ Public Class StockBuyingStrategyUnitTests
         mockMarket.BuyingOfferings.Returns(New List(Of Transaction))
 
         Dim seller As New Company(New AssetManager())
-        seller.AddResource(New Resource() With {.Name = "TestResource", .Shares = 1000})
+        seller.AddResource(New CraftResource() With {.Name = "TestResource", .Shares = 1000})
 
 
         Dim myCompany As New Company(New AssetManager())
-        myCompany.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = 1000})
-        myCompany.AddResource(New Resource() With {.Name = "TestResource", .Shares = 600})
+        myCompany.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = 1000})
+        myCompany.AddResource(New CraftResource() With {.Name = "TestResource", .Shares = 600})
 
         Dim priceToBuy As Integer = 100
         Dim sharesToHave As Integer = 500
@@ -85,7 +85,7 @@ Public Class StockBuyingStrategyUnitTests
         testStrategy.Execute(myCompany, mockMarket)
 
         'verify
-        mockMarket.DidNotReceiveWithAnyArgs.Buy(100, New Resource() With {.Name = "TestResource", .Shares = 100}, myCompany)
+        mockMarket.DidNotReceiveWithAnyArgs.Buy(100, New CraftResource() With {.Name = "TestResource", .Shares = 100}, myCompany)
 
     End Sub
    

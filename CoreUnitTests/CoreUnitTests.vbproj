@@ -107,7 +107,8 @@
     <Compile Include="StrategyTests\StockBuyingStrategyUnitTests.vb" />
     <Compile Include="StrategyTests\StockSellingStrategyUnitTests.vb" />
     <Compile Include="LuxuryResourceUnitTests.vb" />
-    <Compile Include="WorldPopulationDecreaseUnitTests.vb" />
+    <Compile Include="ResourceProductionUnitTests.vb" />
+    <Compile Include="WorldPopulationTests\WorldPopulationDecreaseUnitTests.vb" />
     <Compile Include="WorldPopulationTests\WorldPopulationEngineUnitTests.vb" />
     <Compile Include="WorldPopulationTests\WorldPopulationIncreaseUnitTests.vb" />
   </ItemGroup>

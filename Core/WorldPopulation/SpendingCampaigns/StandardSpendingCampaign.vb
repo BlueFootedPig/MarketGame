@@ -13,7 +13,7 @@
             Dim luxuryItemsForSale As IEnumerable(Of Transaction) = market.SellingOfferings.Where(Function(n) n.Resource.GetType() = GetType(LuxuryResource))
             Dim orderedItemsByValue As IEnumerable(Of Transaction) = luxuryItemsForSale.OrderBy(Function(n) getPerceivedValue(tag, n))
 
-            For Each buyingThisItem As Transaction In orderedItemsByValue
+            For Each buyingThisItem As Transaction In orderedItemsByValue.ToList()
                 If runningTotal < buyingThisItem.PricePerUnit Then Exit For
 
                 runningTotal = buyShares(runningTotal, buyingThisItem, market)
@@ -35,7 +35,7 @@
         Else
             Dim numberOfSharesToBuy As Integer = runningTotal / buyingThisItem.PricePerUnit
 
-            market.Buy(buyingThisItem.PricePerUnit, New Resource() With {.Name = buyingThisItem.Resource.Name, .Shares = numberOfSharesToBuy}, Company.VoidCompany)
+            market.Buy(buyingThisItem.PricePerUnit, New CraftResource() With {.Name = buyingThisItem.Resource.Name, .Shares = numberOfSharesToBuy}, Company.VoidCompany)
             runningTotal -= buyingThisItem.PricePerUnit * numberOfSharesToBuy
 
         End If

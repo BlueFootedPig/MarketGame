@@ -3,10 +3,14 @@ Imports Core
 
 Public Class HomeScreen
 
-    Dim market As IMarket = New Core.Market
-    Dim gameEngine As New Engine(market)
-    Dim user As New Player(New AssetManager())
-    Dim clock As System.Timers.Timer
+    Private market As IMarket = New Core.Market
+    Private gameEngine As New Engine(market, New WorldPopulationEngine())
+    Private user As New Player(New AssetManager())
+    Private interfaceClock As System.Timers.Timer
+    ' Private computerClock As System.Timers.Timer
+    '  Private popluationClock As System.Timers.Timer
+    Private Const STANDARD_TICK As Integer = 5000
+
     Public Sub New()
 
         ' This call is required by the designer.
@@ -16,13 +20,18 @@ Public Class HomeScreen
 
         user.currentSkill = SkillChoice.Common
 
-        'Setup Companies
+        'computerClock = New Timers.Timer(STANDARD_TICK / 2)
+        'AddHandler computerClock.Elapsed, AddressOf ExecuteCompany
+        'computerClock.Start()
+
+        'popluationClock = New Timers.Timer(STANDARD_TICK)
+        'AddHandler popluationClock.Elapsed, AddressOf ExecutePopulation
+        'popluationClock.Start()
 
 
-        '   gameEngine.Companies.Add(user)
-        clock = New Timers.Timer(1000)
-        AddHandler clock.Elapsed, AddressOf UpdateInterface
-        clock.Start()
+        interfaceClock = New Timers.Timer(1000)
+        AddHandler interfaceClock.Elapsed, AddressOf UpdateInterface
+        interfaceClock.Start()
 
         Dim resourceDatatable As New DataTable()
         resourceDatatable.Columns.Add("Name")
@@ -41,23 +50,61 @@ Public Class HomeScreen
 
         UpdateTransactionGrid()
 
-
-
-
-
+        'Setup companies
         Dim company As New Company(New AssetManager())
-        company.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = 1000000})
+        company.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = 1000000})
         company.gamingStrategy.Add(New StockBuyStrategy(100, 100, "Lumber"))
         company.gamingStrategy.Add(New StockSellingBasicStrategy(200, 5, "Stool"))
-        company.ProducedResource = New Resource() With {.Name = "Stool", .Shares = 1}
-        company.RequiredResources.Add(New Resource() With {.Name = "Lumber", .Shares = 2})
+        company.ProducedResource = New ResourceProduction() With {.ProducedResource = New LuxuryResource() With {.Name = "Stool", .Shares = 1}}
+        company.ProducedResource.RequiredResources.Add(New CraftResource() With {.Name = "Lumber", .Shares = 2})
         gameEngine.Companies.Add(company)
+
+
+        'setup population
+        Dim person As New Person(0)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+
+        person = New Person(1)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+
+        person = New Person(2)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+        gameEngine.society.Population.Add(person)
+
 
     End Sub
 
     Dim updatingObject As New Object
 
     Private Sub UpdateTransactionGrid()
+        Dim token As IBlock = New FunctionBlock(AddressOf UpdateTransactionGrid)
+        If Not EventRegistry.TryGetLock(Me, Nothing, token) Then Exit Sub
+
         Dim marketDatatable As DataTable = MarketGridControl.DataSource
         marketDatatable.Clear()
         For Each trans As Transaction In market.SellingOfferings
@@ -81,12 +128,14 @@ Public Class HomeScreen
 
             marketDatatable.Rows.Add(nRow)
         Next
+
+        token.Dispose()
     End Sub
 
 
     Private Sub RareBarButtonItem_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles RareBarButtonItem.ItemClick
         user.currentSkill = SkillChoice.Rare
-        ResourceSelectionBarLinkContainerItem.Caption = Resource.RESOURCE_GOLD
+        ResourceSelectionBarLinkContainerItem.Caption = CraftResource.RESOURCE_GOLD
         ResourceSelectionBarLinkContainerItem.LargeGlyph = RareBarButtonItem.Glyph
         RareBarButtonItem.Down = True
     End Sub
@@ -94,14 +143,14 @@ Public Class HomeScreen
     Private Sub UncommonBarButtonItem_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles UncommonBarButtonItem.ItemClick
         user.currentSkill = SkillChoice.Uncommon
 
-        ResourceSelectionBarLinkContainerItem.Caption = Resource.RESOURCE_IRON
+        ResourceSelectionBarLinkContainerItem.Caption = CraftResource.RESOURCE_IRON
         ResourceSelectionBarLinkContainerItem.LargeGlyph = UncommonBarButtonItem.Glyph
         UncommonBarButtonItem.Down = True
     End Sub
 
     Private Sub CommonBarButtonItem_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles CommonBarButtonItem.ItemClick
         user.currentSkill = SkillChoice.Common
-        ResourceSelectionBarLinkContainerItem.Caption = Resource.RESOURCE_LUMBER
+        ResourceSelectionBarLinkContainerItem.Caption = CraftResource.RESOURCE_LUMBER
         ResourceSelectionBarLinkContainerItem.LargeGlyph = CommonBarButtonItem.Glyph
         CommonBarButtonItem.Down = True
 
@@ -121,9 +170,9 @@ Public Class HomeScreen
         If Not EventRegistry.TryGetLock(Me, updatingObject, token) Then Exit Sub
 
 
-        Dim allAssests As IList(Of Resource) = user.GetAllAssets()
+        Dim allAssests As IList(Of CraftResource) = user.GetAllAssets()
 
-        Dim checkedResources As New List(Of Resource)
+        Dim checkedResources As New List(Of CraftResource)
         Dim rowsToRemove As New List(Of DataRow)
 
         Dim resourceDataTable As DataTable = ResourceDataGrid.DataSource
@@ -131,7 +180,7 @@ Public Class HomeScreen
         For Each row As DataRow In resourceDataTable.Rows
             Dim resourceName As String = row("Name")
 
-            Dim currentResource As Resource = allAssests.FirstOrDefault(Function(n) n.Name = resourceName)
+            Dim currentResource As CraftResource = allAssests.FirstOrDefault(Function(n) n.Name = resourceName)
 
             If currentResource Is Nothing Then
                 rowsToRemove.Add(row)
@@ -141,7 +190,7 @@ Public Class HomeScreen
             checkedResources.Add(currentResource)
         Next
 
-        For Each item As Resource In allAssests
+        For Each item As CraftResource In allAssests
             If checkedResources.Any(Function(n) n.Name = item.Name) Then Continue For
 
             Dim nRow As DataRow = resourceDataTable.NewRow
@@ -154,9 +203,6 @@ Public Class HomeScreen
             resourceDataTable.Rows.Remove(row)
         Next
 
-
-        gameEngine.ExecuteComputerActions()
-
         UpdateTransactionGrid()
 
         token.Dispose()
@@ -164,9 +210,26 @@ Public Class HomeScreen
 
     End Sub
 
+    Private Sub ExecuteCompany(sender As Object, e As EventArgs) Handles CompanysBarButtonItem.ItemClick
+
+        gameEngine.ExecuteComputerActions()
+
+    End Sub
+
+    Private rand As New Random(0)
+    Private Sub ExecutePopulation(sender As Object, e As EventArgs) Handles StandardPopulation.ItemClick
+
+        gameEngine.society.RunPopulationCampaign(New WorldPopluationIncreaseCampaign(rand))
+        gameEngine.society.RunPopulationCampaign(New WorldPopluationDecreaseCampaign(rand))
+
+        gameEngine.society.ProduceMoney()
+
+        gameEngine.society.RunSpendingCampaign(New StandardSpendingCampaign(), market)
+
+    End Sub
 
     Private Sub ProduceLumberBarButtonItem_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles ProduceLumberBarButtonItem.ItemClick
-        user.AddResource(New Resource() With {.Name = "Lumber", .Shares = 1})
+        user.AddResource(New CraftResource() With {.Name = "Lumber", .Shares = 1})
     End Sub
 
     Private Sub SellBarButtonItem_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles SellBarButtonItem.ItemClick
@@ -176,8 +239,10 @@ Public Class HomeScreen
         Dim firstIndex As Integer = indexes.First()
 
         Dim row As DataRowView = ResourceGridView.GetRow(firstIndex)
-        Dim resourceToDealWith As New Resource() With {.Name = row("Name"), .Shares = 1}
+        Dim resourceToDealWith As New CraftResource() With {.Name = row("Name"), .Shares = 1}
         market.Sell(10, resourceToDealWith, user)
 
     End Sub
+
+    
 End Class

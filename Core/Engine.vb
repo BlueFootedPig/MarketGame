@@ -2,12 +2,16 @@
 
 Public Class Engine
     Public Companies As New List(Of IMarketForce)
+    Public society As IWorldPopulationEngine
     Private market As IMarket
 
-    Public Sub New(thisMarket As IMarket)
-        If thisMarket Is Nothing Then Throw New ArgumentNullException("Market cannot be Null.")
+    Public Sub New(thisMarket As IMarket, populationEngine As IWorldPopulationEngine)
+        If thisMarket Is Nothing Then Throw New ArgumentNullException("thismarket", "thisMarket cannot be Null.")
+        If populationEngine Is Nothing Then Throw New ArgumentNullException("populationEngine", "'populationEngine cannot be Null.")
 
         market = thisMarket
+        society = populationEngine
+
     End Sub
 
     Public Sub ExecuteComputerActions()

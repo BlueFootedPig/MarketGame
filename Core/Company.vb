@@ -2,7 +2,7 @@
 Imports Core.VoidAssestManager
 
 Public Class Company
-    Inherits Resource
+    Inherits CraftResource
     Implements IMarketForce
 
     Shared Property VoidCompany As Company = New Company(New VoidAssetManager())
@@ -11,8 +11,10 @@ Public Class Company
 
     Friend ProfitPerUnit As Double
 
-    Public RequiredResources As New List(Of Resource)
-    Public Property ProducedResource As Resource
+    Public Property ProducedResource As IResourceProduction
+
+    'Public RequiredResources As New List(Of CraftResource)
+    'Public Property ProducedResource As CraftResource
     Public gamingStrategy As New List(Of IStrategy)
 
     Public Sub New(manager As IAssetManager)
@@ -20,21 +22,21 @@ Public Class Company
         Assests = manager
     End Sub
 
-    Public Sub AddResource(resourceToAdd As Resource) Implements IMarketForce.AddResource
+    Public Sub AddResource(resourceToAdd As IResource) Implements IMarketForce.AddResource
         If resourceToAdd Is Nothing Then Throw New ArgumentNullException("Resource cannot be Null.")
         If resourceToAdd.Shares = 0 Then Throw New ArgumentException("Resource must have more than 0 shares.")
 
         Assests.AddAsset(resourceToAdd)
     End Sub
 
-    Public Sub RemoveResource(resourceToRemove As Resource) Implements IMarketForce.RemoveResource
+    Public Sub RemoveResource(resourceToRemove As IResource) Implements IMarketForce.RemoveResource
         If resourceToRemove Is Nothing Then Throw New ArgumentNullException("Resource cannot be Null.")
         If resourceToRemove.Shares = 0 Then Throw New ArgumentException("Resource must have more than 0 shares.")
 
         Assests.RemoveAsset(resourceToRemove)
     End Sub
 
-    Public Function GetAllAssets() As IList(Of Resource) Implements IMarketForce.GetAllAssets
+    Public Function GetAllAssets() As IList(Of IResource) Implements IMarketForce.GetAllAssets
         Return Assests.GetAllAssets()
     End Function
 
@@ -49,29 +51,28 @@ Public Class Company
 
     Public Sub Produce() Implements IMarketForce.Produce
         If ProducedResource IsNot Nothing Then
-            If hasEnoughToProduce() Then
-                Assests.AddAsset(New Resource() With {.Name = ProducedResource.Name, .Shares = ProducedResource.Shares})
+            ' If hasEnoughToProduce() Then
 
-                For Each item As Resource In RequiredResources
-                    Dim reqResource As Resource = GetAsset(item.Name)
-                    reqResource.Shares -= item.Shares
-                Next
-            End If
+            ProducedResource.Produce(Assests)
+
+
+            'If ProducedResource.GetType() = GetType(LuxuryResource) Then
+            '    Assests.AddAsset(New LuxuryResource() With {.Name = ProducedResource.Name, .Shares = ProducedResource.Shares})
+            'Else
+            '    Assests.AddAsset(New CraftResource() With {.Name = ProducedResource.Name, .Shares = ProducedResource.Shares})
+            'End If
+
+            'For Each item As CraftResource In RequiredResources
+            '    Dim reqResource As CraftResource = GetAsset(item.Name)
+            '    reqResource.Shares -= item.Shares
+            'Next
+            'End If
         End If
     End Sub
 
-    Private Function hasEnoughToProduce() As Boolean
-        Dim returnValue As Boolean = True
 
-        For Each item As Resource In RequiredResources
 
-            returnValue = returnValue AndAlso Assests.HasEnough(item)
-        Next
-
-        Return returnValue
-    End Function
-
-    Public Function GetAsset(resource As String) As Resource Implements IMarketForce.GetAsset
+    Public Function GetAsset(resource As String) As IResource Implements IMarketForce.GetAsset
         Return Assests.GetResource(resource)
     End Function
 
@@ -80,9 +81,9 @@ End Class
 
 Public Interface IMarketForce
     Sub Produce()
-    Function GetAsset(resource As String) As Resource
+    Function GetAsset(resource As String) As IResource
     Sub PerformAction(market As IMarket)
-    Sub AddResource(resourceToAdd As Resource)
-    Sub RemoveResource(resourceToRemove As Resource)
-    Function GetAllAssets() As IList(Of Resource)
+    Sub AddResource(resourceToAdd As IResource)
+    Sub RemoveResource(resourceToRemove As IResource)
+    Function GetAllAssets() As IList(Of IResource)
 End Interface

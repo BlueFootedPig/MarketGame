@@ -4,15 +4,12 @@
     Public Property SellingOfferings As New List(Of Transaction) Implements IMarket.SellingOfferings
     Public Property BuyingOfferings As New List(Of Transaction) Implements IMarket.BuyingOfferings
 
+    Private lockingObject As New Object
+    Private knownResources As IList(Of CraftResource)
 
-    Private knownResources As IList(Of Resource)
-
-    'Private Function GetResourceValue(item As Resource) As Double
-    '    Return knownResources.First(Function(n) n.Name = item.Name).MarketValue
-    'End Function
 
     'Posts an bid up for sale
-    Public Sub Buy(pricePerUnit As Integer, item As Resource, theCompany As Company) Implements IMarket.Buy
+    Public Sub Buy(pricePerUnit As Integer, item As CraftResource, theCompany As Company) Implements IMarket.Buy
         If item Is Nothing Then Throw New ArgumentNullException("A Resource must be specified.")
         If item.Shares <= 0 OrElse String.IsNullOrEmpty(item.Name) Then Throw New ArgumentException("Item did not have a resource name or number of shares.")
 
@@ -23,35 +20,41 @@
         nTransaction.Owner = theCompany
         nTransaction.Resource = item
         nTransaction.PricePerUnit = pricePerUnit
+        SyncLock (lockingObject)
 
-        CompleteBuyOrder(nTransaction)
 
-        If nTransaction.Resource.Shares > 0 Then
-            BuyingOfferings.Add(nTransaction)
-        End If
+            CompleteBuyOrder(nTransaction)
 
+            If nTransaction.Resource.Shares > 0 Then
+                BuyingOfferings.Add(nTransaction)
+            End If
+        End SyncLock
 
     End Sub
 
     'Posts an item for sale
-    Public Sub Sell(pricePerUnit As Integer, item As Resource, theCompany As Company) Implements IMarket.Sell
+    Public Sub Sell(pricePerUnit As Integer, item As CraftResource, theCompany As Company) Implements IMarket.Sell
         If item Is Nothing Then Throw New ArgumentNullException("A Resource must be specified.")
         If item.Shares <= 0 OrElse String.IsNullOrEmpty(item.Name) Then Throw New ArgumentException("Item did not have a resource name or number of shares.")
 
         If theCompany Is Nothing Then Throw New ArgumentNullException("A company must be specified.")
 
-        theCompany.GetAsset(item.Name).Shares -= item.Shares
+        theCompany.RemoveResource(item)
 
-        Dim nTransaction As New Transaction()
-        nTransaction.Owner = theCompany
-        nTransaction.Resource = item
-        nTransaction.PricePerUnit = pricePerUnit
+        SyncLock (lockingObject)
 
-        CompleteSellOrder(nTransaction)
 
-        If nTransaction.Resource.Shares > 0 Then
-            SellingOfferings.Add(nTransaction)
-        End If
+            Dim nTransaction As New Transaction()
+            nTransaction.Owner = theCompany
+            nTransaction.Resource = item
+            nTransaction.PricePerUnit = pricePerUnit
+
+            CompleteSellOrder(nTransaction)
+
+            If nTransaction.Resource.Shares > 0 Then
+                SellingOfferings.Add(nTransaction)
+            End If
+        End SyncLock
     End Sub
 
     Private Sub CompleteSellOrder(selling As Transaction)
@@ -73,11 +76,11 @@
         End If
 
         sellingTransaction.Resource.Shares -= amountBuying
-        sellingTransaction.Owner.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = buyingTransaction.PricePerUnit * amountBuying})
+        sellingTransaction.Owner.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = buyingTransaction.PricePerUnit * amountBuying})
         '  sellingTransaction.Owner.RemoveResource(New Resource() With {.Name = sellingTransaction.Resource.Name, .Shares = amountBuying})
 
-        buyer.RemoveResource(New Resource() With {.Name = Resource.CREDIT, .Shares = buyingTransaction.PricePerUnit * amountBuying})
-        buyer.AddResource(New Resource() With {.Name = sellingTransaction.Resource.Name, .Shares = amountBuying})
+        buyer.RemoveResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = buyingTransaction.PricePerUnit * amountBuying})
+        buyer.AddResource(New CraftResource() With {.Name = sellingTransaction.Resource.Name, .Shares = amountBuying})
 
         buyingTransaction.Resource.Shares -= amountBuying
         Dim SellerResourceName As String = sellingTransaction.Resource.Name
@@ -99,11 +102,11 @@
             End If
 
             buying.Resource.Shares -= amountBuying
-            buying.Owner.RemoveResource(New Resource() With {.Name = Resource.CREDIT, .Shares = availableTransaction.PricePerUnit * amountBuying})
-            buying.Owner.AddResource(New Resource() With {.Name = availableTransaction.Resource.Name, .Shares = amountBuying})
+            buying.Owner.RemoveResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = availableTransaction.PricePerUnit * amountBuying})
+            buying.Owner.AddResource(New CraftResource() With {.Name = availableTransaction.Resource.Name, .Shares = amountBuying})
 
-            seller.AddResource(New Resource() With {.Name = Resource.CREDIT, .Shares = availableTransaction.PricePerUnit * amountBuying})
-            seller.RemoveResource(New Resource() With {.Name = availableTransaction.Resource.Name, .Shares = amountBuying})
+            seller.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = availableTransaction.PricePerUnit * amountBuying})
+            seller.RemoveResource(New CraftResource() With {.Name = availableTransaction.Resource.Name, .Shares = amountBuying})
 
             availableTransaction.Resource.Shares -= amountBuying
             availableTransaction = SellingOfferings.FirstOrDefault(Function(n) n.Resource.Name = buying.Resource.Name)
@@ -121,7 +124,7 @@ Public Class Transaction
     Public Id As New Guid()
     Public Owner As Company
     Public PricePerUnit As Double
-    Public Resource As Resource
+    Public Resource As CraftResource
 End Class
 
 Public Interface IMarket
@@ -129,8 +132,8 @@ Public Interface IMarket
     Property BuyingOfferings As List(Of Transaction)
 
 
-    Sub Buy(pricePerUnit As Integer, item As Resource, theCompany As Company)
-    Sub Sell(pricePerUnit As Integer, item As Resource, theCompany As Company)
+    Sub Buy(pricePerUnit As Integer, item As CraftResource, theCompany As Company)
+    Sub Sell(pricePerUnit As Integer, item As CraftResource, theCompany As Company)
 
 End Interface
 

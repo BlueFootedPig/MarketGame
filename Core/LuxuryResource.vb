@@ -1,5 +1,5 @@
 ﻿Public Class LuxuryResource
-    Inherits Resource
+    Inherits CraftResource
 
     Private _prefferedCustomers As New List(Of String)
 

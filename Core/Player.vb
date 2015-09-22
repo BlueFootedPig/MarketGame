@@ -14,15 +14,15 @@
     End Sub
 
     Public Overrides Sub PerformAction(market As IMarket)
-        Dim producedResource As Resource = Nothing
+        Dim producedResource As CraftResource = Nothing
         Select Case currentSkill
             Case SkillChoice.Common
-                AddResource(New Resource() With {.Name = Resource.RESOURCE_LUMBER, .Shares = 1})
+                AddResource(New CraftResource() With {.Name = CraftResource.RESOURCE_LUMBER, .Shares = 1})
 
             Case SkillChoice.Uncommon
-                AddResource(New Resource() With {.Name = Resource.RESOURCE_IRON, .Shares = 1})
+                AddResource(New CraftResource() With {.Name = CraftResource.RESOURCE_IRON, .Shares = 1})
             Case SkillChoice.Rare
-                AddResource(New Resource() With {.Name = Resource.RESOURCE_GOLD, .Shares = 1})
+                AddResource(New CraftResource() With {.Name = CraftResource.RESOURCE_GOLD, .Shares = 1})
         End Select
 
 
