@@ -44,23 +44,25 @@ Public Class StockSellingBasicStrategy
     Implements IStrategy
     Dim baselinePrice As Integer
     Dim idealShares As Integer
-    Dim ResourceToSellName As String
+    Dim ResourceToSellName As IResource
 
-    Public Sub New(baseline As Integer, shares As Integer, resourceToSell As String)
+    Public Sub New(baseline As Integer, shares As Integer, resourceToSell As IResource)
         ResourceToSellName = resourceToSell
         baselinePrice = baseline
         idealShares = shares
     End Sub
 
     Public Sub Execute(theCompany As Company, theMarket As IMarket) Implements IStrategy.Execute
-        Dim currentResource As CraftResource = theCompany.GetAsset(ResourceToSellName)
+        Dim currentResource As IResource = theCompany.GetAsset(ResourceToSellName.Name)
         Dim numberOfShares As Integer = 0
         If currentResource IsNot Nothing Then
             numberOfShares = currentResource.Shares
         End If
 
         If numberOfShares > idealShares Then
-            theMarket.Sell(baselinePrice, New CraftResource() With {.Name = ResourceToSellName, .Shares = numberOfShares - idealShares}, theCompany)
+            Dim whatToSell As IResource = currentResource.CopyResource()
+            whatToSell.Shares = numberOfShares - idealShares
+            theMarket.Sell(baselinePrice, whatToSell, theCompany)
         End If
 
     End Sub

@@ -1,4 +1,14 @@
-﻿Public Class Market
+﻿Public Interface IMarket
+    Property SellingOfferings As List(Of Transaction)
+    Property BuyingOfferings As List(Of Transaction)
+
+
+    Sub Buy(pricePerUnit As Integer, item As IResource, theCompany As Company)
+    Sub Sell(pricePerUnit As Integer, item As IResource, theCompany As Company)
+
+End Interface
+
+Public Class Market
     Implements IMarket
 
     Public Property SellingOfferings As New List(Of Transaction) Implements IMarket.SellingOfferings
@@ -9,7 +19,7 @@
 
 
     'Posts an bid up for sale
-    Public Sub Buy(pricePerUnit As Integer, item As CraftResource, theCompany As Company) Implements IMarket.Buy
+    Public Sub Buy(pricePerUnit As Integer, item As IResource, theCompany As Company) Implements IMarket.Buy
         If item Is Nothing Then Throw New ArgumentNullException("A Resource must be specified.")
         If item.Shares <= 0 OrElse String.IsNullOrEmpty(item.Name) Then Throw New ArgumentException("Item did not have a resource name or number of shares.")
 
@@ -18,7 +28,7 @@
 
         Dim nTransaction As New Transaction()
         nTransaction.Owner = theCompany
-        nTransaction.Resource = item
+        nTransaction.Resource = item.CopyResource()
         nTransaction.PricePerUnit = pricePerUnit
         SyncLock (lockingObject)
 
@@ -28,12 +38,30 @@
             If nTransaction.Resource.Shares > 0 Then
                 BuyingOfferings.Add(nTransaction)
             End If
+            cleanupTransactions()
         End SyncLock
 
     End Sub
 
+    Private Sub cleanupTransactions()
+        removeEmptyOfferings(SellingOfferings)
+        removeEmptyOfferings(BuyingOfferings)
+
+    End Sub
+
+    Private Sub removeEmptyOfferings(listToCheck As IList(Of Transaction))
+
+        Dim listToRemove As IList(Of Transaction) = listToCheck.Where(Function(n) n.Resource.Shares <= 0).ToList()
+        If listToRemove.Count = 0 Then Exit Sub
+
+        For Each item As Transaction In listToRemove
+            listToCheck.Remove(item)
+        Next
+
+    End Sub
+
     'Posts an item for sale
-    Public Sub Sell(pricePerUnit As Integer, item As CraftResource, theCompany As Company) Implements IMarket.Sell
+    Public Sub Sell(pricePerUnit As Integer, item As IResource, theCompany As Company) Implements IMarket.Sell
         If item Is Nothing Then Throw New ArgumentNullException("A Resource must be specified.")
         If item.Shares <= 0 OrElse String.IsNullOrEmpty(item.Name) Then Throw New ArgumentException("Item did not have a resource name or number of shares.")
 
@@ -46,7 +74,7 @@
 
             Dim nTransaction As New Transaction()
             nTransaction.Owner = theCompany
-            nTransaction.Resource = item
+            nTransaction.Resource = item.CopyResource()
             nTransaction.PricePerUnit = pricePerUnit
 
             CompleteSellOrder(nTransaction)
@@ -54,6 +82,7 @@
             If nTransaction.Resource.Shares > 0 Then
                 SellingOfferings.Add(nTransaction)
             End If
+            cleanupTransactions()
         End SyncLock
     End Sub
 
@@ -102,14 +131,15 @@
             End If
 
             buying.Resource.Shares -= amountBuying
+            Dim itemBuying As IResource = availableTransaction.Resource.CopyResource()
+            itemBuying.Shares = amountBuying
+
             buying.Owner.RemoveResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = availableTransaction.PricePerUnit * amountBuying})
-            buying.Owner.AddResource(New CraftResource() With {.Name = availableTransaction.Resource.Name, .Shares = amountBuying})
+            buying.Owner.AddResource(itemBuying)
 
             seller.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = availableTransaction.PricePerUnit * amountBuying})
-            seller.RemoveResource(New CraftResource() With {.Name = availableTransaction.Resource.Name, .Shares = amountBuying})
 
             availableTransaction.Resource.Shares -= amountBuying
-            availableTransaction = SellingOfferings.FirstOrDefault(Function(n) n.Resource.Name = buying.Resource.Name)
 
         End While
 
@@ -120,20 +150,6 @@
 End Class
 
 
-Public Class Transaction
-    Public Id As New Guid()
-    Public Owner As Company
-    Public PricePerUnit As Double
-    Public Resource As CraftResource
-End Class
-
-Public Interface IMarket
-    Property SellingOfferings As List(Of Transaction)
-    Property BuyingOfferings As List(Of Transaction)
 
 
-    Sub Buy(pricePerUnit As Integer, item As CraftResource, theCompany As Company)
-    Sub Sell(pricePerUnit As Integer, item As CraftResource, theCompany As Company)
-
-End Interface
 

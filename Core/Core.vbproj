@@ -91,6 +91,7 @@
     <Compile Include="ResourceProduction.vb" />
     <Compile Include="Resources.vb" />
     <Compile Include="StockValueBasicStrategy.vb" />
+    <Compile Include="Transaction.vb" />
     <Compile Include="VoidAssestManager.vb" />
     <Compile Include="WorldPopulation\PopulationCampaigns\IPopulationCampaign.vb" />
     <Compile Include="WorldPopulation\IWorldPopulationEngine.vb" />

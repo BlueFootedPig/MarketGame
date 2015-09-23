@@ -1,5 +1,6 @@
 ﻿Public Class LuxuryResource
-    Inherits CraftResource
+    Inherits IResource
+
 
     Private _prefferedCustomers As New List(Of String)
 
@@ -35,5 +36,15 @@
             Return _allUsedTags.Keys.Count
         End Get
     End Property
+
+    
+
+    Public Overrides Function CopyResource() As IResource
+        Dim returnValue As New LuxuryResource()
+        returnValue.Level = Level
+        returnValue.Name = Name
+        returnValue.Shares = Shares
+        Return returnValue
+    End Function
 
 End Class

@@ -30,13 +30,16 @@
 
     Private Function buyShares(runningTotal As Double, buyingThisItem As Transaction, market As IMarket) As Integer
         If canBuyAllShares(runningTotal, buyingThisItem) Then
-            market.Buy(buyingThisItem.PricePerUnit, buyingThisItem.Resource, Company.VoidCompany)
+            'runningTotal must be first as the buy can happen instantly if there is already something for sale
             runningTotal -= buyingThisItem.PricePerUnit * buyingThisItem.Resource.Shares
+            market.Buy(buyingThisItem.PricePerUnit, buyingThisItem.Resource, Company.VoidCompany)
+
         Else
             Dim numberOfSharesToBuy As Integer = runningTotal / buyingThisItem.PricePerUnit
-
-            market.Buy(buyingThisItem.PricePerUnit, New CraftResource() With {.Name = buyingThisItem.Resource.Name, .Shares = numberOfSharesToBuy}, Company.VoidCompany)
+            'runningTotal must be first as the buy can happen instantly if there is already something for sale
             runningTotal -= buyingThisItem.PricePerUnit * numberOfSharesToBuy
+            market.Buy(buyingThisItem.PricePerUnit, New CraftResource() With {.Name = buyingThisItem.Resource.Name, .Shares = numberOfSharesToBuy}, Company.VoidCompany)
+
 
         End If
         Return runningTotal

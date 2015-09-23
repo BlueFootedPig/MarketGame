@@ -28,7 +28,7 @@ Public Class StockSellingStrategyUnitTests
         Dim sharesToHave As Integer = 0
 
         'test
-        Dim testStrategy As New StockSellingBasicStrategy(priceToBuy, sharesToHave, "TestResource")
+        Dim testStrategy As New StockSellingBasicStrategy(priceToBuy, sharesToHave, New CraftResource() With {.Name = "TestResource"})
         testStrategy.Execute(myCompany, mockMarket)
 
         'verify
@@ -53,7 +53,7 @@ Public Class StockSellingStrategyUnitTests
         Dim sharesToHave As Integer = 300
 
         'test
-        Dim testStrategy As New StockSellingBasicStrategy(priceToBuy, sharesToHave, "TestResource")
+        Dim testStrategy As New StockSellingBasicStrategy(priceToBuy, sharesToHave, New CraftResource() With {.Name = "TestResource"})
         testStrategy.Execute(myCompany, mockMarket)
 
         'verify
@@ -78,7 +78,7 @@ Public Class StockSellingStrategyUnitTests
         Dim sharesToHave As Integer = 500
 
         'test
-        Dim testStrategy As New StockSellingBasicStrategy(priceToBuy, sharesToHave, "TestResource")
+        Dim testStrategy As New StockSellingBasicStrategy(priceToBuy, sharesToHave, New CraftResource() With {.Name = "TestResource"})
         testStrategy.Execute(myCompany, mockMarket)
 
         'verify

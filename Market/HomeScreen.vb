@@ -54,8 +54,10 @@ Public Class HomeScreen
         Dim company As New Company(New AssetManager())
         company.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = 1000000})
         company.gamingStrategy.Add(New StockBuyStrategy(100, 100, "Lumber"))
-        company.gamingStrategy.Add(New StockSellingBasicStrategy(200, 5, "Stool"))
-        company.ProducedResource = New ResourceProduction() With {.ProducedResource = New LuxuryResource() With {.Name = "Stool", .Shares = 1}}
+        Dim producedRes As New LuxuryResource() With {.Name = "Stool", .Shares = 1}
+
+        company.gamingStrategy.Add(New StockSellingBasicStrategy(200, 0, producedRes))
+        company.ProducedResource = New ResourceProduction() With {.ProducedResource = producedRes}
         company.ProducedResource.RequiredResources.Add(New CraftResource() With {.Name = "Lumber", .Shares = 2})
         gameEngine.Companies.Add(company)
 
@@ -107,7 +109,7 @@ Public Class HomeScreen
 
         Dim marketDatatable As DataTable = MarketGridControl.DataSource
         marketDatatable.Clear()
-        For Each trans As Transaction In market.SellingOfferings
+        For Each trans As Transaction In market.SellingOfferings.ToList()
             Dim nRow As DataRow = marketDatatable.NewRow
             nRow("Poster") = trans.Owner
             nRow("#") = trans.Resource.Shares
@@ -118,7 +120,7 @@ Public Class HomeScreen
             marketDatatable.Rows.Add(nRow)
         Next
 
-        For Each trans As Transaction In market.BuyingOfferings
+        For Each trans As Transaction In market.BuyingOfferings.ToList()
             Dim nRow As DataRow = marketDatatable.NewRow
             nRow("Poster") = trans.Owner
             nRow("#") = trans.Resource.Shares
@@ -170,9 +172,9 @@ Public Class HomeScreen
         If Not EventRegistry.TryGetLock(Me, updatingObject, token) Then Exit Sub
 
 
-        Dim allAssests As IList(Of CraftResource) = user.GetAllAssets()
+        Dim allAssests As IList(Of IResource) = user.GetAllAssets()
 
-        Dim checkedResources As New List(Of CraftResource)
+        Dim checkedResources As New List(Of IResource)
         Dim rowsToRemove As New List(Of DataRow)
 
         Dim resourceDataTable As DataTable = ResourceDataGrid.DataSource
