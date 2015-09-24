@@ -4,6 +4,7 @@ Public Class WorldPopluationIncreaseCampaign
 
     Dim random As Random
     Public Sub New(randomGenerator As Random)
+        If randomGenerator Is Nothing Then Throw New ArgumentNullException("randomGenerator", "randomGenerator cannot be null.")
         random = randomGenerator
     End Sub
 

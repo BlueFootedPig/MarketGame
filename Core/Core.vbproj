@@ -90,12 +90,15 @@
     <Compile Include="Player.vb" />
     <Compile Include="ResourceProduction.vb" />
     <Compile Include="Resources.vb" />
-    <Compile Include="StockValueBasicStrategy.vb" />
+    <Compile Include="Strategies\StockValueBasicStrategy.vb" />
     <Compile Include="Transaction.vb" />
     <Compile Include="VoidAssestManager.vb" />
+    <Compile Include="WorldPopulation\CompanyCampaigns\CreateCompanyByDemandCampaign.vb" />
+    <Compile Include="WorldPopulation\CompanyCampaigns\ICompanyCampaign.vb" />
     <Compile Include="WorldPopulation\PopulationCampaigns\IPopulationCampaign.vb" />
     <Compile Include="WorldPopulation\IWorldPopulationEngine.vb" />
     <Compile Include="WorldPopulation\Person.vb" />
+    <Compile Include="WorldPopulation\PopulationCampaigns\GainTagWorldPopluationCampaign.vb" />
     <Compile Include="WorldPopulation\PopulationCampaigns\WorldPopluationDecreaseCampaign.vb" />
     <Compile Include="WorldPopulation\PopulationCampaigns\WorldPopluationIncreaseCampaign.vb" />
     <Compile Include="WorldPopulation\SpendingCampaigns\ISpendingCampaign.vb" />
