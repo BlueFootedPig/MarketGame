@@ -52,52 +52,40 @@ Public Class HomeScreen
 
         'Setup companies
         Dim company As New Company(New AssetManager())
+        company.Name = "Best Stools"
+        company.Shares = 1000
         company.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = 1000000})
         company.gamingStrategy.Add(New StockBuyStrategy(100, 100, "Lumber"))
-        Dim producedRes As New LuxuryResource() With {.Name = "Stool", .Shares = 1}
-
+        Dim producedRes As IResource = New LuxuryResource() With {.Name = "Stool", .Shares = 1}
         company.gamingStrategy.Add(New StockSellingBasicStrategy(200, 0, producedRes))
         company.ProducedResource = New ResourceProduction() With {.ProducedResource = producedRes}
         company.ProducedResource.RequiredResources.Add(New CraftResource() With {.Name = "Lumber", .Shares = 2})
         gameEngine.Companies.Add(company)
 
+        company = New Company(New AssetManager())
+        company.Name = "Lumber Jacks Lumber"
+        company.Shares = 2000
+        producedRes = New CraftResource() With {.Name = "Lumber", .Shares = 1}
+        company.gamingStrategy.Add(New StockSellingBasicStrategy(50, 0, producedRes))
+        company.ProducedResource = New ResourceProduction() With {.ProducedResource = producedRes}
+        gameEngine.Companies.Add(company)
+
 
         'setup population
-        Dim person As New Person(0)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
+        '20 poor
+        For counter As Integer = 0 To 20
+            AddNewPerson(0)
+        Next
 
-        person = New Person(1)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
+        '10 middle class
+        For counter As Integer = 0 To 10
+            AddNewPerson(1)
+        Next
 
-        person = New Person(2)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-        gameEngine.society.Population.Add(person)
-
+        '5 rich
+        For counter As Integer = 0 To 5
+            AddNewPerson(2)
+        Next
 
     End Sub
 
@@ -244,6 +232,11 @@ Public Class HomeScreen
         Dim resourceToDealWith As New CraftResource() With {.Name = row("Name"), .Shares = 1}
         market.Sell(10, resourceToDealWith, user)
 
+    End Sub
+
+    Private Sub AddNewPerson(incomeLevel As Integer)
+        Dim person As New Person(incomeLevel)
+        gameEngine.society.Population.Add(person)
     End Sub
 
     

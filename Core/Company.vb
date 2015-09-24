@@ -13,14 +13,18 @@ Public Class Company
 
     Public Property ProducedResource As IResourceProduction
 
-    'Public RequiredResources As New List(Of CraftResource)
-    'Public Property ProducedResource As CraftResource
+    
     Public gamingStrategy As New List(Of IStrategy)
 
     Public Sub New(manager As IAssetManager)
         If manager Is Nothing Then Throw New ArgumentNullException("manager", "An AssetManager must be provided.")
         Assests = manager
     End Sub
+
+    Public Overrides Function ToString() As String
+        Return Name
+    End Function
+
 
     Public Sub AddResource(resourceToAdd As IResource) Implements IMarketForce.AddResource
         If resourceToAdd Is Nothing Then Throw New ArgumentNullException("Resource cannot be Null.")

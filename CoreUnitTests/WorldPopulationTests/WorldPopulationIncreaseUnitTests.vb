@@ -30,6 +30,12 @@ Imports Core
 
     End Sub
 
+    <TestMethod()>
+  <ExpectedException(GetType(ArgumentNullException))>
+    Public Sub worldPopulationIncrease_NullRandom()
+        Dim testingCampaign As New WorldPopluationIncreaseCampaign(Nothing)
+    End Sub
+
     Private Function GenerateStandardPopulation() As List(Of Person)
         Dim returnValue As New List(Of Person)
 
