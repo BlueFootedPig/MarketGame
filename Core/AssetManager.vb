@@ -16,6 +16,11 @@
 
 
     Public Sub RemoveAsset(resource As IResource) Implements IAssetManager.RemoveAsset
+
+        If resource Is Nothing Then Throw New ArgumentNullException("resource", "resource cannot be null.")
+        If resource.Shares = 0 Then Exit Sub
+
+
         Dim foundResource As IResource = assests.FirstOrDefault(Function(n) n.Name = resource.Name)
 
         If foundResource Is Nothing Then
@@ -27,6 +32,10 @@
     End Sub
 
     Public Function HasEnough(item As IResource) As Boolean Implements IAssetManager.HasEnough
+        If item Is Nothing Then Throw New ArgumentNullException("item", "item cannot be null.")
+
+        If item.Shares <= 0 Then Return True
+
         Dim foundResource As IResource = assests.FirstOrDefault(Function(n) n.Name = item.Name)
         If foundResource Is Nothing Then
             Return False

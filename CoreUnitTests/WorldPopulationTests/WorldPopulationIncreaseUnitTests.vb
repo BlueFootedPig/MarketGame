@@ -7,7 +7,7 @@ Imports Core
     <TestMethod()>
     Public Sub WorldPopulationIncrease_SeedZero()
 
-        Dim testingCampaign As New WorldPopluationIncreaseCampaign(New Random(0))
+        Dim testingCampaign As New WorldPopluationIncreaseCampaign(New Random(0), 30)
 
         Dim popluation As List(Of Person) = GenerateStandardPopulation()
 
@@ -20,7 +20,7 @@ Imports Core
     <TestMethod()>
     Public Sub WorldPopulationIncrease_SeedOneHundred()
 
-        Dim testingCampaign As New WorldPopluationIncreaseCampaign(New Random(100))
+        Dim testingCampaign As New WorldPopluationIncreaseCampaign(New Random(100), 30)
 
         Dim popluation As List(Of Person) = GenerateStandardPopulation()
 
@@ -33,7 +33,19 @@ Imports Core
     <TestMethod()>
   <ExpectedException(GetType(ArgumentNullException))>
     Public Sub worldPopulationIncrease_NullRandom()
-        Dim testingCampaign As New WorldPopluationIncreaseCampaign(Nothing)
+        Dim testingCampaign As New WorldPopluationIncreaseCampaign(Nothing, 30)
+    End Sub
+
+    <TestMethod()>
+  <ExpectedException(GetType(ArgumentException))>
+    Public Sub worldPopulationIncrease_NegChance()
+        Dim testingCampaign As New WorldPopluationIncreaseCampaign(New Random(0), -30)
+    End Sub
+
+    <TestMethod()>
+  <ExpectedException(GetType(ArgumentException))>
+    Public Sub worldPopulationIncrease_TooHighChance()
+        Dim testingCampaign As New WorldPopluationIncreaseCampaign(New Random(0), 130)
     End Sub
 
     Private Function GenerateStandardPopulation() As List(Of Person)

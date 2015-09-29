@@ -1,25 +1,40 @@
-﻿Public Class ResourceProduction
+﻿Public Interface IResourceProduction
+    Property ProducedResource As IResource
+    Property RequiredResources As IList(Of IResource)
+    Property LaborLevel As Integer
+
+    Sub Produce(Assests As IAssetManager)
+
+End Interface
+
+Public Class ResourceProduction
     Implements IResourceProduction
+
+    Public Sub New(systemSettings As EngineSettings)
+        If systemSettings Is Nothing Then Throw New ArgumentException("systemSettings cannot be null.")
+
+        settings = systemSettings
+    End Sub
 
     Public Property ProducedResource As IResource Implements IResourceProduction.ProducedResource
     Public Property RequiredResources As IList(Of IResource) = New List(Of IResource) Implements IResourceProduction.RequiredResources
 
-    'future properties might include cost to produce
+    Public Property LaborLevel As Integer = 1 Implements IResourceProduction.LaborLevel
+    Private Const LABOR_FACTOR As Double = 0.2
+    Private settings As EngineSettings
 
     Sub Produce(Assests As IAssetManager) Implements IResourceProduction.Produce
 
         If Not hasEnoughToProduce(Assests) Then Exit Sub
 
-        If ProducedResource.GetType() = GetType(LuxuryResource) Then
-            Assests.AddAsset(New LuxuryResource() With {.Name = ProducedResource.Name, .Shares = ProducedResource.Shares})
-        Else
-            Assests.AddAsset(New CraftResource() With {.Name = ProducedResource.Name, .Shares = ProducedResource.Shares})
-        End If
+        Assests.AddAsset(ProducedResource.CopyResource())
 
         For Each item As CraftResource In RequiredResources
             Assests.RemoveAsset(item)
 
         Next
+
+        Assests.RemoveAsset(getLaborCosts)
 
     End Sub
 
@@ -31,13 +46,24 @@
             returnValue = returnValue AndAlso Assests.HasEnough(item)
         Next
 
+        returnValue = returnValue AndAlso Assests.HasEnough(getLaborCosts)
+
         Return returnValue
+    End Function
+
+    Private Function getLaborCosts() As IResource
+
+        Dim minWage As Double = settings.minWage
+        Dim cash As IResource = IResource.CREDIT.CopyResource()
+        cash.Shares = minWage * (LaborLevel - (LaborLevel * LABOR_FACTOR))
+        Return cash
+
     End Function
 
 End Class
 
-Public Interface IResourceProduction
-    Property ProducedResource As IResource
-    Property RequiredResources As IList(Of IResource)
-    Sub Produce(Assests As IAssetManager)
-End Interface
+Public Class EngineSettings
+    Public minWage As Double = 1
+
+End Class
+

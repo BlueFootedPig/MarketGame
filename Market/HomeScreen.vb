@@ -27,7 +27,7 @@ Public Class HomeScreen
         'popluationClock = New Timers.Timer(STANDARD_TICK)
         'AddHandler popluationClock.Elapsed, AddressOf ExecutePopulation
         'popluationClock.Start()
-
+        Dim systemSettings As New EngineSettings
 
         interfaceClock = New Timers.Timer(1000)
         AddHandler interfaceClock.Elapsed, AddressOf UpdateInterface
@@ -58,7 +58,7 @@ Public Class HomeScreen
         company.gamingStrategy.Add(New StockBuyStrategy(100, 100, "Lumber"))
         Dim producedRes As IResource = New LuxuryResource() With {.Name = "Stool", .Shares = 1}
         company.gamingStrategy.Add(New StockSellingBasicStrategy(200, 0, producedRes))
-        company.ProducedResource = New ResourceProduction() With {.ProducedResource = producedRes}
+        company.ProducedResource = New ResourceProduction(systemSettings) With {.ProducedResource = producedRes}
         company.ProducedResource.RequiredResources.Add(New CraftResource() With {.Name = "Lumber", .Shares = 2})
         gameEngine.Companies.Add(company)
 
@@ -67,7 +67,7 @@ Public Class HomeScreen
         company.Shares = 2000
         producedRes = New CraftResource() With {.Name = "Lumber", .Shares = 1}
         company.gamingStrategy.Add(New StockSellingBasicStrategy(50, 0, producedRes))
-        company.ProducedResource = New ResourceProduction() With {.ProducedResource = producedRes}
+        company.ProducedResource = New ResourceProduction(systemSettings) With {.ProducedResource = producedRes}
         gameEngine.Companies.Add(company)
 
 
@@ -90,6 +90,8 @@ Public Class HomeScreen
     End Sub
 
     Dim updatingObject As New Object
+
+    Dim listedResources As New Dictionary(Of String, Double)
 
     Private Sub UpdateTransactionGrid()
         Dim token As IBlock = New FunctionBlock(AddressOf UpdateTransactionGrid)
@@ -195,9 +197,17 @@ Public Class HomeScreen
 
         UpdateTransactionGrid()
 
+        UpdateWorldStats()
+
         token.Dispose()
 
 
+    End Sub
+
+    Private Sub UpdateWorldStats()
+        RichBarStaticItem.Caption = "Rich: " & gameEngine.society.Population.Where(Function(n) n.Income = 2).Count
+        MiddleClassBarStaticItem.Caption = "MiddleClass: " & gameEngine.society.Population.Where(Function(n) n.Income = 1).Count
+        PoorBarStaticItem.Caption = "Poor: " & gameEngine.society.Population.Where(Function(n) n.Income = 0).Count
     End Sub
 
     Private Sub ExecuteCompany(sender As Object, e As EventArgs) Handles CompanysBarButtonItem.ItemClick
@@ -209,8 +219,8 @@ Public Class HomeScreen
     Private rand As New Random(0)
     Private Sub ExecutePopulation(sender As Object, e As EventArgs) Handles StandardPopulation.ItemClick
 
-        gameEngine.society.RunPopulationCampaign(New WorldPopluationIncreaseCampaign(rand))
-        gameEngine.society.RunPopulationCampaign(New WorldPopluationDecreaseCampaign(rand))
+        gameEngine.society.RunPopulationCampaign(New WorldPopluationIncreaseCampaign(rand, 30))
+        gameEngine.society.RunPopulationCampaign(New WorldPopluationDecreaseCampaign(rand, 20))
 
         gameEngine.society.ProduceMoney()
 

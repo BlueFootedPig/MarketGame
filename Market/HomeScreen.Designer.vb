@@ -45,6 +45,10 @@ Partial Class HomeScreen
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.MarketGridControl = New DevExpress.XtraGrid.GridControl()
         Me.MarketGridView = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.WorldStatusRibbonPageGroup = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.PoorBarStaticItem = New DevExpress.XtraBars.BarStaticItem()
+        Me.MiddleClassBarStaticItem = New DevExpress.XtraBars.BarStaticItem()
+        Me.RichBarStaticItem = New DevExpress.XtraBars.BarStaticItem()
         CType(Me.RibbonControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ResourceDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ResourceGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -59,9 +63,9 @@ Partial Class HomeScreen
         'RibbonControl1
         '
         Me.RibbonControl1.ExpandCollapseItem.Id = 0
-        Me.RibbonControl1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl1.ExpandCollapseItem, Me.ResourceSelectionBarLinkContainerItem, Me.CommonBarButtonItem, Me.UncommonBarButtonItem, Me.RareBarButtonItem, Me.BuyBarButtonItem, Me.SellBarButtonItem, Me.BarButtonItem1, Me.BarButtonItem2, Me.ProduceLumberBarButtonItem, Me.StandardPopulation, Me.CompanysBarButtonItem})
+        Me.RibbonControl1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl1.ExpandCollapseItem, Me.ResourceSelectionBarLinkContainerItem, Me.CommonBarButtonItem, Me.UncommonBarButtonItem, Me.RareBarButtonItem, Me.BuyBarButtonItem, Me.SellBarButtonItem, Me.BarButtonItem1, Me.BarButtonItem2, Me.ProduceLumberBarButtonItem, Me.StandardPopulation, Me.CompanysBarButtonItem, Me.PoorBarStaticItem, Me.MiddleClassBarStaticItem, Me.RichBarStaticItem})
         Me.RibbonControl1.Location = New System.Drawing.Point(0, 0)
-        Me.RibbonControl1.MaxItemId = 13
+        Me.RibbonControl1.MaxItemId = 16
         Me.RibbonControl1.Name = "RibbonControl1"
         Me.RibbonControl1.Pages.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPage() {Me.ControlRibbonPage})
         Me.RibbonControl1.Size = New System.Drawing.Size(889, 142)
@@ -143,7 +147,7 @@ Partial Class HomeScreen
         '
         'ControlRibbonPage
         '
-        Me.ControlRibbonPage.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.ProductionRibbonPageGroup, Me.MarketRibbonPageGroup, Me.ProduceRibbonPageGroup, Me.EngineRibbonPageGroup})
+        Me.ControlRibbonPage.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.ProductionRibbonPageGroup, Me.MarketRibbonPageGroup, Me.ProduceRibbonPageGroup, Me.EngineRibbonPageGroup, Me.WorldStatusRibbonPageGroup})
         Me.ControlRibbonPage.Name = "ControlRibbonPage"
         Me.ControlRibbonPage.Text = "Control"
         '
@@ -231,6 +235,36 @@ Partial Class HomeScreen
         Me.MarketGridView.OptionsEditForm.ActionOnModifiedRowChange = DevExpress.XtraGrid.Views.Grid.EditFormModifiedAction.[Nothing]
         Me.MarketGridView.OptionsSelection.EnableAppearanceFocusedCell = False
         '
+        'WorldStatusRibbonPageGroup
+        '
+        Me.WorldStatusRibbonPageGroup.AllowTextClipping = False
+        Me.WorldStatusRibbonPageGroup.ItemLinks.Add(Me.PoorBarStaticItem)
+        Me.WorldStatusRibbonPageGroup.ItemLinks.Add(Me.MiddleClassBarStaticItem)
+        Me.WorldStatusRibbonPageGroup.ItemLinks.Add(Me.RichBarStaticItem)
+        Me.WorldStatusRibbonPageGroup.Name = "WorldStatusRibbonPageGroup"
+        Me.WorldStatusRibbonPageGroup.Text = "World Status"
+        '
+        'PoorBarStaticItem
+        '
+        Me.PoorBarStaticItem.Caption = "Poor"
+        Me.PoorBarStaticItem.Id = 13
+        Me.PoorBarStaticItem.Name = "PoorBarStaticItem"
+        Me.PoorBarStaticItem.TextAlignment = System.Drawing.StringAlignment.Near
+        '
+        'MiddleClassBarStaticItem
+        '
+        Me.MiddleClassBarStaticItem.Caption = "Middle"
+        Me.MiddleClassBarStaticItem.Id = 14
+        Me.MiddleClassBarStaticItem.Name = "MiddleClassBarStaticItem"
+        Me.MiddleClassBarStaticItem.TextAlignment = System.Drawing.StringAlignment.Near
+        '
+        'RichBarStaticItem
+        '
+        Me.RichBarStaticItem.Caption = "Rich"
+        Me.RichBarStaticItem.Id = 15
+        Me.RichBarStaticItem.Name = "RichBarStaticItem"
+        Me.RichBarStaticItem.TextAlignment = System.Drawing.StringAlignment.Near
+        '
         'HomeScreen
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -275,5 +309,9 @@ Partial Class HomeScreen
     Friend WithEvents StandardPopulation As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents CompanysBarButtonItem As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents EngineRibbonPageGroup As DevExpress.XtraBars.Ribbon.RibbonPageGroup
+    Friend WithEvents PoorBarStaticItem As DevExpress.XtraBars.BarStaticItem
+    Friend WithEvents MiddleClassBarStaticItem As DevExpress.XtraBars.BarStaticItem
+    Friend WithEvents RichBarStaticItem As DevExpress.XtraBars.BarStaticItem
+    Friend WithEvents WorldStatusRibbonPageGroup As DevExpress.XtraBars.Ribbon.RibbonPageGroup
 
 End Class

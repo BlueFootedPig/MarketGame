@@ -37,6 +37,14 @@ Public MustInherit Class IResource
     Property Shares As Integer
     Property Level As Integer
 
+    Public Shared ReadOnly Property CREDIT As IResource
+        Get
+            Return New CraftResource() With {.Name = "Widgets", .Shares = 0, .Level = 1}
+        End Get
+    End Property
+
+
+
     MustOverride Function CopyResource() As IResource
 
     Public Overrides Function ToString() As String

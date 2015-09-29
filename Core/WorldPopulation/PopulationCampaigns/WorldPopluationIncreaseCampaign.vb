@@ -2,8 +2,13 @@
 Public Class WorldPopluationDecreaseCampaign
     Implements IPopulationCampaign
 
-    Dim random As Random
-    Public Sub New(randomGenerator As Random)
+    Private random As Random
+    Private odds As Double
+    Public Sub New(randomGenerator As Random, oddsOfDeath As Double)
+        If randomGenerator Is Nothing Then Throw New ArgumentNullException("randomGenerator", "randomGenerator cannot be null.")
+        If oddsOfDeath < 0 OrElse oddsOfDeath > 100 Then Throw New ArgumentException("odds", "odds must be a percent between 0 and 100.")
+
+        odds = oddsOfDeath
         random = randomGenerator
     End Sub
 
@@ -13,7 +18,7 @@ Public Class WorldPopluationDecreaseCampaign
 
 
         For Each subject As Person In population
-            Dim hasDied As Boolean = random.Next(0, 100) < (28 - subject.Income * 5)
+            Dim hasDied As Boolean = random.Next(0, 100) < (odds - subject.Income * 5)
             If hasDied Then
                 populationDecreases.Add(subject)
             End If

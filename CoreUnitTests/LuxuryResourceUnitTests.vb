@@ -26,7 +26,7 @@ Public Class LuxuryResourceUnitTests
 
         Assert.AreEqual(3, testResource.PrefferedCustomers.Count)
         Assert.AreEqual("TestTag", testResource.PrefferedCustomers.First())
-        Assert.AreEqual("TestTag", testResource.PrefferedCustomers.Last())
+        Assert.AreEqual("TestTag3", testResource.PrefferedCustomers.Last())
         Assert.AreEqual(3, LuxuryResource.TotalTags)
     End Sub
 
