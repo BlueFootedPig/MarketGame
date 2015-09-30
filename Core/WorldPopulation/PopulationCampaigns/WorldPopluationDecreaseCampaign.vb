@@ -10,7 +10,7 @@ Public Class WorldPopluationIncreaseCampaign
         random = randomGenerator
     End Sub
 
-    Public Sub Run(ByRef population As IList(Of Person)) Implements IPopulationCampaign.Run
+    Public Sub Run(ByRef population As IList(Of IResourceGenerator)) Implements IPopulationCampaign.Run
 
         Dim populationIncreases As New Dictionary(Of Integer, Integer)
 

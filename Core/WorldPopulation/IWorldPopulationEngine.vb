@@ -1,7 +1,7 @@
 ﻿
 Public Interface IWorldPopulationEngine
 
-    ReadOnly Property Population As IList(Of Person)
+    ReadOnly Property Population As IList(Of IResourceGenerator)
 
     Property Wallet As IDictionary(Of String, Double)
 

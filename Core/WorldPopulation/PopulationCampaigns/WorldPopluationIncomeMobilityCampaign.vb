@@ -1,5 +1,5 @@
 ﻿
-Public Class WorldPopluationDecreaseCampaign
+Public Class WorldPopluationMobilityCampaign
     Implements IPopulationCampaign
 
     Private random As Random

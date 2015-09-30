@@ -1,5 +1,13 @@
-﻿Public Class Person
-    Public Property Tags As New List(Of String)
+﻿Public Interface IResourceGenerator
+    Function SpendMoney() As Double
+    Property Tags As IList(Of String)
+
+End Interface
+
+Public Class Person
+    Implements IResourceGenerator
+
+    Public Property Tags As IList(Of String) = New List(Of String) Implements IResourceGenerator.Tags
     Public Income As Integer
 
 
@@ -19,8 +27,8 @@
     End Sub
 
 
-    Public Function SpendMoney() As Double
-        Return Math.Pow(10, Income) / tags.Count
+    Public Function SpendMoney() As Double Implements IResourceGenerator.SpendMoney
+        Return Math.Pow(10, Income) / Tags.Count
     End Function
 
 End Class

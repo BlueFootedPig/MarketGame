@@ -74,7 +74,7 @@ Public Class WorldPopulationEngineUnitTests
 
     End Sub
 
-    Private Sub GeneratePopulation(ByRef population As List(Of Person))
+    Private Sub GeneratePopulation(ByRef population As List(Of IResourceGenerator))
         Dim newPerson As New Person(0)
         population.Add(newPerson)
         population.Add(newPerson)

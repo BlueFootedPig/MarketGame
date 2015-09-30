@@ -9,7 +9,7 @@ Imports Core
 
         Dim testingCampaign As New WorldPopluationIncreaseCampaign(New Random(0), 30)
 
-        Dim popluation As List(Of Person) = GenerateStandardPopulation()
+        Dim popluation As List(Of IResourceGenerator) = GenerateStandardPopulation()
 
         testingCampaign.Run(popluation)
 
@@ -22,7 +22,7 @@ Imports Core
 
         Dim testingCampaign As New WorldPopluationIncreaseCampaign(New Random(100), 30)
 
-        Dim popluation As List(Of Person) = GenerateStandardPopulation()
+        Dim popluation As List(Of IResourceGenerator) = GenerateStandardPopulation()
 
         testingCampaign.Run(popluation)
 
@@ -48,8 +48,8 @@ Imports Core
         Dim testingCampaign As New WorldPopluationIncreaseCampaign(New Random(0), 130)
     End Sub
 
-    Private Function GenerateStandardPopulation() As List(Of Person)
-        Dim returnValue As New List(Of Person)
+    Private Function GenerateStandardPopulation() As List(Of IResourceGenerator)
+        Dim returnValue As New List(Of IResourceGenerator)
 
         'poor people
         Dim newPerson As New Person(0)

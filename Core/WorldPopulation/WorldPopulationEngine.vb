@@ -3,8 +3,8 @@
 Public Class WorldPopulationEngine
     Implements IWorldPopulationEngine
 
-    Private _population As New List(Of Person)
-    Public ReadOnly Property Population As IList(Of Person) Implements IWorldPopulationEngine.Population
+    Private _population As New List(Of IResourceGenerator)
+    Public ReadOnly Property Population As IList(Of IResourceGenerator) Implements IWorldPopulationEngine.Population
         Get
             Return _population
         End Get

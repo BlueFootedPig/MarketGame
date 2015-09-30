@@ -205,9 +205,9 @@ Public Class HomeScreen
     End Sub
 
     Private Sub UpdateWorldStats()
-        RichBarStaticItem.Caption = "Rich: " & gameEngine.society.Population.Where(Function(n) n.Income = 2).Count
-        MiddleClassBarStaticItem.Caption = "MiddleClass: " & gameEngine.society.Population.Where(Function(n) n.Income = 1).Count
-        PoorBarStaticItem.Caption = "Poor: " & gameEngine.society.Population.Where(Function(n) n.Income = 0).Count
+        'RichBarStaticItem.Caption = "Rich: " & gameEngine.society.Population.Where(Function(n) n.Income = 2).Count
+        'MiddleClassBarStaticItem.Caption = "MiddleClass: " & gameEngine.society.Population.Where(Function(n) n.Income = 1).Count
+        'PoorBarStaticItem.Caption = "Poor: " & gameEngine.society.Population.Where(Function(n) n.Income = 0).Count
     End Sub
 
     Private Sub ExecuteCompany(sender As Object, e As EventArgs) Handles CompanysBarButtonItem.ItemClick

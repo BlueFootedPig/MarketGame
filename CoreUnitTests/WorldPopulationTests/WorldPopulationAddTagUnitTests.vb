@@ -9,7 +9,7 @@ Imports Core
 
         Dim testingCampaign As New GainTagWorldPopluationCampaign(New Random(0), 30, "TestTag")
 
-        Dim popluation As List(Of Person) = GenerateStandardPopulation()
+        Dim popluation As List(Of IResourceGenerator) = GenerateStandardPopulation()
 
         testingCampaign.Run(popluation)
 
@@ -22,7 +22,7 @@ Imports Core
 
         Dim testingCampaign As New GainTagWorldPopluationCampaign(New Random(100), 30, "TestTag")
 
-        Dim popluation As List(Of Person) = GenerateStandardPopulation()
+        Dim popluation As List(Of IResourceGenerator) = GenerateStandardPopulation()
 
         testingCampaign.Run(popluation)
 
@@ -59,8 +59,8 @@ Imports Core
         Dim testingCampaign As New GainTagWorldPopluationCampaign(Nothing, 50, "Test")
     End Sub
     'Adds 18 people
-    Private Function GenerateStandardPopulation() As List(Of Person)
-        Dim returnValue As New List(Of Person)
+    Private Function GenerateStandardPopulation() As List(Of IResourceGenerator)
+        Dim returnValue As New List(Of IResourceGenerator)
 
         '10 poor people
         Dim newPerson As New Person(0)

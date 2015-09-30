@@ -95,11 +95,13 @@
     <Compile Include="VoidAssestManager.vb" />
     <Compile Include="WorldPopulation\CompanyCampaigns\CreateCompanyByDemandCampaign.vb" />
     <Compile Include="WorldPopulation\CompanyCampaigns\ICompanyCampaign.vb" />
-    <Compile Include="WorldPopulation\PopulationCampaigns\IPopulationCampaign.vb" />
     <Compile Include="WorldPopulation\IWorldPopulationEngine.vb" />
+    <Compile Include="WorldPopulation\Budget.vb" />
     <Compile Include="WorldPopulation\Person.vb" />
     <Compile Include="WorldPopulation\PopulationCampaigns\GainTagWorldPopluationCampaign.vb" />
+    <Compile Include="WorldPopulation\PopulationCampaigns\IPopulationCampaign.vb" />
     <Compile Include="WorldPopulation\PopulationCampaigns\WorldPopluationDecreaseCampaign.vb" />
+    <Compile Include="WorldPopulation\PopulationCampaigns\WorldPopluationIncomeMobilityCampaign.vb" />
     <Compile Include="WorldPopulation\PopulationCampaigns\WorldPopluationIncreaseCampaign.vb" />
     <Compile Include="WorldPopulation\SpendingCampaigns\ISpendingCampaign.vb" />
     <Compile Include="WorldPopulation\SpendingCampaigns\StandardSpendingCampaign.vb" />
@@ -124,7 +126,9 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="WorldPopulation\WorldBudget\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="External DLLs\EventBlocker.dll" />
   </ItemGroup>
