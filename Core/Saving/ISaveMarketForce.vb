@@ -1,9 +1,17 @@
 ﻿Imports Core
 
-Public Interface ISaveMarketForce
+Public MustInherit Class IPersistMarketForce
 
-    Sub Save(marketForce As IMarketForce)
+    Public MustOverride Sub Save(marketForce As IMarketForce)
 
-End Interface
+    Public MustOverride Function LoadForce(nameOfForce As String, settings As EngineSettings) As IMarketForce
+
+    Public Shared Function Load(nameOfForce As String, persistance As IPersistMarketForce, settings As EngineSettings) As IMarketForce
+
+        Return persistance.LoadForce(nameOfForce, settings)
+
+    End Function
+
+End Class
 
 

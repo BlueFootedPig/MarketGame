@@ -8,20 +8,20 @@ Public Class Company
     Shared Property VoidCompany As Company = New Company(New VoidAssetManager(), Nothing)
 
     Private Assests As IAssetManager
-    Public Property savingProvider As ISaveMarketForce
+    Public Property savingProvider As IPersistMarketForce
 
     Friend ProfitPerUnit As Double
 
     Public Property ProducedResource As IResourceProduction
 
-    
+
     Public gamingStrategy As New List(Of IStrategy)
 
     Public Sub New(manager As IAssetManager)
         Me.New(manager, Nothing)
     End Sub
 
-    Public Sub New(manager As IAssetManager, savingSystem As ISaveMarketForce)
+    Public Sub New(manager As IAssetManager, savingSystem As IPersistMarketForce)
         If manager Is Nothing Then Throw New ArgumentNullException("manager", "An AssetManager must be provided.")
         Assests = manager
         savingProvider = savingSystem
