@@ -15,7 +15,7 @@ Public Class WorldPopluationIncreaseCampaign
         Dim populationIncreases As New Dictionary(Of Integer, Integer)
 
 
-        For Each subject As Person In population
+        For Each subject As Person In population.OfType(Of Person)()
             Dim hadChild As Boolean = random.Next(0, 100) < (odds - subject.Income * 5)
             If hadChild Then
                 If populationIncreases.ContainsKey(subject.Income) Then

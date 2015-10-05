@@ -16,13 +16,13 @@ Public Class WorldPopulationEngine
     Public Sub ProduceMoney() Implements IWorldPopulationEngine.ProduceMoney
 
 
-        For Each subject As Person In Population
+        For Each subject As Person In Population.OfType(Of Person)()
             Dim moneyProduced As Double = subject.SpendMoney()
             For Each tag As String In subject.Tags
-                If wallet.ContainsKey(tag) Then
-                    wallet(tag) += moneyProduced
+                If Wallet.ContainsKey(tag) Then
+                    Wallet(tag) += moneyProduced
                 Else
-                    wallet.Add(tag, moneyProduced)
+                    Wallet.Add(tag, moneyProduced)
                 End If
             Next
 

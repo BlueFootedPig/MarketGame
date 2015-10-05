@@ -51,10 +51,10 @@ Public Class HomeScreen
         UpdateTransactionGrid()
 
         'Setup companies
-        Dim company As New Company(New AssetManager())
+        Dim company As New Company(New AssetManager(), New SaveCompanyToFile("Best Stools"))
         company.Name = "Best Stools"
         company.Shares = 1000
-        company.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = 1000000})
+        company.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = 10000})
         company.gamingStrategy.Add(New StockBuyStrategy(100, 100, "Lumber"))
         Dim producedRes As IResource = New LuxuryResource() With {.Name = "Stool", .Shares = 1}
         company.gamingStrategy.Add(New StockSellingBasicStrategy(200, 0, producedRes))
@@ -62,17 +62,24 @@ Public Class HomeScreen
         company.ProducedResource.RequiredResources.Add(New CraftResource() With {.Name = "Lumber", .Shares = 2})
         gameEngine.Companies.Add(company)
 
-        company = New Company(New AssetManager())
+        company = New Company(New AssetManager(), New SaveCompanyToFile("Lumber Jacks Lumber"))
         company.Name = "Lumber Jacks Lumber"
         company.Shares = 2000
+        company.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = 1000})
         producedRes = New CraftResource() With {.Name = "Lumber", .Shares = 1}
         company.gamingStrategy.Add(New StockSellingBasicStrategy(50, 0, producedRes))
         company.ProducedResource = New ResourceProduction(systemSettings) With {.ProducedResource = producedRes}
         gameEngine.Companies.Add(company)
 
-
+        'SetupPopulation()
+        SetupBudgets()
         'setup population
         '20 poor
+
+
+    End Sub
+
+    Private Sub SetupPopulation()
         For counter As Integer = 0 To 20
             AddNewPerson(0)
         Next
@@ -86,8 +93,14 @@ Public Class HomeScreen
         For counter As Integer = 0 To 5
             AddNewPerson(2)
         Next
-
     End Sub
+
+    Private Sub SetupBudgets()
+        AddNewBudget("Poor", 5000)
+        AddNewBudget("Middle", 300)
+        AddNewBudget("Rich", 100)
+    End Sub
+
 
     Dim updatingObject As New Object
 
@@ -249,5 +262,15 @@ Public Class HomeScreen
         gameEngine.society.Population.Add(person)
     End Sub
 
+    Private Sub AddNewBudget(tag As String, basicBudget As Double)
+        Dim budget As New Budget(tag, basicBudget)
+        gameEngine.society.Population.Add(budget)
+    End Sub
+
     
+    Private Sub SaveButton_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles SaveButton.ItemClick
+        For Each force As IMarketForce In gameEngine.Companies
+            force.Save()
+        Next
+    End Sub
 End Class

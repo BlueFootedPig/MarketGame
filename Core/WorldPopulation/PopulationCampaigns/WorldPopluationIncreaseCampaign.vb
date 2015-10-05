@@ -17,7 +17,7 @@ Public Class WorldPopluationDecreaseCampaign
         Dim populationDecreases As New List(Of Person)
 
 
-        For Each subject As Person In population
+        For Each subject As Person In population.OfType(Of Person)()
             Dim hasDied As Boolean = random.Next(0, 100) < (odds - subject.Income * 5)
             If hasDied Then
                 populationDecreases.Add(subject)

@@ -90,6 +90,8 @@
     <Compile Include="Player.vb" />
     <Compile Include="ResourceProduction.vb" />
     <Compile Include="Resources.vb" />
+    <Compile Include="Saving\ISaveMarketForce.vb" />
+    <Compile Include="Saving\SaveCompanyToFile.vb" />
     <Compile Include="Strategies\StockValueBasicStrategy.vb" />
     <Compile Include="Transaction.vb" />
     <Compile Include="VoidAssestManager.vb" />
