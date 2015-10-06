@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ECBAB770-239A-4BA1-AECA-5A16CC866A29}</ProjectGuid>
+    <ProjectGuid>{D7702D04-E2A8-4B0D-9F80-2946B4393EA1}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Core</RootNamespace>
-    <AssemblyName>Core</AssemblyName>
+    <RootNamespace>SaveToFile</RootNamespace>
+    <AssemblyName>SaveToFile</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -18,7 +18,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Core.xml</DocumentationFile>
+    <DocumentationFile>SaveToFile.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -27,7 +27,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Core.xml</DocumentationFile>
+    <DocumentationFile>SaveToFile.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -43,10 +43,6 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EventBlocker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>External DLLs\EventBlocker.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -66,12 +62,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssetManager.vb" />
-    <Compile Include="Company.vb" />
-    <Compile Include="Engine.vb" />
-    <Compile Include="IAssetManager.vb" />
-    <Compile Include="LuxuryResource.vb" />
-    <Compile Include="Market.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -87,21 +77,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Player.vb" />
-    <Compile Include="ResourceProduction.vb" />
-    <Compile Include="Resources.vb" />
-    <Compile Include="Saving\ISaveMarketForce.vb" />
-    <Compile Include="Strategies\StockValueBasicStrategy.vb" />
-    <Compile Include="Transaction.vb" />
-    <Compile Include="VoidAssestManager.vb" />
-    <Compile Include="WorldPopulation\CompanyCampaigns\CreateCompanyByDemandCampaign.vb" />
-    <Compile Include="WorldPopulation\CompanyCampaigns\ICompanyCampaign.vb" />
-    <Compile Include="WorldPopulation\IWorldPopulationEngine.vb" />
-    <Compile Include="WorldPopulation\Person.vb" />
-    <Compile Include="WorldPopulation\PopulationCampaigns\IPopulationCampaign.vb" />
-    <Compile Include="WorldPopulation\SpendingCampaigns\ISpendingCampaign.vb" />
-    <Compile Include="WorldPopulation\SpendingCampaigns\StandardSpendingCampaign.vb" />
-    <Compile Include="WorldPopulation\WorldPopulationEngine.vb" />
+    <Compile Include="SaveCompanyToFile.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -123,10 +99,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="WorldPopulation\WorldBudget\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="External DLLs\EventBlocker.dll" />
+    <ProjectReference Include="..\Core\Core.vbproj">
+      <Project>{ecbab770-239a-4ba1-aeca-5a16cc866a29}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

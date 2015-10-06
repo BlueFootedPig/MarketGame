@@ -1,6 +1,8 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports Core
+Imports PersonPopulationCampaigns
+Imports System.Collections.Generic
 
 <TestClass()> Public Class WorldPopulationIncreaseUnitTests
 

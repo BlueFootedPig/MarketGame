@@ -16,7 +16,7 @@ Public Class WorldPopulationEngine
     Public Sub ProduceMoney() Implements IWorldPopulationEngine.ProduceMoney
 
 
-        For Each subject As Person In Population.OfType(Of Person)()
+        For Each subject As IResourceGenerator In Population
             Dim moneyProduced As Double = subject.SpendMoney()
             For Each tag As String In subject.Tags
                 If Wallet.ContainsKey(tag) Then

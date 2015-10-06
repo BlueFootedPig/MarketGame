@@ -3,13 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2013 for Windows Desktop
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Market", "Market\Market.vbproj", "{478AA975-69AC-4A0C-8E52-E4A45473AB4F}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MarketUI", "Market\MarketUI.vbproj", "{478AA975-69AC-4A0C-8E52-E4A45473AB4F}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Core", "Core\Core.vbproj", "{ECBAB770-239A-4BA1-AECA-5A16CC866A29}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CoreUnitTests", "CoreUnitTests\CoreUnitTests.vbproj", "{FA377098-1652-4094-A83D-9CE087A05360}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "EventBlocker", "..\Event-Manager\EventBlocker.vbproj", "{89A71FB3-B7E2-4734-867E-E3C442918D48}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SaveToFile", "SaveToFile\SaveToFile.vbproj", "{D7702D04-E2A8-4B0D-9F80-2946B4393EA1}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SaveToFileUnitTests", "SaveToFileUnitTests\SaveToFileUnitTests.vbproj", "{376D4837-2D91-4785-A8F1-AE08B32D4CCC}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "BudgetPopulationCampaigns", "PopulationCampaigns\BudgetPopulationCampaigns.vbproj", "{C2D8631F-C52D-4201-A59C-0928446AF5E7}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PersonPopulationCampaignsUnitTests", "PersonPopulationCampaignsUnitTests\PersonPopulationCampaignsUnitTests.vbproj", "{0FC898F9-B75F-403F-9018-896A8DE237E4}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PersonPopulationCampaigns", "PersonPopulationCampaigns\PersonPopulationCampaigns.vbproj", "{8DFA7721-E68D-40E1-B5AC-74BA5EB2D54A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +43,26 @@ Global
 		{89A71FB3-B7E2-4734-867E-E3C442918D48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89A71FB3-B7E2-4734-867E-E3C442918D48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89A71FB3-B7E2-4734-867E-E3C442918D48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7702D04-E2A8-4B0D-9F80-2946B4393EA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7702D04-E2A8-4B0D-9F80-2946B4393EA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7702D04-E2A8-4B0D-9F80-2946B4393EA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7702D04-E2A8-4B0D-9F80-2946B4393EA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{376D4837-2D91-4785-A8F1-AE08B32D4CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{376D4837-2D91-4785-A8F1-AE08B32D4CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{376D4837-2D91-4785-A8F1-AE08B32D4CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{376D4837-2D91-4785-A8F1-AE08B32D4CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2D8631F-C52D-4201-A59C-0928446AF5E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D8631F-C52D-4201-A59C-0928446AF5E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D8631F-C52D-4201-A59C-0928446AF5E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D8631F-C52D-4201-A59C-0928446AF5E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FC898F9-B75F-403F-9018-896A8DE237E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FC898F9-B75F-403F-9018-896A8DE237E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FC898F9-B75F-403F-9018-896A8DE237E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FC898F9-B75F-403F-9018-896A8DE237E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DFA7721-E68D-40E1-B5AC-74BA5EB2D54A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DFA7721-E68D-40E1-B5AC-74BA5EB2D54A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DFA7721-E68D-40E1-B5AC-74BA5EB2D54A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DFA7721-E68D-40E1-B5AC-74BA5EB2D54A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

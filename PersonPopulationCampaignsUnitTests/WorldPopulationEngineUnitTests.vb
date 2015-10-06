@@ -2,6 +2,8 @@
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports Core
 Imports NSubstitute
+Imports System.Collections.Generic
+Imports PersonPopulationCampaigns
 
 <TestClass()>
 Public Class WorldPopulationEngineUnitTests

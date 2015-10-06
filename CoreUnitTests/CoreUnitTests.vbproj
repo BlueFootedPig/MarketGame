@@ -108,10 +108,6 @@
     <Compile Include="StrategyTests\StockSellingStrategyUnitTests.vb" />
     <Compile Include="LuxuryResourceUnitTests.vb" />
     <Compile Include="ResourceProductionUnitTests.vb" />
-    <Compile Include="WorldPopulationTests\WorldPopulationAddTagUnitTests.vb" />
-    <Compile Include="WorldPopulationTests\WorldPopulationDecreaseUnitTests.vb" />
-    <Compile Include="WorldPopulationTests\WorldPopulationEngineUnitTests.vb" />
-    <Compile Include="WorldPopulationTests\WorldPopulationIncreaseUnitTests.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -141,6 +137,9 @@
   <ItemGroup>
     <Content Include="TestingDLLs\NSubstitute.dll" />
     <Content Include="TestingDLLs\NSubstitute.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WorldPopulationTests\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

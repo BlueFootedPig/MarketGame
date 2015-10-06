@@ -1,6 +1,9 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports Core
+Imports System.Collections.Generic
+Imports PersonPopulationCampaigns
+Imports System.Linq
 
 <TestClass()> Public Class WorldPopulationGainTagUnitTests
 

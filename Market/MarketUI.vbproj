@@ -4,30 +4,33 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ECBAB770-239A-4BA1-AECA-5A16CC866A29}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Core</RootNamespace>
-    <AssemblyName>Core</AssemblyName>
+    <ProjectGuid>{478AA975-69AC-4A0C-8E52-E4A45473AB4F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Market.My.MyApplication</StartupObject>
+    <RootNamespace>Market</RootNamespace>
+    <AssemblyName>Market</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>Windows</MyType>
+    <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Core.xml</DocumentationFile>
+    <DocumentationFile>Market.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Core.xml</DocumentationFile>
+    <DocumentationFile>Market.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -43,12 +46,19 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EventBlocker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>External DLLs\EventBlocker.dll</HintPath>
-    </Reference>
+    <Reference Include="DevExpress.Data.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v13.2.Core, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGrid.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPrinting.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -60,18 +70,21 @@
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssetManager.vb" />
-    <Compile Include="Company.vb" />
-    <Compile Include="Engine.vb" />
-    <Compile Include="IAssetManager.vb" />
-    <Compile Include="LuxuryResource.vb" />
-    <Compile Include="Market.vb" />
+    <Compile Include="HomeScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HomeScreen.Designer.vb">
+      <DependentUpon>HomeScreen.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -87,23 +100,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Player.vb" />
-    <Compile Include="ResourceProduction.vb" />
-    <Compile Include="Resources.vb" />
-    <Compile Include="Saving\ISaveMarketForce.vb" />
-    <Compile Include="Strategies\StockValueBasicStrategy.vb" />
-    <Compile Include="Transaction.vb" />
-    <Compile Include="VoidAssestManager.vb" />
-    <Compile Include="WorldPopulation\CompanyCampaigns\CreateCompanyByDemandCampaign.vb" />
-    <Compile Include="WorldPopulation\CompanyCampaigns\ICompanyCampaign.vb" />
-    <Compile Include="WorldPopulation\IWorldPopulationEngine.vb" />
-    <Compile Include="WorldPopulation\Person.vb" />
-    <Compile Include="WorldPopulation\PopulationCampaigns\IPopulationCampaign.vb" />
-    <Compile Include="WorldPopulation\SpendingCampaigns\ISpendingCampaign.vb" />
-    <Compile Include="WorldPopulation\SpendingCampaigns\StandardSpendingCampaign.vb" />
-    <Compile Include="WorldPopulation\WorldPopulationEngine.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="HomeScreen.resx">
+      <DependentUpon>HomeScreen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -121,12 +123,29 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="WorldPopulation\WorldBudget\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="External DLLs\EventBlocker.dll" />
+    <ProjectReference Include="..\..\Event-Manager\EventBlocker.vbproj">
+      <Project>{89a71fb3-b7e2-4734-867e-e3c442918d48}</Project>
+      <Name>EventBlocker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.vbproj">
+      <Project>{ecbab770-239a-4ba1-aeca-5a16cc866a29}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PersonPopulationCampaigns\PersonPopulationCampaigns.vbproj">
+      <Project>{8dfa7721-e68d-40e1-b5ac-74ba5eb2d54a}</Project>
+      <Name>PersonPopulationCampaigns</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PopulationCampaigns\BudgetPopulationCampaigns.vbproj">
+      <Project>{c2d8631f-c52d-4201-a59c-0928446af5e7}</Project>
+      <Name>BudgetPopulationCampaigns</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SaveToFile\SaveToFile.vbproj">
+      <Project>{d7702d04-e2a8-4b0d-9f80-2946b4393ea1}</Project>
+      <Name>SaveToFile</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
