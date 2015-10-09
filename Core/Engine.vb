@@ -3,7 +3,7 @@
 Public Class Engine
     Public Companies As New List(Of IMarketForce)
     Public society As IWorldPopulationEngine
-    Private market As IMarket
+    Public market As IMarket
 
     Public Sub New(thisMarket As IMarket, populationEngine As IWorldPopulationEngine)
         If thisMarket Is Nothing Then Throw New ArgumentNullException("thismarket", "thisMarket cannot be Null.")

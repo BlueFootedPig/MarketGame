@@ -38,19 +38,19 @@ Partial Class HomeScreen
         Me.PoorBarStaticItem = New DevExpress.XtraBars.BarStaticItem()
         Me.MiddleClassBarStaticItem = New DevExpress.XtraBars.BarStaticItem()
         Me.RichBarStaticItem = New DevExpress.XtraBars.BarStaticItem()
+        Me.SaveButton = New DevExpress.XtraBars.BarButtonItem()
         Me.ControlRibbonPage = New DevExpress.XtraBars.Ribbon.RibbonPage()
         Me.ProductionRibbonPageGroup = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.MarketRibbonPageGroup = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.ProduceRibbonPageGroup = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.EngineRibbonPageGroup = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.WorldStatusRibbonPageGroup = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.SavingRibbonPageGroup = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.ResourceDataGrid = New DevExpress.XtraGrid.GridControl()
         Me.ResourceGridView = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.MarketGridControl = New DevExpress.XtraGrid.GridControl()
         Me.MarketGridView = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.SavingRibbonPageGroup = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
-        Me.SaveButton = New DevExpress.XtraBars.BarButtonItem()
         CType(Me.RibbonControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ResourceDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ResourceGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -168,6 +168,12 @@ Partial Class HomeScreen
         Me.RichBarStaticItem.Name = "RichBarStaticItem"
         Me.RichBarStaticItem.TextAlignment = System.Drawing.StringAlignment.Near
         '
+        'SaveButton
+        '
+        Me.SaveButton.Caption = "Save"
+        Me.SaveButton.Id = 16
+        Me.SaveButton.Name = "SaveButton"
+        '
         'ControlRibbonPage
         '
         Me.ControlRibbonPage.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.ProductionRibbonPageGroup, Me.MarketRibbonPageGroup, Me.ProduceRibbonPageGroup, Me.EngineRibbonPageGroup, Me.WorldStatusRibbonPageGroup, Me.SavingRibbonPageGroup})
@@ -210,6 +216,13 @@ Partial Class HomeScreen
         Me.WorldStatusRibbonPageGroup.ItemLinks.Add(Me.RichBarStaticItem)
         Me.WorldStatusRibbonPageGroup.Name = "WorldStatusRibbonPageGroup"
         Me.WorldStatusRibbonPageGroup.Text = "World Status"
+        '
+        'SavingRibbonPageGroup
+        '
+        Me.SavingRibbonPageGroup.AllowTextClipping = False
+        Me.SavingRibbonPageGroup.ItemLinks.Add(Me.SaveButton)
+        Me.SavingRibbonPageGroup.Name = "SavingRibbonPageGroup"
+        Me.SavingRibbonPageGroup.Text = "Save / Load"
         '
         'ResourceDataGrid
         '
@@ -267,19 +280,6 @@ Partial Class HomeScreen
         Me.MarketGridView.OptionsEditForm.ActionOnModifiedRowChange = DevExpress.XtraGrid.Views.Grid.EditFormModifiedAction.[Nothing]
         Me.MarketGridView.OptionsSelection.EnableAppearanceFocusedCell = False
         '
-        'SavingRibbonPageGroup
-        '
-        Me.SavingRibbonPageGroup.AllowTextClipping = False
-        Me.SavingRibbonPageGroup.ItemLinks.Add(Me.SaveButton)
-        Me.SavingRibbonPageGroup.Name = "SavingRibbonPageGroup"
-        Me.SavingRibbonPageGroup.Text = "Save / Load"
-        '
-        'SaveButton
-        '
-        Me.SaveButton.Caption = "Save"
-        Me.SaveButton.Id = 16
-        Me.SaveButton.Name = "SaveButton"
-        '
         'HomeScreen
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -288,7 +288,7 @@ Partial Class HomeScreen
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.RibbonControl1)
         Me.Name = "HomeScreen"
-        Me.Text = "Home"
+        Me.Text = "b"
         CType(Me.RibbonControl1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ResourceDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ResourceGridView, System.ComponentModel.ISupportInitialize).EndInit()

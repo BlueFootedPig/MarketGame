@@ -1,18 +1,18 @@
 ﻿Imports EventBlocker
 Imports Core
 Imports SaveToFile
-Imports WorldPopulation
 Imports PersonPopulationCampaigns
 Imports PopulationCampaigns
+Imports Ninject
+
 
 Public Class HomeScreen
 
     Private market As IMarket = New Core.Market
-    Private gameEngine As New Engine(market, New WorldPopulationEngine())
+    ' Private gameEngine As New Engine(market, New WorldPopulationEngine())
+    Private gameEngine As Engine
     Private user As New Player(New AssetManager())
     Private interfaceClock As System.Timers.Timer
-    ' Private computerClock As System.Timers.Timer
-    '  Private popluationClock As System.Timers.Timer
     Private Const STANDARD_TICK As Integer = 5000
 
     Public Sub New()
@@ -22,15 +22,12 @@ Public Class HomeScreen
         DevExpress.Data.CurrencyDataController.DisableThreadingProblemsDetection = True
         ' Add any initialization after the InitializeComponent() call.
 
+        SetupObjectMap()
+        gameEngine = kernal.Get(Of Engine)()
+        market = gameEngine.Market
+
         user.currentSkill = SkillChoice.Common
 
-        'computerClock = New Timers.Timer(STANDARD_TICK / 2)
-        'AddHandler computerClock.Elapsed, AddressOf ExecuteCompany
-        'computerClock.Start()
-
-        'popluationClock = New Timers.Timer(STANDARD_TICK)
-        'AddHandler popluationClock.Elapsed, AddressOf ExecutePopulation
-        'popluationClock.Start()
         Dim systemSettings As New EngineSettings
 
         interfaceClock = New Timers.Timer(1000)
@@ -277,4 +274,15 @@ Public Class HomeScreen
             force.Save()
         Next
     End Sub
+
+    Private kernal As IKernel
+
+    Private Sub SetupObjectMap()
+
+        kernal = New StandardKernel()
+        kernal.Bind(Of IMarket).To(Of Core.Market)()
+        kernal.Bind(Of IWorldPopulationEngine).To(Of WorldPopulationEngine)()
+
+    End Sub
+
 End Class
