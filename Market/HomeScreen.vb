@@ -52,7 +52,7 @@ Public Class HomeScreen
         UpdateTransactionGrid()
 
         'Setup companies
-        Dim company As New Company(New AssetManager(), New SaveCompanyToFile("Best Stools"))
+        Dim company As New Company(New AssetManager(), New SaveCompanyToFile())
         company.Name = "Best Stools"
         company.Shares = 1000
         company.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = 10000})
@@ -63,7 +63,7 @@ Public Class HomeScreen
         company.ProducedResource.RequiredResources.Add(New CraftResource() With {.Name = "Lumber", .Shares = 2})
         gameEngine.Companies.Add(company)
 
-        company = New Company(New AssetManager(), New SaveCompanyToFile("Lumber Jacks Lumber"))
+        company = New Company(New AssetManager(), New SaveCompanyToFile())
         company.Name = "Lumber Jacks Lumber"
         company.Shares = 2000
         company.AddResource(New CraftResource() With {.Name = CraftResource.CREDIT, .Shares = 1000})

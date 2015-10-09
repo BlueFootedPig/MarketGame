@@ -1,0 +1,4 @@
+CompanyWithAssets,1,100
+--EndRequired--
+Core.CraftResource,CraftResource,2,1337
+Core.LuxuryResource,LuxResource,2,31337

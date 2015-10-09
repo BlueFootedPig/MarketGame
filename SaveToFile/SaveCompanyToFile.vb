@@ -6,9 +6,8 @@ Public Class SaveCompanyToFile
 
     Private BASE_PATH As String = "./data/"
 
-    Public Sub New(filePath As String)
-        'If String.IsNullOrEmpty(filePath) Then Throw New ArgumentException("filePath", "filePath cannot be null or empty.")
-        'path = BASE_PATH & filePath
+    Public Sub New()
+        
     End Sub
 
     Public Overrides Sub Save(marketForce As IMarketForce)
@@ -91,15 +90,18 @@ Public Class SaveCompanyToFile
 
         returnValue &= Environment.NewLine
 
-        returnValue &= String.Join(",", New Object() {companyToSave.ProducedResource.LaborLevel, _
-                                                      companyToSave.ProducedResource.ProducedResource.ToString()})
+        If companyToSave.ProducedResource IsNot Nothing Then
 
-        returnValue &= Environment.NewLine
+            returnValue &= String.Join(",", New Object() {companyToSave.ProducedResource.LaborLevel, _
+                                                          companyToSave.ProducedResource.ProducedResource.ToString()})
 
-        For Each item As IResource In companyToSave.ProducedResource.RequiredResources
-            returnValue &= String.Join(",", New Object() {item.Name, item.Level, item.Shares})
             returnValue &= Environment.NewLine
-        Next
+
+            For Each item As IResource In companyToSave.ProducedResource.RequiredResources
+                returnValue &= String.Join(",", New Object() {item.Name, item.Level, item.Shares})
+                returnValue &= Environment.NewLine
+            Next
+        End If
 
         returnValue &= END_REQUIRED
         returnValue &= Environment.NewLine
