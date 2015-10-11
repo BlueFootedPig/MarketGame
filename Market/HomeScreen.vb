@@ -225,8 +225,13 @@ Public Class HomeScreen
     End Sub
 
     Private Sub ExecuteCompany(sender As Object, e As EventArgs) Handles CompanysBarButtonItem.ItemClick
+        Try
+            gameEngine.ExecuteComputerActions()
+        Catch ex As Exception
+            MessageBox.Show("Could not perform Task." & Environment.NewLine & ex.Message)
 
-        gameEngine.ExecuteComputerActions()
+        End Try
+
 
     End Sub
 

@@ -1,0 +1,4 @@
+CompanyWithResourceProduction_SingleResourceRequired,1,100
+1,OutputRes;1
+TestRequired,2,2
+--EndRequired--

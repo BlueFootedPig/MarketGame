@@ -112,6 +112,12 @@
     <None Include="data\Expected_CompanyWithAssets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="data\Expected_CompanyWithResourceProduction_ManyResourceRequired">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\Expected_CompanyWithResourceProduction_SingleResourceRequired">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="data\Expected_SaveEmptyCompany">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
