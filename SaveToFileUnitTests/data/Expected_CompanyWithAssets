@@ -1,4 +1,4 @@
 CompanyWithAssets,1,100
 --EndRequired--
-Core.CraftResource,CraftResource,2,1337
-Core.LuxuryResource,LuxResource,2,31337
+Core.CraftResource- Core- Version=1.0.0.0- Culture=neutral- PublicKeyToken=null,CraftResource,2,1337
+Core.LuxuryResource- Core- Version=1.0.0.0- Culture=neutral- PublicKeyToken=null,LuxResource,2,31337

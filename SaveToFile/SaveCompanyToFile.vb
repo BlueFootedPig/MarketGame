@@ -52,6 +52,7 @@ Public Class SaveCompanyToFile
                 newCompany.Level = companyInfo(COMPANY_LEVEL_INDEX)
                 newCompany.Shares = companyInfo(COMPANY_SHARE_INDEX)
 
+
                 Dim productionInfo As String = sr.ReadLine()
                 If productionInfo <> END_REQUIRED Then
                     Dim productionDetails As String() = productionInfo.Split(",")
@@ -63,14 +64,26 @@ Public Class SaveCompanyToFile
                     While requirementInfo <> END_REQUIRED
                         Dim requirementDetails As String() = requirementInfo.Split(",")
 
-                        Dim newResource As IResource = Activator.CreateInstance(Type.GetType(requirementDetails(0)))
-                        newResource.Name = requirementInfo(RESOURCE_NAME_INDEX)
-                        newResource.Level = Integer.Parse(requirementInfo(RESOURCE_LEVEL_INDEX))
-                        newResource.Shares = Integer.Parse(requirementInfo(RESOURCE_SHARE_INDEX))
+                        Dim newResource As IResource = Activator.CreateInstance(Type.GetType(requirementDetails(0).Replace("-", ",")))
+                        newResource.Name = requirementDetails(RESOURCE_NAME_INDEX)
+                        newResource.Level = Integer.Parse(requirementDetails(RESOURCE_LEVEL_INDEX))
+                        newResource.Shares = Integer.Parse(requirementDetails(RESOURCE_SHARE_INDEX))
+                        requirementInfo = sr.ReadLine()
                     End While
 
                 End If
 
+                While Not sr.EndOfStream
+                    Dim assetLine As String = sr.ReadLine()
+                    'Example line:
+                    'Core.CraftResource,CraftResource,2,1337
+                    Dim splitLine As String() = assetLine.Split(",")
+                    Dim resourceToAdd As IResource = Activator.CreateInstance(Type.GetType(splitLine(0).Replace("-", ",")))
+                    resourceToAdd.Name = splitLine(1)
+                    resourceToAdd.Level = splitLine(2)
+                    resourceToAdd.Shares = splitLine(3)
+                    newCompany.AddResource(resourceToAdd)
+                End While
 
             End Using
         End Using
@@ -98,7 +111,7 @@ Public Class SaveCompanyToFile
             returnValue &= Environment.NewLine
 
             For Each item As IResource In companyToSave.ProducedResource.RequiredResources
-                returnValue &= String.Join(",", New Object() {item.Name, item.Level, item.Shares})
+                returnValue &= String.Join(",", New Object() {item.GetType().AssemblyQualifiedName.Replace(",", "-"), item.Name, item.Level, item.Shares})
                 returnValue &= Environment.NewLine
             Next
         End If
@@ -107,7 +120,7 @@ Public Class SaveCompanyToFile
         returnValue &= Environment.NewLine
 
         For Each item As IResource In companyToSave.GetAllAssets()
-            returnValue &= String.Join(",", New Object() {item.GetType(), item.Name, item.Level, item.Shares})
+            returnValue &= String.Join(",", New Object() {item.GetType().AssemblyQualifiedName.Replace(",", "-"), item.Name, item.Level, item.Shares})
             returnValue &= Environment.NewLine
         Next
 

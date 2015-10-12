@@ -1,5 +1,5 @@
 CompanyWithResourceProduction_ManyResourceRequired,1,100
 1,OutputRes;1
-TestRequired,2,2
-TestRequired2,2,2
+Core.CraftResource- Core- Version=1.0.0.0- Culture=neutral- PublicKeyToken=null,TestRequired,2,2
+Core.CraftResource- Core- Version=1.0.0.0- Culture=neutral- PublicKeyToken=null,TestRequired2,2,2
 --EndRequired--
