@@ -24,7 +24,20 @@ Public Class SaveCompanyToFileUnitTests
     End Sub
 
     <TestMethod()>
-    Public Sub SaveCompanyToFile_CompanyWithAssests()
+    Public Sub SaveCompanyToFile_SaveEngineSettings()
+        Dim testSaveSettings As New SaveCompanyToFile()
+
+        Dim gameEngine As New EngineSettings()
+        gameEngine.minWage = 1337
+
+        testSaveSettings.SaveGameSettings(gameEngine)
+        
+
+        CompareFiles(outputFileExtension & "Expected_GameSettings", outputFileExtension & "GameSettings")
+    End Sub
+
+    <TestMethod()>
+    Public Sub SaveCompanyToFile_SaveCompanyWithAssests()
         Dim nCompany As New Company(New AssetManager, New SaveCompanyToFile())
 
         nCompany.Name = "CompanyWithAssets"
@@ -43,7 +56,7 @@ Public Class SaveCompanyToFileUnitTests
     End Sub
 
     <TestMethod()>
-    Public Sub SaveCompanyToFile_CompanyWithResourceProduction_SingleResourceRequired()
+    Public Sub SaveCompanyToFile_SaveCompanyWithResourceProduction_SingleResourceRequired()
         Dim nCompany As New Company(New AssetManager, New SaveCompanyToFile())
 
         nCompany.Name = "CompanyWithResourceProduction_SingleResourceRequired"
@@ -62,7 +75,7 @@ Public Class SaveCompanyToFileUnitTests
     End Sub
 
     <TestMethod()>
-    Public Sub SaveCompanyToFile_CompanyWithResourceProduction_ManyResourceRequired()
+    Public Sub SaveCompanyToFile_SaveCompanyWithResourceProduction_ManyResourceRequired()
         Dim nCompany As New Company(New AssetManager, New SaveCompanyToFile())
 
         nCompany.Name = "CompanyWithResourceProduction_ManyResourceRequired"
@@ -84,7 +97,7 @@ Public Class SaveCompanyToFileUnitTests
 
     <TestMethod()>
     Public Sub SaveCompanyToFile_LoadCompanyByBase_Basic()
-        Dim testCompany As Company = IPersistMarketForce.Load("Expected_SaveEmptyCompany", New SaveCompanyToFile(), Nothing)
+        Dim testCompany As Company = IPersistMarketForce.LoadMarketForce("Expected_SaveEmptyCompany", New SaveCompanyToFile(), Nothing)
 
         Assert.AreEqual("SaveEmptyCompany", testCompany.Name)
         Assert.AreEqual(100, testCompany.Shares)
@@ -94,7 +107,7 @@ Public Class SaveCompanyToFileUnitTests
 
     <TestMethod()>
     Public Sub SaveCompanyToFile_LoadCompanyByBase_CompanyWithAssets()
-        Dim testCompany As Company = IPersistMarketForce.Load("Expected_CompanyWithAssets", New SaveCompanyToFile(), Nothing)
+        Dim testCompany As Company = IPersistMarketForce.LoadMarketForce("Expected_CompanyWithAssets", New SaveCompanyToFile(), Nothing)
 
         Assert.AreEqual("CompanyWithAssets", testCompany.Name)
         Assert.AreEqual(100, testCompany.Shares)
@@ -108,7 +121,7 @@ Public Class SaveCompanyToFileUnitTests
 
     <TestMethod()>
     Public Sub SaveCompanyToFile_LoadCompanyByBase_CompanyWithResourceProduction_Simple()
-        Dim testCompany As Company = IPersistMarketForce.Load("Expected_CompanyWithResourceProduction_SingleResourceRequired", New SaveCompanyToFile(), New EngineSettings())
+        Dim testCompany As Company = IPersistMarketForce.LoadMarketForce("Expected_CompanyWithResourceProduction_SingleResourceRequired", New SaveCompanyToFile(), New EngineSettings())
 
         Assert.AreEqual("CompanyWithResourceProduction_SingleResourceRequired", testCompany.Name)
         Assert.AreEqual(100, testCompany.Shares)
@@ -118,7 +131,7 @@ Public Class SaveCompanyToFileUnitTests
 
     <TestMethod()>
     Public Sub SaveCompanyToFile_LoadCompanyByBase_CompanyWithResourceProduction_Complex()
-        Dim testCompany As Company = IPersistMarketForce.Load("Expected_CompanyWithResourceProduction_ManyResourceRequired", New SaveCompanyToFile(), New EngineSettings())
+        Dim testCompany As Company = IPersistMarketForce.LoadMarketForce("Expected_CompanyWithResourceProduction_ManyResourceRequired", New SaveCompanyToFile(), New EngineSettings())
 
         Assert.AreEqual("CompanyWithResourceProduction_ManyResourceRequired", testCompany.Name)
         Assert.AreEqual(100, testCompany.Shares)

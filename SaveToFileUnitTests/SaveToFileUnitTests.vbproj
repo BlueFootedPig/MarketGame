@@ -118,6 +118,9 @@
     <None Include="data\Expected_CompanyWithResourceProduction_SingleResourceRequired">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="data\Expected_GameSettings">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="data\Expected_SaveEmptyCompany">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

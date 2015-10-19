@@ -1,5 +1,6 @@
 ﻿Imports Core
 Imports System.IO
+Imports System.Text
 
 Public Class SaveCompanyToFile
     Inherits IPersistMarketForce
@@ -7,18 +8,16 @@ Public Class SaveCompanyToFile
     Private BASE_PATH As String = "./data/"
 
     Public Sub New()
-        
+        Directory.CreateDirectory(BASE_PATH)
     End Sub
 
-    Public Overrides Sub Save(marketForce As IMarketForce)
+    Public Overrides Sub SaveMarketForce(marketForce As IMarketForce)
         If marketForce Is Nothing Then Throw New ArgumentNullException("marketForce", "marketForce cannot be null.")
         If marketForce.GetType() <> GetType(Company) Then Throw New ArgumentException("marketForce", "marketForce must be a Company.")
 
         Dim companyToSave As Company = marketForce
 
         Dim saveString As String = GenerateSaveString(companyToSave)
-
-        Directory.CreateDirectory(BASE_PATH)
 
         Using fs As FileStream = File.Create(BASE_PATH & companyToSave.Name)
             Using sw As New StreamWriter(fs)
@@ -91,6 +90,19 @@ Public Class SaveCompanyToFile
         Return newCompany
 
     End Function
+
+    Public Overrides Sub SaveGameSettings(settings As EngineSettings)
+        Using fs As FileStream = File.Create(BASE_PATH & "GameSettings")
+            Using sw As New StreamWriter(fs)
+                Dim saveString As New StringBuilder
+                saveString.Append("Min Wage:" & settings.minWage)
+
+                sw.Write(saveString.ToString())
+            End Using
+
+        End Using
+
+    End Sub
 
     Private END_REQUIRED As String = "--EndRequired--"
 
