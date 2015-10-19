@@ -37,6 +37,16 @@ Public Class SaveCompanyToFileUnitTests
     End Sub
 
     <TestMethod()>
+    Public Sub SaveCompanyToFile_LoadEngineSettings()
+        Dim testSaveSettings As New SaveCompanyToFile()
+
+        Dim resultEngineSettings As EngineSettings = testSaveSettings.LoadGameSettings()
+
+        Assert.AreEqual(1337.0, resultEngineSettings.minWage)
+
+    End Sub
+
+    <TestMethod()>
     Public Sub SaveCompanyToFile_SaveCompanyWithAssests()
         Dim nCompany As New Company(New AssetManager, New SaveCompanyToFile())
 

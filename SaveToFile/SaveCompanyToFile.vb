@@ -92,7 +92,7 @@ Public Class SaveCompanyToFile
     End Function
 
     Public Overrides Sub SaveGameSettings(settings As EngineSettings)
-        Using fs As FileStream = File.Create(BASE_PATH & "GameSettings")
+        Using fs As FileStream = File.Create(BASE_PATH & GAME_SETTINGS_PATH)
             Using sw As New StreamWriter(fs)
                 Dim saveString As New StringBuilder
                 saveString.Append("Min Wage:" & settings.minWage)
@@ -103,6 +103,28 @@ Public Class SaveCompanyToFile
         End Using
 
     End Sub
+
+    Private Const GAME_SETTINGS_PATH As String = "GameSettings"
+
+    Public Overrides Function LoadGameSettings() As EngineSettings
+        Dim returnValue As New EngineSettings
+
+        Using fs As FileStream = File.OpenRead(BASE_PATH & GAME_SETTINGS_PATH)
+            Using sr As New StreamReader(fs)
+                Dim rawString As String = sr.ReadLine()
+                Dim splitString As String() = rawString.Split(":")
+
+                Select Case splitString(0)
+                    Case "Min Wage"
+                        returnValue.minWage = Double.Parse(splitString(1))
+                End Select
+
+            End Using
+        End Using
+
+        Return returnValue
+
+    End Function
 
     Private END_REQUIRED As String = "--EndRequired--"
 
