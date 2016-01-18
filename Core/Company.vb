@@ -34,7 +34,7 @@ Public Class Company
     Public Sub Save() Implements IMarketForce.Save
         If savingProvider Is Nothing Then Throw New InvalidOperationException("A saving system must be provided in order to save.")
 
-        savingProvider.Save(Me)
+        savingProvider.SaveMarketForce(Me)
 
     End Sub
 
