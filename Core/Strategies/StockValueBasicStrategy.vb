@@ -1,12 +1,13 @@
 ﻿Public Interface IStrategy
     Sub Execute(company As Company, theMarket As IMarket)
+    Function getStateObject() As StateObject
 End Interface
 
 Public Class StockBuyStrategy
     Implements IStrategy
-    Dim baselinePrice As Integer
-    Dim idealShares As Integer
-    Dim ResourceToBuyName As String
+    Private baselinePrice As Integer
+    Private idealShares As Integer
+    Private resourceToBuyName As String
 
     ''' <summary>
     ''' Sets up a strategy of buying resources.
@@ -18,23 +19,31 @@ Public Class StockBuyStrategy
     Public Sub New(baseline As Integer, shares As Integer, resourceToBuy As String)
         baselinePrice = baseline
         idealShares = shares
-        ResourceToBuyName = resourceToBuy
+        resourceToBuyName = resourceToBuy
     End Sub
+
+    Public Function GetStateObject() As StateObject Implements IStrategy.getStateObject
+        Dim nStateObject As New StateObject(Me)
+        nStateObject.SetProperty("baselinePrice", baselinePrice)
+        nStateObject.SetProperty("idealShares", idealShares)
+        nStateObject.SetProperty("resourceToBuyName", resourceToBuyName)
+        Return nStateObject
+    End Function
 
     Public Sub Execute(theCompany As Company, theMarket As IMarket) Implements IStrategy.Execute
 
-        Dim currentResource As CraftResource = theCompany.GetAsset(ResourceToBuyName)
+        Dim currentResource As CraftResource = theCompany.GetAsset(resourceToBuyName)
         Dim numberOfShares As Integer = 0
         If currentResource IsNot Nothing Then
             numberOfShares = currentResource.Shares
         End If
 
-        Dim listOfMyOfferings As IEnumerable(Of Transaction) = theMarket.BuyingOfferings.Where(Function(n) n.Owner.Name = theCompany.Name AndAlso n.Resource.Name = ResourceToBuyName)
+        Dim listOfMyOfferings As IEnumerable(Of Transaction) = theMarket.BuyingOfferings.Where(Function(n) n.Owner.Name = theCompany.Name AndAlso n.Resource.Name = resourceToBuyName)
         If listOfMyOfferings.Count > 0 Then numberOfShares += listOfMyOfferings.Sum(Function(n) n.Resource.Shares)
 
 
         If numberOfShares < idealShares Then
-            theMarket.Buy(baselinePrice, New CraftResource() With {.Name = ResourceToBuyName, .Shares = idealShares - numberOfShares}, theCompany)
+            theMarket.Buy(baselinePrice, New CraftResource() With {.Name = resourceToBuyName, .Shares = idealShares - numberOfShares}, theCompany)
         End If
 
     End Sub
@@ -42,15 +51,23 @@ End Class
 
 Public Class StockSellingBasicStrategy
     Implements IStrategy
-    Dim baselinePrice As Integer
-    Dim idealShares As Integer
-    Dim ResourceToSellName As IResource
+    Private baselinePrice As Integer
+    Private idealShares As Integer
+    Private ResourceToSellName As IResource
 
     Public Sub New(baseline As Integer, shares As Integer, resourceToSell As IResource)
         ResourceToSellName = resourceToSell
         baselinePrice = baseline
         idealShares = shares
     End Sub
+
+    Public Function GetStateObject() As StateObject Implements IStrategy.getStateObject
+        Dim nStateObject As New StateObject(Me)
+        nStateObject.SetProperty("baselinePrice", baselinePrice)
+        nStateObject.SetProperty("idealShares", idealShares)
+        nStateObject.SetProperty("ResourceToSellName", ResourceToSellName)
+        Return nStateObject
+    End Function
 
     Public Sub Execute(theCompany As Company, theMarket As IMarket) Implements IStrategy.Execute
         Dim currentResource As IResource = theCompany.GetAsset(ResourceToSellName.Name)

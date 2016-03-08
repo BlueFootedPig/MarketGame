@@ -43,7 +43,14 @@ Public MustInherit Class IResource
         End Get
     End Property
 
+    Public Function GetStateObject() As StateObject
+        Dim nStateObject As New StateObject(Me)
+        nStateObject.SetProperty("Name", Name)
+        nStateObject.SetProperty("Shares", Shares)
+        nStateObject.SetProperty("Level", Level)
 
+        Return nStateObject
+    End Function
 
     MustOverride Function CopyResource() As IResource
 

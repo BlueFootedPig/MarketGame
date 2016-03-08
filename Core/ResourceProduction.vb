@@ -5,6 +5,8 @@
 
     Sub Produce(Assests As IAssetManager)
 
+    Function SaveStateObject() As StateObject
+
 End Interface
 
 Public Class ResourceProduction
@@ -22,6 +24,14 @@ Public Class ResourceProduction
     Public Property LaborLevel As Integer = 1 Implements IResourceProduction.LaborLevel
     Private Const LABOR_FACTOR As Double = 0.2
     Private settings As EngineSettings
+
+    Function SaveStateObject() As StateObject Implements IResourceProduction.SaveStateObject
+        Dim returnStateObject As New StateObject(Me)
+        returnStateObject.SetProperty("LaborLevel", LaborLevel)
+        returnStateObject.SetProperty("ProducedResource", ProducedResource.GetStateObject())
+        returnStateObject.SetProperty("RequiredResources", RequiredResources.Select(Function(n) n.GetStateObject()).ToList())
+        Return returnStateObject
+    End Function
 
     Sub Produce(Assests As IAssetManager) Implements IResourceProduction.Produce
 

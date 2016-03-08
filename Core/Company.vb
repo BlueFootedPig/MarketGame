@@ -8,8 +8,6 @@ Public Class Company
     Shared Property VoidCompany As Company = New Company(New VoidAssetManager(), Nothing)
 
     Private Assests As IAssetManager
-    Public Property savingProvider As IPersistMarketForce
-
     Friend ProfitPerUnit As Double
 
     Public Property ProducedResource As IResourceProduction
@@ -24,19 +22,27 @@ Public Class Company
     Public Sub New(manager As IAssetManager, savingSystem As IPersistMarketForce)
         If manager Is Nothing Then Throw New ArgumentNullException("manager", "An AssetManager must be provided.")
         Assests = manager
-        savingProvider = savingSystem
+
     End Sub
 
     Public Overrides Function ToString() As String
         Return Name
     End Function
 
-    Public Sub Save() Implements IMarketForce.Save
-        If savingProvider Is Nothing Then Throw New InvalidOperationException("A saving system must be provided in order to save.")
+    Public Function GetStateObject() As MarketForceState Implements IMarketForce.GetStateObject
+        Dim companyState As New MarketForceState(Assests)
 
-        savingProvider.SaveMarketForce(Me)
 
-    End Sub
+
+        For Each item As IStrategy In gamingStrategy
+            companyState.Strategies.Add(item.getStateObject())
+        Next
+
+
+
+        'savingProvider.SaveMarketForce(Me)
+
+    End Function
 
     Public Sub AddResource(resourceToAdd As IResource) Implements IMarketForce.AddResource
         If resourceToAdd Is Nothing Then Throw New ArgumentNullException("Resource cannot be Null.")
@@ -102,5 +108,5 @@ Public Interface IMarketForce
     Sub AddResource(resourceToAdd As IResource)
     Sub RemoveResource(resourceToRemove As IResource)
     Function GetAllAssets() As IList(Of IResource)
-    Sub Save()
+    Function GetStateObject() As MarketForceState
 End Interface
